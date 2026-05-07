@@ -79,7 +79,7 @@ export default function ServicesPage() {
               >
                 {/* Content */}
                 <div className="flex-1 space-y-8">
-                  <div className={`w-16 h-16 rounded-xl ${service.color} flex items-center justify-center mb-6`}>
+                  <div className={`w-16 h-16 rounded-lg ${service.color} flex items-center justify-center mb-6`}>
                     <service.icon className="h-8 w-8" />
                   </div>
                   <h2 className="text-4xl font-heading font-black text-slate-900">{service.title}</h2>
@@ -95,9 +95,10 @@ export default function ServicesPage() {
                     ))}
                   </div>
                   <div className="pt-4">
-                    <Button asChild size="lg" className="rounded-xl font-bold h-12 px-8 shadow-md hover:shadow-lg transition-all">
-                      <Link href={service.href}>
-                        Full Service Details <ArrowRight className="ml-2 h-5 w-5" />
+                    <Button asChild size="lg" className="rounded-lg font-bold h-12 px-8 shadow hover:shadow transition-all">
+                      <Link href={service.href} className="flex items-center gap-2">
+                        <span>Full Service Details</span>
+                        <ArrowRight className="h-5 w-5" />
                       </Link>
                     </Button>
                   </div>
@@ -105,7 +106,7 @@ export default function ServicesPage() {
 
                 {/* Visual Placeholder */}
                 <div className="flex-1 w-full">
-                  <div className="aspect-[4/3] rounded-xl bg-slate-100 overflow-hidden shadow-xl border-4 border-white relative">
+                  <div className="aspect-[4/3] rounded-lg bg-slate-100 overflow-hidden shadow border-4 border-white relative">
                     <div className="absolute inset-0 flex items-center justify-center text-slate-300 font-bold italic">
                       [ Placeholder for {service.title} Image ]
                     </div>
@@ -136,7 +137,7 @@ export default function ServicesPage() {
           <p className="text-xl text-white/80 max-w-2xl mx-auto">
             Our team is always here to help. Whether you have questions about nutrition or need a special order, just let us know.
           </p>
-          <Button asChild variant="outline" size="lg" className="rounded-xl bg-white text-primary border-none hover:bg-slate-100 font-bold h-14 px-10 text-lg shadow-xl">
+          <Button asChild variant="outline" size="lg" className="rounded-lg bg-white text-primary border-none hover:bg-slate-100 font-bold h-14 px-10 text-lg shadow">
             <Link href="/contact">Contact Our Team</Link>
           </Button>
         </div>

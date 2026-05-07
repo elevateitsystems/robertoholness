@@ -18,7 +18,7 @@ export default function LocalDeliveryPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 space-y-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-lg bg-secondary/10 text-secondary text-xs font-bold uppercase tracking-wider">
                 <Truck className="h-4 w-4" />
                 <span>Convenient & Reliable</span>
               </div>
@@ -30,12 +30,12 @@ export default function LocalDeliveryPage() {
                 Albuquerque's fastest way to get natural pet food. Skip the trip and let us bring the best supplies directly to you.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="h-14 px-8 rounded-xl text-lg font-bold shadow-xl bg-secondary hover:bg-secondary/90 transition-all hover:scale-105">
-                  <Link href="https://shop.simplydlegos.com" target="_blank">
+                <Button asChild size="lg" className="h-14 px-8 rounded-lg text-lg font-bold shadow bg-secondary hover:bg-secondary/90 transition-all hover:scale-105">
+                  <Link href="https://shop.simplydlegos.com" target="_blank" className="flex items-center justify-center">
                     Start Your Order
                   </Link>
                 </Button>
-                <div className="flex items-center px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium">
+                <div className="flex items-center px-6 py-3 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium">
                   <MapPin className="mr-2 h-5 w-5 text-primary" />
                   Albuquerque Area Only
                 </div>
@@ -47,7 +47,7 @@ export default function LocalDeliveryPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 w-full max-w-xl"
             >
-              <div className="aspect-video rounded-xl bg-slate-200 overflow-hidden shadow-2xl border-8 border-white relative">
+              <div className="aspect-video rounded-lg bg-slate-200 overflow-hidden shadow border-8 border-white relative">
                  <img 
                   src="https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?auto=format&fit=crop&q=80&w=1200" 
                   alt="Delivery van"
@@ -74,9 +74,9 @@ export default function LocalDeliveryPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-10 rounded-xl bg-slate-50 border border-slate-100 flex flex-col items-center text-center space-y-6 shadow-sm hover:shadow-md transition-all"
+                className="p-10 rounded-lg bg-slate-50 border border-slate-100 flex flex-col items-center text-center space-y-6 shadow hover:shadow transition-all"
               >
-                <div className={`w-16 h-16 rounded-xl bg-white shadow-md flex items-center justify-center ${step.color}`}>
+                <div className={`w-16 h-16 rounded-lg bg-white shadow flex items-center justify-center ${step.color}`}>
                   <step.icon className="h-8 w-8" />
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900">{step.title}</h3>

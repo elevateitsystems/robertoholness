@@ -18,7 +18,7 @@ export default function PickupServicesPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 space-y-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl bg-slate-200 text-slate-600 text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-lg bg-slate-200 text-slate-600 text-xs font-bold uppercase tracking-wider">
                 <Store className="h-4 w-4" />
                 <span>Fast & Contactless</span>
               </div>
@@ -30,13 +30,13 @@ export default function PickupServicesPage() {
                 Order from your couch and grab it on the go. Choose between quick in-store pickup or our convenient contactless curbside service.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="h-14 px-8 rounded-xl text-lg font-bold shadow-xl hover:scale-105 transition-all">
-                  <Link href="https://shop.simplydlegos.com" target="_blank">
-                    <ShoppingBag className="mr-2 h-5 w-5" />
-                    Shop for Pickup
+                <Button asChild size="lg" className="h-14 px-8 rounded-lg text-lg font-bold shadow hover:scale-105 transition-all">
+                  <Link href="https://shop.simplydlegos.com" target="_blank" className="flex items-center gap-2">
+                    <ShoppingBag className="h-5 w-5" />
+                    <span>Shop for Pickup</span>
                   </Link>
                 </Button>
-                <div className="flex items-center px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium">
+                <div className="flex items-center px-6 py-3 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium">
                   <Clock className="mr-2 h-5 w-5 text-secondary" />
                   Ready in 60 Minutes
                 </div>
@@ -48,7 +48,7 @@ export default function PickupServicesPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 w-full max-w-xl"
             >
-              <div className="aspect-[4/3] rounded-xl bg-slate-200 overflow-hidden shadow-2xl border-8 border-white relative">
+              <div className="aspect-[4/3] rounded-lg bg-slate-200 overflow-hidden shadow border-8 border-white relative">
                  <img 
                   src="https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&q=80&w=1200" 
                   alt="Pet store storefront"
@@ -69,9 +69,9 @@ export default function PickupServicesPage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-12 rounded-xl bg-slate-50 border border-slate-100 space-y-6 hover:shadow-xl transition-shadow group"
+              className="p-12 rounded-lg bg-slate-50 border border-slate-100 space-y-6 hover:shadow transition-shadow group"
             >
-              <div className="w-16 h-16 rounded-xl bg-secondary/10 text-secondary flex items-center justify-center group-hover:scale-110 transition-transform">
+              <div className="w-16 h-16 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center group-hover:scale-110 transition-transform">
                 <Store className="h-8 w-8" />
               </div>
               <h3 className="text-3xl font-heading font-black text-slate-900">In-Store Pickup</h3>
@@ -96,10 +96,10 @@ export default function PickupServicesPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="p-12 rounded-xl bg-slate-900 text-white space-y-6 hover:shadow-xl transition-shadow group relative overflow-hidden"
+              className="p-12 rounded-lg bg-slate-900 text-white space-y-6 hover:shadow transition-shadow group relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
-              <div className="w-16 h-16 rounded-xl bg-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform relative z-10">
+              <div className="w-16 h-16 rounded-lg bg-white/10 text-white flex items-center justify-center group-hover:scale-110 transition-transform relative z-10">
                 <MapPin className="h-8 w-8" />
               </div>
               <h3 className="text-3xl font-heading font-black relative z-10">Curbside Pickup</h3>
@@ -140,7 +140,7 @@ export default function PickupServicesPage() {
                 transition={{ delay: i * 0.1 }}
                 className="space-y-4"
               >
-                 <div className="w-12 h-12 rounded-full bg-white shadow-md mx-auto flex items-center justify-center text-secondary">
+                 <div className="w-12 h-12 rounded-full bg-white shadow mx-auto flex items-center justify-center text-secondary">
                   <item.icon className="h-6 w-6" />
                 </div>
                 <h4 className="font-bold text-slate-900">{item.title}</h4>
@@ -149,9 +149,10 @@ export default function PickupServicesPage() {
             ))}
           </div>
           <div className="pt-8">
-             <Button asChild size="lg" className="rounded-xl font-bold h-14 px-10 shadow-xl transition-all hover:scale-105">
-              <Link href="https://shop.simplydlegos.com" target="_blank">
-                Start Shopping Now <ArrowRight className="ml-2 h-5 w-5" />
+             <Button asChild size="lg" className="rounded-lg font-bold h-14 px-10 shadow transition-all hover:scale-105">
+              <Link href="https://shop.simplydlegos.com" target="_blank" className="flex items-center gap-2">
+                <span>Start Shopping Now</span>
+                <ArrowRight className="h-5 w-5" />
               </Link>
             </Button>
           </div>

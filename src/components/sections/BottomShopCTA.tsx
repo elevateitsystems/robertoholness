@@ -25,7 +25,7 @@ export function BottomShopCTA() {
           viewport={{ once: true }}
           className="max-w-4xl mx-auto space-y-8"
         >
-          <div className="inline-flex p-4 rounded-xl bg-white/10 text-white mb-4">
+          <div className="inline-flex p-4 rounded-lg bg-white/10 text-white mb-4">
             <ShoppingBagIcon className="h-8 w-8" />
           </div>
           <h2 className="text-4xl md:text-6xl font-heading font-black text-white leading-tight">
@@ -36,9 +36,10 @@ export function BottomShopCTA() {
             Browse our full catalog of natural food, healthy treats, and premium supplies. Fast local delivery and easy pickup available.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8">
-            <Button asChild size="lg" className="h-16 px-12 rounded-xl text-xl font-bold shadow-2xl bg-secondary hover:bg-secondary/90 hover:scale-105 active:scale-95 transition-all">
-              <Link href="https://shop.simplydlegos.com/products/list/" target="_blank">
-                Shop Online Now
+            <Button asChild size="lg" className="h-16 px-12 rounded-lg text-xl font-bold shadow bg-secondary hover:bg-secondary/90 hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
+              <Link href="https://shop.simplydlegos.com/products/list/" target="_blank" className="flex items-center gap-3">
+                <ShoppingBagIcon className="h-6 w-6" />
+                <span>Shop Online Now</span>
               </Link>
             </Button>
             <Link href="/contact" className="group flex items-center text-white font-bold text-lg hover:text-secondary transition-colors">

@@ -79,7 +79,7 @@ export function GoogleReviews() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="relative p-8 rounded-xl bg-white shadow-sm border border-slate-100 hover:shadow-md transition-shadow"
+              className="relative p-8 rounded-lg bg-white shadow border border-slate-100 hover:shadow transition-shadow"
             >
               <QuoteIcon className="absolute top-6 right-6 h-8 w-8 text-slate-100" />
               <div className="flex text-yellow-400 mb-4">

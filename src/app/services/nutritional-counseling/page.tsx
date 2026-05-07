@@ -11,9 +11,9 @@ export function CounselingFeature({ icon: Icon, title, description }: { icon: an
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="flex flex-col items-center text-center space-y-4 p-8 rounded-xl bg-white shadow-sm border border-slate-100 hover:shadow-lg transition-all"
+      className="flex flex-col items-center text-center space-y-4 p-8 rounded-lg bg-white shadow border border-slate-100 hover:shadow transition-all"
     >
-      <div className="w-16 h-16 rounded-xl bg-accent-green/10 text-accent-green flex items-center justify-center mb-2">
+      <div className="w-16 h-16 rounded-lg bg-accent-green/10 text-accent-green flex items-center justify-center mb-2">
         <Icon className="h-8 w-8" />
       </div>
       <h3 className="text-xl font-bold text-slate-900">{title}</h3>
@@ -35,7 +35,7 @@ export default function NutritionalCounselingPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 space-y-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl bg-accent-green/10 text-accent-green text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-lg bg-accent-green/10 text-accent-green text-xs font-bold uppercase tracking-wider">
                 <HeartPulse className="h-4 w-4" />
                 <span>Expert Guidance</span>
               </div>
@@ -47,12 +47,12 @@ export default function NutritionalCounselingPage() {
                 What you put in their bowl matters. Our experts help you unlock your pet's full potential through science-backed, natural nutrition.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="h-14 px-8 rounded-xl text-lg font-bold shadow-xl transition-all hover:scale-105">
-                  <Link href="/contact">
+                <Button asChild size="lg" className="h-14 px-8 rounded-lg text-lg font-bold shadow transition-all hover:scale-105">
+                  <Link href="/contact" className="flex items-center justify-center">
                     Book a Consultation
                   </Link>
                 </Button>
-                <div className="flex items-center px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium">
+                <div className="flex items-center px-6 py-3 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium">
                   <Phone className="mr-2 h-5 w-5 text-primary" />
                   Call for Immediate Help
                 </div>
@@ -64,7 +64,7 @@ export default function NutritionalCounselingPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 w-full max-w-xl"
             >
-              <div className="aspect-square rounded-xl bg-slate-200 overflow-hidden shadow-2xl border-[12px] border-white relative">
+              <div className="aspect-square rounded-lg bg-slate-200 overflow-hidden shadow border-[12px] border-white relative">
                  <img 
                   src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=1200" 
                   alt="Pet nutrition expert"
@@ -139,7 +139,7 @@ export default function NutritionalCounselingPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="p-10 rounded-xl bg-white/5 border border-white/10 space-y-8"
+              className="p-10 rounded-lg bg-white/5 border border-white/10 space-y-8"
             >
               <h3 className="text-2xl font-bold">What We Address:</h3>
               <ul className="space-y-4">
@@ -158,8 +158,10 @@ export default function NutritionalCounselingPage() {
                   </li>
                 ))}
               </ul>
-              <Button asChild size="lg" className="w-full h-14 rounded-xl font-bold bg-accent-green text-slate-900 hover:bg-accent-green/90 transition-all hover:scale-105">
-                <Link href="/contact">Book Your Free Consult</Link>
+              <Button asChild size="lg" className="w-full h-14 rounded-lg font-bold bg-accent-green text-slate-900 hover:bg-accent-green/90 transition-all hover:scale-105">
+                <Link href="/contact" className="flex items-center justify-center">
+                  Book Your Free Consult
+                </Link>
               </Button>
             </motion.div>
           </div>

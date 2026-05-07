@@ -46,7 +46,7 @@ export function InstagramFeed() {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.05 }}
-              className="group relative aspect-square overflow-hidden rounded-xl bg-slate-100 shadow-sm"
+              className="group relative aspect-square overflow-hidden rounded-lg bg-slate-100 shadow"
             >
               <img 
                 src={src} 

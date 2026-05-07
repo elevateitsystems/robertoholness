@@ -87,9 +87,9 @@ export function ServicesOverview() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="group p-8 rounded-xl border border-slate-100 bg-slate-50 hover:bg-white hover:shadow-2xl hover:-translate-y-2 transition-all duration-300"
+              className="group p-8 rounded-lg border border-slate-100 bg-slate-50 hover:bg-white hover:shadow hover:-translate-y-2 transition-all duration-300"
             >
-              <div className={`w-14 h-14 rounded-xl ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <div className={`w-14 h-14 rounded-lg ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                 <service.icon className="h-7 w-7" />
               </div>
               <h3 className="text-xl font-bold text-slate-900 mb-3">{service.title}</h3>
@@ -98,16 +98,16 @@ export function ServicesOverview() {
               </p>
               <Link 
                 href={service.href} 
-                className="inline-flex items-center text-sm font-bold text-secondary hover:underline group-hover:gap-2 transition-all"
+                className="inline-flex items-center text-sm font-bold text-secondary hover:underline group-hover:gap-2 transition-all gap-1"
               >
-                Learn More <ArrowRightIcon className="ml-1 h-4 w-4" />
+                <span>Learn More</span> <ArrowRightIcon className="h-4 w-4" />
               </Link>
             </motion.div>
           ))}
         </div>
 
         <div className="mt-16 text-center">
-          <Button asChild variant="outline" size="lg" className="rounded-xl px-8 font-bold border-2 hover:bg-slate-100 transition-all">
+          <Button asChild variant="outline" size="lg" className="rounded-lg px-8 font-bold border-2 hover:bg-slate-100 transition-all">
             <Link href="/services">View All Services</Link>
           </Button>
         </div>

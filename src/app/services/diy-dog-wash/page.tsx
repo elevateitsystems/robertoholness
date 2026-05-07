@@ -18,7 +18,7 @@ export default function DIYDogWashPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 space-y-8"
             >
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-lg bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider">
                 <Bath className="h-4 w-4" />
                 <span>Our Most Popular Service</span>
               </div>
@@ -30,13 +30,13 @@ export default function DIYDogWashPage() {
                 Keep your home clean and your pup fresh. Our professional-grade tubs are designed for comfort and safety, making bath time a fun bonding experience.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="h-14 px-8 rounded-xl text-lg font-bold shadow-xl hover:scale-105 transition-all">
-                  <Link href="https://shop.simplydlegos.com" target="_blank">
-                    <Calendar className="mr-2 h-5 w-5" />
-                    Book Your Spot
+                <Button asChild size="lg" className="h-14 px-8 rounded-lg text-lg font-bold shadow hover:scale-105 transition-all">
+                  <Link href="https://shop.simplydlegos.com" target="_blank" className="flex items-center gap-2">
+                    <Calendar className="h-5 w-5" />
+                    <span>Book Your Spot</span>
                   </Link>
                 </Button>
-                <div className="flex items-center px-6 py-3 rounded-xl bg-white border border-slate-200 text-slate-600 font-medium">
+                <div className="flex items-center px-6 py-3 rounded-lg bg-white border border-slate-200 text-slate-600 font-medium">
                   <Clock className="mr-2 h-5 w-5 text-secondary" />
                   No Appointment Needed
                 </div>
@@ -48,7 +48,7 @@ export default function DIYDogWashPage() {
               transition={{ duration: 0.8 }}
               className="flex-1 w-full max-w-xl"
             >
-              <div className="aspect-square rounded-xl bg-slate-200 overflow-hidden shadow-2xl border-8 border-white relative">
+              <div className="aspect-square rounded-lg bg-slate-200 overflow-hidden shadow border-8 border-white relative">
                  <img 
                   src="https://images.unsplash.com/photo-1583511655826-05700d52f4d9?auto=format&fit=crop&q=80&w=1200" 
                   alt="Dog in bath"
@@ -89,7 +89,7 @@ export default function DIYDogWashPage() {
                   </div>
                 ))}
               </div>
-              <div className="p-6 rounded-xl bg-blue-50 border border-blue-100 flex items-start space-x-4">
+              <div className="p-6 rounded-lg bg-blue-50 border border-blue-100 flex items-start space-x-4">
                 <Info className="h-6 w-6 text-secondary shrink-0 mt-1" />
                 <p className="text-sm text-slate-600">
                   <strong>Pro Tip:</strong> We recommend bringing your dog's favorite treats to keep them happy during the bath. Or, feel free to grab some from our selection in-store!
@@ -102,7 +102,7 @@ export default function DIYDogWashPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
-              className="bg-slate-900 rounded-xl p-10 text-white shadow-2xl relative overflow-hidden"
+              className="bg-slate-900 rounded-lg p-10 text-white shadow relative overflow-hidden"
             >
                <div className="absolute top-0 right-0 w-32 h-32 bg-primary/20 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
               <h2 className="text-3xl font-heading font-black mb-8 relative z-10">Pricing</h2>
@@ -119,7 +119,7 @@ export default function DIYDogWashPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-10 p-6 rounded-xl bg-white/5 border border-white/10 text-center">
+              <div className="mt-10 p-6 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm text-slate-400">
                   * Pricing includes 45 minutes of tub time and all supplies listed above.
                 </p>

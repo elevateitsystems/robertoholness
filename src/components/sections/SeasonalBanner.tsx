@@ -16,7 +16,7 @@ export function SeasonalBanner() {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="relative overflow-hidden rounded-xl bg-secondary p-8 md:p-12 shadow-2xl"
+          className="relative overflow-hidden rounded-lg bg-secondary p-8 md:p-12 shadow"
         >
           {/* Decorative Pattern */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
@@ -24,7 +24,7 @@ export function SeasonalBanner() {
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-8">
             <div className="flex-1 text-center md:text-left space-y-4">
-              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-xl bg-white/20 text-white text-xs font-bold uppercase tracking-wider">
+              <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-lg bg-white/20 text-white text-xs font-bold uppercase tracking-wider">
                 <SparklesIcon className="h-3 w-3" />
                 <span>Special Promotion</span>
               </div>
@@ -37,9 +37,10 @@ export function SeasonalBanner() {
               </p>
             </div>
             <div className="shrink-0">
-              <Button asChild size="lg" className="bg-white text-secondary hover:bg-slate-100 h-14 px-10 rounded-xl text-lg font-bold shadow-xl transition-all hover:scale-105 active:scale-95">
-                <Link href="https://shop.simplydlegos.com/products/list/" target="_blank">
-                  Shop the Sale
+              <Button asChild size="lg" className="bg-white text-secondary hover:bg-slate-100 h-14 px-10 rounded-lg text-lg font-bold shadow transition-all hover:scale-105 active:scale-95 inline-flex items-center justify-center gap-3">
+                <Link href="https://shop.simplydlegos.com/products/list/" target="_blank" className="flex items-center gap-3">
+                  <SparklesIcon className="h-5 w-5" />
+                  <span>Shop the Sale</span>
                 </Link>
               </Button>
             </div>
