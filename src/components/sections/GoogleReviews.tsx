@@ -70,7 +70,7 @@ export function GoogleReviews() {
           <div className="flex-1 flex justify-center items-center relative h-[400px] lg:h-[500px]">
             <div className="relative w-full h-full rounded-[5px] overflow-hidden">
               <Image
-                src={testimonials[0].dogImage}
+                src="https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=800"
                 alt="Happy Dog"
                 fill
                 sizes="(max-width: 1024px) 100vw, 500px"

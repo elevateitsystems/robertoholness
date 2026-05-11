@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
+import heroImg from "../../../assets/pet-store-Albuquerque (1).png"
 
 const ShoppingCartIcon = ({ className }: { className?: string }) => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
@@ -203,10 +204,11 @@ export function HeroSection() {
               {/* Main image container */}
               <div className="relative aspect-[4/5] md:aspect-square rounded-[5px] overflow-hidden shadow-2xl shadow-black/40 border-2 border-white/10">
                 <Image
-                  src="/assets/placeholder.svg"
-                  alt="Happy Pet - Simply Diego's"
+                  src={heroImg}
+                  alt="Simply Diego's Local Healthy Pet Store"
                   fill
-                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 600px"
+                   className="object-cover object-left-center"
                   priority
                 />
                 {/* Warm overlay */}

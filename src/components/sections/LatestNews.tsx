@@ -122,7 +122,7 @@ export function LatestNews() {
                   >
                     <div className="relative aspect-[16/10] overflow-hidden">
                       <Image
-                        src={post.image}
+                        src={i % 2 === 0 ? "https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?auto=format&fit=crop&q=80&w=800" : "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&q=80&w=800"}
                         alt={post.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
