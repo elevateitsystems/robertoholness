@@ -33,13 +33,13 @@ export function CustomCursor() {
 
   return (
     <motion.div
-      className="fixed top-0 left-0 w-8 h-8 bg-secondary/30 rounded-full pointer-events-none z-[9999] backdrop-blur-sm border border-secondary/50 flex items-center justify-center"
+      className="fixed top-0 left-0 w-8 h-8 bg-primary/25 rounded-full pointer-events-none z-[9999] backdrop-blur-sm border border-primary/40 flex items-center justify-center"
       style={{
         x: cursorX,
         y: cursorY,
       }}
     >
-      <div className="w-1.5 h-1.5 bg-secondary rounded-full" />
+      <div className="w-1.5 h-1.5 bg-primary rounded-full" />
     </motion.div>
   );
 }

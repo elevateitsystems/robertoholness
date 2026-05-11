@@ -64,6 +64,12 @@ const ShoppingCartIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const PhoneIcon = ({ className }: { className?: string }) => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+  </svg>
+);
+
 const navItems = [
   { name: "Services", href: "/services" },
   { name: "Reviews", href: "/reviews" },
@@ -76,39 +82,70 @@ const navItems = [
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
+  const [scrolled, setScrolled] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md">
+    <nav className={cn(
+      "fixed top-0 z-50 w-full transition-all duration-300",
+      (scrolled || pathname !== "/")
+        ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-primary/10"
+        : "bg-transparent border-b border-transparent"
+    )}>
+      {/* Top info bar */}
+      <div className="hidden lg:block bg-secondary text-white">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex items-center justify-between h-9 text-xs font-medium">
+            <div className="flex items-center gap-6">
+              <span className="flex items-center gap-1.5">
+                <PhoneIcon className="h-3 w-3" />
+                (505) 990-2014
+              </span>
+              <span>Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm</span>
+            </div>
+            <span className="text-accent-green font-bold">🐾 Free delivery on orders over $50!</span>
+          </div>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2 group">
             <Image
               src="/assets/logo-without-bg.png"
               alt="Simply Diego's Logo"
               width={180}
               height={60}
-              className="h-16 w-auto object-contain"
+              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               priority
             />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "text-sm font-semibold transition-colors hover:text-secondary relative py-2",
-                  pathname === item.href ? "text-secondary" : "text-slate-600",
+                  "relative px-4 py-2 text-sm font-bold transition-all rounded-[5px]",
+                  pathname === item.href
+                    ? "text-primary"
+                    : (scrolled || pathname !== "/") ? "text-secondary hover:text-primary hover:bg-primary/5" : "text-white hover:text-primary hover:bg-white/10",
                 )}
               >
                 {item.name}
                 {pathname === item.href && (
                   <motion.div
-                    layoutId="navbar-underline"
-                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary"
+                    layoutId="navbar-active-pill"
+                    className="absolute inset-0 rounded-[5px] bg-primary/10 border border-primary/20"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
               </Link>
@@ -120,7 +157,7 @@ export function Navbar() {
             <Button
               asChild
               size="lg"
-              className="rounded-lg font-bold shadow hover:shadow transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
+              className="rounded-[5px] font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 bg-primary hover:bg-primary/90"
             >
               <Link
                 href="https://shop.simplydlegos.com/products/list/"
@@ -135,7 +172,10 @@ export function Navbar() {
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden p-2 text-slate-600"
+            className={cn(
+              "lg:hidden p-2.5 rounded-[5px] transition-all",
+              isOpen ? "bg-primary text-white" : (scrolled || pathname !== "/") ? "text-secondary hover:bg-primary/10" : "text-white hover:bg-white/10"
+            )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Menu"
           >
@@ -155,28 +195,34 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t bg-white overflow-hidden shadow"
+            className="lg:hidden border-t border-primary/10 bg-gradient-to-b from-[var(--warm-cream)] to-white overflow-hidden"
           >
-            <div className="p-4 space-y-4">
-              {navItems.map((item) => (
-                <Link
+            <div className="p-5 space-y-2">
+              {navItems.map((item, i) => (
+                <motion.div
                   key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "block text-base font-medium p-2 rounded-lg transition-all",
-                    pathname === item.href
-                      ? "bg-slate-50 text-secondary font-bold"
-                      : "text-slate-600",
-                  )}
-                  onClick={() => setIsOpen(false)}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
                 >
-                  {item.name}
-                </Link>
+                  <Link
+                    href={item.href}
+                    className={cn(
+                      "block text-base font-bold p-3 rounded-[5px] transition-all",
+                      pathname === item.href
+                        ? "bg-primary/10 text-primary border border-primary/20"
+                        : "text-secondary hover:bg-primary/5",
+                    )}
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
               ))}
-              <div className="pt-4 border-t">
+              <div className="pt-4 border-t border-primary/10">
                 <Button
                   asChild
-                  className="w-full rounded-lg font-bold h-12 shadow flex items-center justify-center gap-2"
+                  className="w-full rounded-[5px] font-bold h-14 shadow-lg shadow-primary/20 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90"
                 >
                   <Link
                     href="https://shop.simplydlegos.com/products/list/"
