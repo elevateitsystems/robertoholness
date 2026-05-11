@@ -143,7 +143,7 @@ export function GoogleReviews() {
           viewport={{ once: true }}
           className="mt-16 text-center"
         >
-          <Button asChild variant="outline" size="lg" className="rounded-[5px] px-10 font-bold bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300">
+          <Button asChild variant="outline" size="lg" className="rounded-[5px] px-10 font-bold bg-transparent border-2 border-white/20 text-white/80 hover:bg-primary hover:text-white hover:border-primary transition-all duration-300">
             <Link href="/reviews" className="flex items-center gap-2">
               <span>View All Feedback</span>
               <ArrowRightIcon className="h-4 w-4" />

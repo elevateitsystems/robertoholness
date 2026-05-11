@@ -171,7 +171,7 @@ export function LatestNews() {
           <Button asChild variant="outline" size="lg" className="rounded-[5px] px-10 font-bold border-2 border-secondary/20 text-secondary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300">
             <Link href="/blog" className="flex items-center gap-2">
               <span>View All Blog</span>
-              <ChevronRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </Button>
         </div>
