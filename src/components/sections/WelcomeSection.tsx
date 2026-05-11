@@ -43,7 +43,7 @@ export function WelcomeSection() {
               {/* Main Image with Mask */}
               <div className="relative w-full h-full overflow-hidden border-[8px] border-primary/10 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] shadow-2xl">
                 <Image
-                  src="/assets/placeholder.svg"
+                  src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800"
                   alt="Simply Diego's Store"
                   fill
                   sizes="(max-width: 1024px) 100vw, 500px"

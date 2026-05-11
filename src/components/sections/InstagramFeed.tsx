@@ -49,7 +49,7 @@ export function InstagramFeed() {
               className="group relative aspect-square overflow-hidden"
             >
               <img 
-                src={src} 
+                src={i % 2 === 0 ? "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=600" : "https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?auto=format&fit=crop&q=80&w=600"}
                 alt={`Instagram Post ${i + 1}`} 
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />

@@ -107,7 +107,7 @@ export function GalleryOverview() {
               className={`group relative ${item.span} ${item.aspect} overflow-hidden rounded-[5px] shadow-lg border border-white/80 cursor-pointer`}
             >
               <Image
-                src={item.src}
+                src={i % 2 === 0 ? "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&q=80&w=800" : "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&q=80&w=800"}
                 alt={item.alt}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
