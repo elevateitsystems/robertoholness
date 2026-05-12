@@ -177,7 +177,7 @@ export function Navbar() {
               className="rounded-[5px] font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 bg-primary hover:bg-primary/90"
             >
               <Link
-                href="https://shop.simplydlegos.com/products/list/"
+                href="https://shop.simplydiegos.com/products/shop/"
                 target="_blank"
                 className="flex items-center gap-2"
               >
