@@ -86,7 +86,7 @@ const MapPinIcon = () => (
 );
 
 const PawIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-primary/60">
+  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white/60">
     <ellipse cx="12" cy="17" rx="4" ry="5" opacity="0.9"/>
     <ellipse cx="6" cy="11" rx="2.5" ry="3" opacity="0.9"/>
     <ellipse cx="18" cy="11" rx="2.5" ry="3" opacity="0.9"/>
@@ -97,12 +97,12 @@ const PawIcon = () => (
 
 export function Footer() {
   return (
-    <footer className="bg-gradient-to-b from-secondary to-[#0F2D38] text-white/80 relative overflow-hidden">
+    <footer className="bg-gradient-to-b from-primary to-[#600030] text-white/80 relative overflow-hidden">
       {/* Paw pattern overlay */}
       <div className="absolute inset-0 paw-pattern-light opacity-50" />
       
       {/* Decorative blobs */}
-      <div className="absolute top-0 left-1/4 w-80 h-80 bg-primary/8 rounded-full blur-[120px]" />
+      <div className="absolute top-0 left-1/4 w-80 h-80 bg-white/5 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent-green/5 rounded-full blur-[120px]" />
 
       <div className="container mx-auto px-4 py-16 md:px-6 relative z-10">
@@ -126,13 +126,13 @@ export function Footer() {
             <div className="flex space-x-3">
               <Link
                 href="https://facebook.com"
-                className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
+                className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <FacebookIcon />
               </Link>
               <Link
                 href="https://instagram.com"
-                className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
+                className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <InstagramIcon />
               </Link>
@@ -149,36 +149,36 @@ export function Footer() {
               <li>
                 <Link
                   href="/services"
-                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
                   Our Services
                 </Link>
               </li>
               <li>
                 <Link
                   href="/reviews"
-                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
                   Customer Reviews
                 </Link>
               </li>
               <li>
                 <Link
                   href="/gallery"
-                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
                   Pet Gallery
                 </Link>
               </li>
               <li>
                 <Link
                   href="/blog"
-                  className="hover:text-primary transition-colors flex items-center gap-2 group"
+                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/40 group-hover:bg-primary group-hover:scale-125 transition-all" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
                   Pet Care Blog
                 </Link>
               </li>
@@ -186,9 +186,9 @@ export function Footer() {
                 <Link
                   href="https://shop.simplydlegos.com/products/list/"
                   target="_blank"
-                  className="text-primary font-bold hover:text-warm-orange transition-colors flex items-center gap-2 group"
+                  className="text-secondary font-bold hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary group-hover:bg-warm-orange group-hover:scale-125 transition-all" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-secondary group-hover:bg-accent-green group-hover:scale-125 transition-all" />
                   Shop Online Store
                 </Link>
               </li>
@@ -203,7 +203,7 @@ export function Footer() {
             </h3>
             <ul className="space-y-6 text-base">
               <li className="flex items-start space-x-4">
-                <div className="mt-1 w-10 h-10 rounded-[5px] bg-primary/15 text-primary flex items-center justify-center shrink-0">
+                <div className="mt-1 w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MapPinIcon />
                 </div>
                 <span>
@@ -213,13 +213,13 @@ export function Footer() {
                 </span>
               </li>
               <li className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-[5px] bg-primary/15 text-primary flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <PhoneIcon />
                 </div>
                 <span>(505) 990-2014</span>
               </li>
               <li className="flex items-center space-x-4">
-                <div className="w-10 h-10 rounded-[5px] bg-primary/15 text-primary flex items-center justify-center shrink-0">
+                <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MailIcon />
                 </div>
                 <span>info@simplydlegos.com</span>
@@ -236,19 +236,19 @@ export function Footer() {
             <ul className="space-y-3 text-base">
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Mon - Fri</span>{" "}
-                <span className="text-primary font-bold">9:00 - 7:00</span>
+                <span className="text-secondary font-bold">9:00 - 7:00</span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Saturday</span>{" "}
-                <span className="text-primary font-bold">9:00 - 6:00</span>
+                <span className="text-secondary font-bold">9:00 - 6:00</span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Sunday</span>{" "}
-                <span className="text-primary font-bold">10:00 - 5:00</span>
+                <span className="text-secondary font-bold">10:00 - 5:00</span>
               </li>
             </ul>
             {/* Fun CTA */}
-            <div className="mt-6 p-4 rounded-[5px] bg-primary/10 border border-primary/20">
+            <div className="mt-6 p-4 rounded-[5px] bg-white/10 border border-white/20">
               <p className="text-sm text-white/70">🐾 Bring your furry friend in for a visit!</p>
             </div>
           </div>
@@ -262,13 +262,13 @@ export function Footer() {
           <div className="flex gap-8">
             <Link
               href="/privacy-policy"
-              className="hover:text-primary transition-colors"
+              className="hover:text-secondary transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms-of-service"
-              className="hover:text-primary transition-colors"
+              className="hover:text-secondary transition-colors"
             >
               Terms of Service
             </Link>

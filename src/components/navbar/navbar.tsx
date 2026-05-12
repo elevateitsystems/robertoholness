@@ -65,8 +65,19 @@ const ShoppingCartIcon = ({ className }: { className?: string }) => (
 );
 
 const PhoneIcon = ({ className }: { className?: string }) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
   </svg>
 );
 
@@ -91,14 +102,16 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav className={cn(
-      "fixed top-0 z-50 w-full transition-all duration-300",
-      (scrolled || pathname !== "/")
-        ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-primary/10"
-        : "bg-transparent border-b border-transparent"
-    )}>
+    <nav
+      className={cn(
+        "fixed top-0 z-50 w-full transition-all duration-300",
+        scrolled || pathname !== "/"
+          ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-primary/10"
+          : "bg-transparent border-b border-transparent",
+      )}
+    >
       {/* Top info bar */}
-      <div className="hidden lg:block bg-secondary text-white">
+      <div className="hidden lg:block bg-primary text-white">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex items-center justify-between h-9 text-xs font-medium">
             <div className="flex items-center gap-6">
@@ -108,7 +121,9 @@ export function Navbar() {
               </span>
               <span>Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm</span>
             </div>
-            <span className="text-accent-green font-bold">🐾 Free delivery on orders over $50!</span>
+            <span className="text-accent-green font-bold">
+              🐾 Free delivery on orders over $50!
+            </span>
           </div>
         </div>
       </div>
@@ -137,7 +152,9 @@ export function Navbar() {
                   "relative px-4 py-2 text-sm font-bold transition-all rounded-[5px]",
                   pathname === item.href
                     ? "text-primary"
-                    : (scrolled || pathname !== "/") ? "text-secondary hover:text-primary hover:bg-primary/5" : "text-white hover:text-primary hover:bg-white/10",
+                    : scrolled || pathname !== "/"
+                      ? "text-secondary hover:text-primary hover:bg-primary/5"
+                      : "text-white hover:text-secondary hover:bg-white/10",
                 )}
               >
                 {item.name}
@@ -174,7 +191,11 @@ export function Navbar() {
           <button
             className={cn(
               "lg:hidden p-2.5 rounded-[5px] transition-all",
-              isOpen ? "bg-primary text-white" : (scrolled || pathname !== "/") ? "text-secondary hover:bg-primary/10" : "text-white hover:bg-white/10"
+              isOpen
+                ? "bg-primary text-white"
+                : scrolled || pathname !== "/"
+                  ? "text-secondary hover:bg-primary/10"
+                  : "text-white hover:bg-white/10",
             )}
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle Menu"

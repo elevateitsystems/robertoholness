@@ -24,7 +24,7 @@ const PawIcon = ({ className }: { className?: string }) => (
 
 export function BottomShopCTA() {
   return (
-    <section className="py-24 bg-gradient-to-br from-secondary via-secondary to-deep-teal overflow-hidden relative">
+    <section className="py-24 bg-gradient-to-br from-primary via-primary-dark to-[#800040] overflow-hidden relative">
       {/* Decorative Elements */}
       <div className="absolute inset-0 paw-pattern-light" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-primary/15 rounded-full blur-[150px] opacity-60" />
