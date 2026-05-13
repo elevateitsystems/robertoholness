@@ -83,10 +83,10 @@ const PhoneIcon = ({ className }: { className?: string }) => (
 
 const navItems = [
   { name: "Services", href: "/services" },
-  { name: "Reviews", href: "/reviews" },
   { name: "Sales", href: "/sales" },
   { name: "Gallery", href: "/gallery" },
   { name: "Blog", href: "/blog" },
+  { name: "Reviews", href: "/reviews" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -149,7 +149,7 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "relative px-4 py-2 text-sm font-bold transition-all rounded-[5px]",
+                  "relative px-4 py-3 text-sm font-semibold transition-all rounded-[5px]",
                   pathname === item.href
                     ? "text-primary"
                     : scrolled || pathname !== "/"
@@ -161,7 +161,7 @@ export function Navbar() {
                 {pathname === item.href && (
                   <motion.div
                     layoutId="navbar-active-pill"
-                    className="absolute inset-0 rounded-[5px] bg-primary/10 border border-primary/20"
+                    className="absolute inset-0  border-b border-primary/50"
                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
                 )}
