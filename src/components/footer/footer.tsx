@@ -86,12 +86,19 @@ const MapPinIcon = () => (
 );
 
 const PawIcon = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white/60">
-    <ellipse cx="12" cy="17" rx="4" ry="5" opacity="0.9"/>
-    <ellipse cx="6" cy="11" rx="2.5" ry="3" opacity="0.9"/>
-    <ellipse cx="18" cy="11" rx="2.5" ry="3" opacity="0.9"/>
-    <ellipse cx="8.5" cy="6" rx="2" ry="2.5" opacity="0.9"/>
-    <ellipse cx="15.5" cy="6" rx="2" ry="2.5" opacity="0.9"/>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="16"
+    height="16"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className="text-white/60"
+  >
+    <ellipse cx="12" cy="17" rx="4" ry="5" opacity="0.9" />
+    <ellipse cx="6" cy="11" rx="2.5" ry="3" opacity="0.9" />
+    <ellipse cx="18" cy="11" rx="2.5" ry="3" opacity="0.9" />
+    <ellipse cx="8.5" cy="6" rx="2" ry="2.5" opacity="0.9" />
+    <ellipse cx="15.5" cy="6" rx="2" ry="2.5" opacity="0.9" />
   </svg>
 );
 
@@ -100,7 +107,7 @@ export function Footer() {
     <footer className="bg-gradient-to-b from-primary to-[#600030] text-white/80 relative overflow-hidden">
       {/* Paw pattern overlay */}
       <div className="absolute inset-0 paw-pattern-light opacity-50" />
-      
+
       {/* Decorative blobs */}
       <div className="absolute top-0 left-1/4 w-80 h-80 bg-white/5 rounded-full blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-accent-green/5 rounded-full blur-[120px]" />
@@ -184,7 +191,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="https://shop.simplydlegos.com/products/list/"
+                  href="https://shop.simplydiegos.com/products/shop/"
                   target="_blank"
                   className="text-secondary font-bold hover:text-accent-green transition-colors flex items-center gap-2 group"
                 >
@@ -249,7 +256,9 @@ export function Footer() {
             </ul>
             {/* Fun CTA */}
             <div className="mt-6 p-4 rounded-[5px] bg-white/10 border border-white/20">
-              <p className="text-sm text-white/70">🐾 Bring your furry friend in for a visit!</p>
+              <p className="text-sm text-white/70">
+                🐾 Bring your furry friend in for a visit!
+              </p>
             </div>
           </div>
         </div>

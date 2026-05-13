@@ -246,7 +246,7 @@ export function Navbar() {
                   className="w-full rounded-[5px] font-bold h-14 shadow-lg shadow-primary/20 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90"
                 >
                   <Link
-                    href="https://shop.simplydlegos.com/products/list/"
+                    href="https://shop.simplydiegos.com/products/shop/"
                     target="_blank"
                     className="flex items-center gap-2"
                   >
