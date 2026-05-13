@@ -146,13 +146,6 @@ export function BottomShopCTA() {
                 <span>Shop Online Now</span>
               </Link>
             </Button>
-            <Link
-              href="/contact"
-              className="group flex items-center text-white font-bold text-lg hover:text-warm-orange transition-colors"
-            >
-              Find Our Store{" "}
-              <ArrowRightIcon className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
           </div>
         </motion.div>
       </div>
