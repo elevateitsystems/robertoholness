@@ -2,16 +2,13 @@
 
 import Link from "next/link";
 import {
-  Bath,
-  Truck,
-  HeartPulse,
-  Store,
   ArrowRight,
   CheckCircle2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { servicesData, iconMap } from "@/lib/services-data";
 
 const PawIcon = ({ className }: { className?: string }) => (
   <svg
@@ -30,74 +27,9 @@ const PawIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const services = [
-  {
-    title: "DIY Dog Wash",
-    description:
-      "Our state-of-the-art DIY dog wash stations make bath time a breeze. No more backaches or messy bathrooms – we provide the professional-grade tubs, premium shampoos, brushes, and towels. Just bring your dog and we'll handle the cleanup!",
-    icon: Bath,
-    href: "/services/diy-dog-wash",
-    features: [
-      "Professional Tubs",
-      "Premium Shampoos",
-      "Towels Provided",
-      "No Cleanup for You",
-    ],
-    gradient: "from-primary/10 to-primary/5",
-    iconBg: "bg-gradient-to-br from-primary to-warm-orange",
-    borderColor: "border-primary/20",
-  },
-  {
-    title: "Local Delivery",
-    description:
-      "Can't make it to the store? No problem! We offer fast, reliable local delivery across Albuquerque. Get your pet's favorite food, treats, and supplies delivered right to your porch.",
-    icon: Truck,
-    href: "/services/local-delivery",
-    features: [
-      "Fast Turnaround",
-      "Albuquerque Area",
-      "Free Over $50",
-      "Contactless Option",
-    ],
-    gradient: "from-secondary/10 to-secondary/5",
-    iconBg: "bg-gradient-to-br from-secondary to-deep-teal",
-    borderColor: "border-secondary/20",
-  },
-  {
-    title: "Nutritional Counseling",
-    description:
-      "Every pet is unique. Our expert counselors help you navigate the complex world of pet nutrition to find the perfect diet for your dog or cat's age, breed, and health requirements.",
-    icon: HeartPulse,
-    href: "/services/nutritional-counseling",
-    features: [
-      "Expert Guidance",
-      "Allergy Support",
-      "Weight Management",
-      "Custom Meal Plans",
-    ],
-    gradient: "from-accent-green/10 to-accent-green/5",
-    iconBg: "bg-gradient-to-br from-accent-green to-[#6BA033]",
-    borderColor: "border-accent-green/20",
-  },
-  {
-    title: "Pickup Services",
-    description:
-      'Short on time? Order through our online store and select "Pickup". We\'ll have your items ready and waiting. Choose from quick in-store pickup or our convenient curbside service.',
-    icon: Store,
-    href: "/services/pickup-services",
-    features: [
-      "Easy Online Ordering",
-      "Curbside Available",
-      "Ready in Minutes",
-      "No Extra Fees",
-    ],
-    gradient: "from-warm-orange/10 to-warm-orange/5",
-    iconBg: "bg-gradient-to-br from-warm-orange to-primary",
-    borderColor: "border-warm-orange/20",
-  },
-];
-
 export default function ServicesPage() {
+  const services = Object.values(servicesData);
+
   return (
     <div className="flex flex-col w-full">
       {/* Header Section */}
@@ -163,77 +95,84 @@ export default function ServicesPage() {
 
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <div className="space-y-32">
-            {services.map((service, index) => (
-              <motion.div
-                key={service.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className={`flex flex-col lg:flex-row items-center gap-12 ${index % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
-              >
-                {/* Content */}
-                <div className="flex-1 space-y-8">
-                  <div
-                    className={`w-16 h-16 rounded-lg ${service.iconBg} flex items-center justify-center mb-6 text-white shadow-lg`}
-                  >
-                    <service.icon className="h-8 w-8" />
-                  </div>
-                  <h2 className="text-4xl font-heading font-black text-secondary">
-                    {service.title}
-                  </h2>
-                  <p className="text-lg text-secondary/60 leading-relaxed">
-                    {service.description}
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {service.features.map((feature) => (
-                      <div
-                        key={feature}
-                        className="flex items-center space-x-2 text-secondary/80 font-medium"
-                      >
-                        <CheckCircle2 className="h-5 w-5 text-accent-green" />
-                        <span>{feature}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="pt-4">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="rounded-lg font-bold h-12 px-8 shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 transition-all hover:scale-105"
-                    >
-                      <Link
-                        href={service.href}
-                        className="flex items-center gap-2"
-                      >
-                        <span>Full Service Details</span>
-                        <ArrowRight className="h-5 w-5" />
-                      </Link>
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Visual */}
-                <div className="flex-1 w-full">
-                  <div className="relative">
+            {services.map((service, index) => {
+              const Icon = iconMap[service.icon || ""] || iconMap.store;
+              const theme = service.metadata?.theme;
+              
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8 }}
+                  className={`flex flex-col lg:flex-row items-center gap-12 ${index % 2 !== 0 ? "lg:flex-row-reverse" : ""}`}
+                >
+                  {/* Content */}
+                  <div className="flex-1 space-y-8">
                     <div
-                      className={`absolute -inset-3 bg-gradient-to-br ${service.gradient} rounded-lg ${index % 2 === 0 ? "rotate-2" : "-rotate-2"}`}
-                    />
-                    <div
-                      className={`relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl border-4 border-white ${service.borderColor}`}
+                      className={`w-16 h-16 rounded-lg ${theme?.iconBg || "bg-primary"} flex items-center justify-center mb-6 text-white shadow-lg`}
                     >
-                      <Image
-                        src={`https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&q=80&w=800&sig=${index}`}
-                        alt={service.title}
-                        fill
-                        className="w-full h-full object-cover"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 via-transparent to-transparent" />
+                      <Icon className="h-8 w-8" />
+                    </div>
+                    <h2 className="text-4xl font-heading font-black text-secondary">
+                      {service.name}
+                    </h2>
+                    <p className="text-lg text-secondary/60 leading-relaxed">
+                      {service.shortDescription}
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {service.metadata?.listingFeatures?.map((feature: string) => (
+                        <div
+                          key={feature}
+                          className="flex items-center space-x-2 text-secondary/80 font-medium"
+                        >
+                          <CheckCircle2 className="h-5 w-5 text-accent-green" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="pt-4">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="rounded-lg font-bold h-12 px-8 shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 transition-all hover:scale-105"
+                      >
+                        <Link
+                          href={`/services/${service.slug}`}
+                          className="flex items-center gap-2"
+                        >
+                          <span>Full Service Details</span>
+                          <ArrowRight className="h-5 w-5" />
+                        </Link>
+                      </Button>
                     </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
+
+                  {/* Visual */}
+                  <div className="flex-1 w-full">
+                    <div className="relative">
+                      <div
+                        className={`absolute -inset-3 bg-gradient-to-br ${theme?.gradient || "from-primary/10 to-primary/5"} rounded-lg ${index % 2 === 0 ? "rotate-2" : "-rotate-2"}`}
+                      />
+                      <div
+                        className={`relative aspect-[4/3] rounded-lg overflow-hidden shadow-2xl border-4 border-white ${theme?.borderColor || "border-primary/20"}`}
+                      >
+                        {service.imageUrl && (
+                          <Image
+                            src={service.imageUrl}
+                            alt={service.name}
+                            fill
+                            className="w-full h-full object-cover"
+                          />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-t from-secondary/30 via-transparent to-transparent" />
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
