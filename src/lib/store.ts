@@ -1,8 +1,20 @@
 import { create } from 'zustand';
 
+export interface User {
+  id: string;
+  email: string;
+  username?: string;
+  firstName: string;
+  lastName: string;
+  displayName?: string;
+  role: string;
+  status: string;
+  avatar?: { url: string };
+}
+
 interface AppState {
-  user: { name: string; email: string } | null;
-  setUser: (user: { name: string; email: string } | null) => void;
+  user: User | null;
+  setUser: (user: User | null) => void;
   theme: 'light' | 'dark';
   toggleTheme: () => void;
 }
