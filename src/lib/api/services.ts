@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3030/api'; // match auth backend port 3030
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL; // match auth backend port 3030
 
 export const servicesApi = {
   getAll: async () => {

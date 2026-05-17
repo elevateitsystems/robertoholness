@@ -1,4 +1,4 @@
-const API_URL = process.env.BACKEND_URL || "http://localhost:3030/api";
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const getHeaders = () => {
   return {

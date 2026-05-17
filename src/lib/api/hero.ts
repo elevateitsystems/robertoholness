@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3030/api';
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 export const heroApi = {
   get: async () => {
