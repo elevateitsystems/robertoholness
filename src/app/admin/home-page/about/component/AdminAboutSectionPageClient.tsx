@@ -8,6 +8,7 @@ import { Skeleton } from "@/components/admin/Skeleton";
 import { Modal } from "@/components/admin/Modal";
 import { AboutPreview } from "./AboutPreview";
 import { AboutModalContent } from "./AboutModalContent";
+import { toast } from "react-toastify";
 
 export default function AdminAboutSectionPageClient() {
   const user = useAppStore((state: any) => state.user);
@@ -55,7 +56,10 @@ export default function AdminAboutSectionPageClient() {
   };
 
   const openEditModal = (type: "content" | "testimonial" | "image") => {
-    if (!user) return alert("Please login first to edit about page");
+    if (!user) {
+      toast.error("Please login first to edit about page");
+      return;
+    }
 
     if (type === "content") {
       setTitle(aboutData.title);
@@ -73,14 +77,38 @@ export default function AdminAboutSectionPageClient() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate Format
+      const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+      if (!validTypes.includes(file.type)) {
+        toast.error("Unsupported file format! Please upload a PNG, JPG, JPEG, or WebP image.");
+        e.target.value = ""; // Clear file input
+        setImageFile(null);
+        setImagePreview(null);
+        return;
+      }
+
+      // Validate Max Size (5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error("File is too large! Maximum allowed file size is 5MB.");
+        e.target.value = ""; // Clear file input
+        setImageFile(null);
+        setImagePreview(null);
+        return;
+      }
+
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+      toast.success("Image selected and validated successfully!");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return alert("Unauthorized");
+    if (!user) {
+      toast.error("Unauthorized");
+      return;
+    }
 
     setSaving(true);
     const formData = new FormData();
@@ -112,11 +140,12 @@ export default function AdminAboutSectionPageClient() {
           ...res.data,
           imageUrl: res.data.image?.url || "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800"
         });
+        toast.success("Welcome section updated successfully!");
       }
       setActiveModal(null);
     } catch (e) {
       console.error(e);
-      alert("Failed to save changes");
+      toast.error("Failed to save changes");
     } finally {
       setSaving(false);
     }

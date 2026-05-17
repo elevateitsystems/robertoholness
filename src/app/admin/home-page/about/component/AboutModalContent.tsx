@@ -86,20 +86,56 @@ export function AboutModalContent({
   if (activeModal === "image") {
     return (
       <div className="space-y-4">
-        <label className="block text-sm font-semibold text-gray-700">Choose New Image File</label>
-        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-blue-500 transition-colors bg-gray-50/50">
+        <label className="block text-sm font-semibold text-gray-700">
+          About Welcome Banner Photo
+        </label>
+        <div
+          onClick={() => document.getElementById("about-file-input")?.click()}
+          className="group relative border-2 border-dashed border-gray-300 hover:border-primary bg-gray-50/50 hover:bg-primary/[0.02] transition-all rounded-xl p-6 text-center cursor-pointer overflow-hidden flex flex-col items-center justify-center gap-3"
+        >
+          <input
+            id="about-file-input"
+            type="file"
+            onChange={handleImageChange}
+            className="hidden"
+            accept="image/*"
+          />
+          
           {imagePreview ? (
-            <div className="mb-4 relative">
-              <img src={imagePreview} alt="Preview" className="h-32 w-auto object-contain rounded" />
+            <div className="relative aspect-square w-32 rounded-lg overflow-hidden border border-gray-200 shadow-md">
+              <img
+                src={imagePreview}
+                alt="About Preview"
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white text-xs font-semibold px-2 py-1 bg-black/60 rounded">Change Image</span>
+              </div>
             </div>
           ) : (
-            <Upload className="h-10 w-10 text-gray-400 mb-2" />
+            <>
+              <div className="p-3 bg-white rounded-full shadow-sm text-gray-400 group-hover:text-primary transition-colors border border-gray-100">
+                <Upload className="h-6 w-6" />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-gray-700 group-hover:text-primary transition-colors">
+                  Click to upload welcome photo
+                </p>
+                <p className="text-xs text-gray-500 mt-1">
+                  or drag and drop your file here
+                </p>
+              </div>
+            </>
           )}
-          <label className="cursor-pointer bg-white px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-semibold text-gray-700 hover:bg-gray-50 flex items-center gap-2">
-            <Upload className="h-4 w-4" />
-            Select Image File
-            <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
-          </label>
+
+          {/* Guidelines */}
+          <div className="mt-2 pt-3 border-t border-gray-200/60 w-full text-[11px] text-gray-400 text-left space-y-1">
+            <p className="font-semibold text-gray-500 uppercase tracking-wider text-[9px] mb-1">
+              💡 Image Guidelines:
+            </p>
+            <p>• <strong>Formats</strong>: PNG, JPG, JPEG, or WebP.</p>
+            <p>• <strong>Max Size</strong>: Up to <strong>5MB</strong> file size.</p>
+          </div>
         </div>
       </div>
     );

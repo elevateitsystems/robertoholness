@@ -8,6 +8,7 @@ import { useAppStore } from "@/lib/store";
 import { Skeleton } from "@/components/admin/Skeleton";
 import Image from "next/image";
 import { Modal } from "@/components/admin/Modal";
+import { toast } from "react-toastify";
 
 export default function AdminSalesPage() {
   const user = useAppStore((state: any) => state.user);
@@ -44,17 +45,24 @@ export default function AdminSalesPage() {
   }, []);
 
   const handleToggleVisibility = (checked: boolean) => {
-    if (!user) return alert("Please login first");
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
     const updated = {
       ...salesData,
       isShow: checked
     };
     localStorage.setItem("admin_sales_data", JSON.stringify(updated));
     setSalesData(updated);
+    toast.success(`Sales section ${checked ? "enabled" : "hidden"} successfully!`);
   };
 
   const openEditModal = (type: "text" | "image") => {
-    if (!user) return alert("Please login first to edit sales");
+    if (!user) {
+      toast.error("Please login first to edit sales");
+      return;
+    }
 
     if (type === "text") {
       setBadgeText(salesData.badgeText);
@@ -71,14 +79,38 @@ export default function AdminSalesPage() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate Format
+      const validTypes = ["image/png", "image/jpeg", "image/jpg", "image/webp"];
+      if (!validTypes.includes(file.type)) {
+        toast.error("Unsupported file format! Please upload a PNG, JPG, JPEG, or WebP image.");
+        e.target.value = ""; // Clear file input
+        setImageFile(null);
+        setImagePreview(null);
+        return;
+      }
+
+      // Validate Max Size (5MB)
+      const maxSize = 5 * 1024 * 1024;
+      if (file.size > maxSize) {
+        toast.error("File is too large! Maximum allowed file size is 5MB.");
+        e.target.value = ""; // Clear file input
+        setImageFile(null);
+        setImagePreview(null);
+        return;
+      }
+
       setImageFile(file);
       setImagePreview(URL.createObjectURL(file));
+      toast.success("Image selected and validated successfully!");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return alert("Unauthorized");
+    if (!user) {
+      toast.error("Unauthorized");
+      return;
+    }
 
     setSaving(true);
     let newImageUrl = salesData.imageUrl;
@@ -103,6 +135,7 @@ export default function AdminSalesPage() {
     setTimeout(() => {
       setSaving(false);
       setActiveModal(null);
+      toast.success("Sales section updated successfully!");
     }, 400);
   };
 
@@ -270,26 +303,55 @@ export default function AdminSalesPage() {
         {activeModal === "image" && (
           <div className="space-y-4">
             <label className="block text-sm font-semibold text-gray-700">
-              Choose Image
+              Sales Promo Image
             </label>
-            <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-6 hover:border-blue-500 bg-gray-50/50">
+            <div
+              onClick={() => document.getElementById("sales-file-input")?.click()}
+              className="group relative border-2 border-dashed border-gray-300 hover:border-primary bg-gray-50/50 hover:bg-primary/[0.02] transition-all rounded-xl p-6 text-center cursor-pointer overflow-hidden flex flex-col items-center justify-center gap-3"
+            >
+              <input
+                id="sales-file-input"
+                type="file"
+                onChange={handleImageChange}
+                className="hidden"
+                accept="image/*"
+              />
+              
               {imagePreview ? (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="h-32 w-auto object-contain mb-4 rounded"
-                />
-              ) : null}
-              <label className="cursor-pointer bg-white px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-semibold hover:bg-gray-50 flex items-center gap-2">
-                <Upload className="h-4 w-4" />
-                Select Image
-                <input
-                  type="file"
-                  onChange={handleImageChange}
-                  className="hidden"
-                  accept="image/*"
-                />
-              </label>
+                <div className="relative w-full max-w-[280px] aspect-[4/3] rounded-lg overflow-hidden border border-gray-200 shadow-md">
+                  <img
+                    src={imagePreview}
+                    alt="Sales Preview"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="text-white text-xs font-semibold px-2 py-1 bg-black/60 rounded">Change Image</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="p-3 bg-white rounded-full shadow-sm text-gray-400 group-hover:text-primary transition-colors border border-gray-100">
+                    <Upload className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-bold text-gray-700 group-hover:text-primary transition-colors">
+                      Click to upload sales image
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      or drag and drop your file here
+                    </p>
+                  </div>
+                </>
+              )}
+
+              {/* Guidelines */}
+              <div className="mt-2 pt-3 border-t border-gray-200/60 w-full text-[11px] text-gray-400 text-left space-y-1">
+                <p className="font-semibold text-gray-500 uppercase tracking-wider text-[9px] mb-1">
+                  💡 Image Guidelines:
+                </p>
+                <p>• <strong>Formats</strong>: PNG, JPG, JPEG, or WebP.</p>
+                <p>• <strong>Max Size</strong>: Up to <strong>5MB</strong> file size.</p>
+              </div>
             </div>
           </div>
         )}

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { ConditionalLayout } from "@/components/ui/ConditionalLayout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -26,6 +28,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         <ConditionalLayout>{children}</ConditionalLayout>
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       </body>
     </html>
   );
