@@ -7,6 +7,7 @@ import { footerApi } from "@/lib/api/footer";
 import { useAppStore } from "@/lib/store";
 import { Edit3 } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export default function AdminFooterPage() {
 
@@ -49,7 +50,7 @@ export default function AdminFooterPage() {
   };
 
   const openEditModal = () => {
-    if (!user) return alert("Please login first to edit footer");
+    if (!user) return toast.error("Please login first to edit footer");
     setDescription(footerData.description || "");
     setLocation(footerData.location || "");
     setPhoneNumber(footerData.phoneNumber || "");
@@ -59,7 +60,7 @@ export default function AdminFooterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return alert("Unauthorized");
+    if (!user) return toast.error("Unauthorized");
     
     setSaving(true);
     const formData = new FormData();
@@ -71,12 +72,15 @@ export default function AdminFooterPage() {
     try {
       const res = await footerApi.upsert(formData);
       if (res.data) {
-        setFooterData(res.data);
+        // If array, grab first element
+        const record = Array.isArray(res.data) ? res.data[0] : res.data;
+        setFooterData(record || res.data);
       }
+      toast.success("Footer updated successfully!");
       setActiveModal(false);
     } catch (e) {
       console.error(e);
-      alert("Failed to save changes");
+      toast.error("Failed to save changes");
     } finally {
       setSaving(false);
     }

@@ -1,10 +1,8 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -30,6 +28,24 @@ const PawIcon = ({ className }: { className?: string }) => (
 export default function ServicesPage() {
   const services = Object.values(servicesData);
 
+  const [bannerData, setBannerData] = useState<any>({
+    title: "Our Professional",
+    highlightedWord: "Services",
+    badge: "🐾 Simply Diego's",
+    description: "Discover our premium grooming, DIY washing stations, nutritional counseling, and high-quality natural supplies tailored to keep your pet happy and thriving."
+  });
+
+  useEffect(() => {
+    const saved = localStorage.getItem("banner_service");
+    if (saved) {
+      try {
+        setBannerData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse services banner:", e);
+      }
+    }
+  }, []);
+
   return (
     <div className="flex flex-col w-full">
       {/* Header Section */}
@@ -48,30 +64,32 @@ export default function ServicesPage() {
         </motion.div>
 
         <div className="container mx-auto px-4 md:px-6 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary/10 text-primary font-bold text-xs tracking-widest uppercase mb-6 border border-primary/20"
-          >
-            🐾 What We Offer
-          </motion.div>
+          {bannerData.badge && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary/10 text-primary font-bold text-xs tracking-widest uppercase mb-6 border border-primary/20"
+            >
+              {bannerData.badge}
+            </motion.div>
+          )}
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl md:text-6xl font-heading font-black text-secondary mb-6"
           >
-            Our <span className="gradient-text">Services</span>
+            {bannerData.title} <span className="gradient-text">{bannerData.highlightedWord}</span>
           </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-xl text-secondary/60 max-w-3xl mx-auto leading-relaxed"
-          >
-            At Simply Diego&apos;s, we go beyond just selling food. We provide a
-            full suite of services to support your pet&apos;s health, hygiene,
-            and happiness.
-          </motion.p>
+          {bannerData.description && (
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-xl text-secondary/60 max-w-3xl mx-auto leading-relaxed"
+            >
+              {bannerData.description}
+            </motion.p>
+          )}
         </div>
 
         {/* Bottom wave */}
@@ -98,7 +116,7 @@ export default function ServicesPage() {
             {services.map((service, index) => {
               const Icon = iconMap[service.icon || ""] || iconMap.store;
               const theme = service.metadata?.theme;
-              
+
               return (
                 <motion.div
                   key={service.id}
@@ -122,30 +140,17 @@ export default function ServicesPage() {
                       {service.shortDescription}
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {service.metadata?.listingFeatures?.map((feature: string) => (
-                        <div
-                          key={feature}
-                          className="flex items-center space-x-2 text-secondary/80 font-medium"
-                        >
-                          <CheckCircle2 className="h-5 w-5 text-accent-green" />
-                          <span>{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="pt-4">
-                      <Button
-                        asChild
-                        size="lg"
-                        className="rounded-lg font-bold h-12 px-8 shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90 transition-all hover:scale-105"
-                      >
-                        <Link
-                          href={`/services/${service.slug}`}
-                          className="flex items-center gap-2"
-                        >
-                          <span>Full Service Details</span>
-                          <ArrowRight className="h-5 w-5" />
-                        </Link>
-                      </Button>
+                      {service.metadata?.listingFeatures?.map(
+                        (feature: string) => (
+                          <div
+                            key={feature}
+                            className="flex items-center space-x-2 text-secondary/80 font-medium"
+                          >
+                            <CheckCircle2 className="h-5 w-5 text-accent-green" />
+                            <span>{feature}</span>
+                          </div>
+                        ),
+                      )}
                     </div>
                   </div>
 

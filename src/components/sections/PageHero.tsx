@@ -1,5 +1,6 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -35,6 +36,40 @@ export function PageHero({
   description,
   breadcrumbs,
 }: PageHeroProps) {
+  const [localData, setLocalData] = useState({
+    title,
+    highlightedWord,
+    badge,
+    description
+  });
+
+  useEffect(() => {
+    let key = "";
+    const isGallery = breadcrumbs.some(c => c.label.toLowerCase() === "gallery") || highlightedWord.toLowerCase() === "gallery";
+    const isBlog = breadcrumbs.some(c => c.label.toLowerCase() === "blog") || highlightedWord.toLowerCase() === "blog";
+    const isContact = breadcrumbs.some(c => c.label.toLowerCase() === "contact") || highlightedWord.toLowerCase().includes("contact") || highlightedWord.toLowerCase() === "us";
+
+    if (isGallery) key = "banner_gallery";
+    else if (isBlog) key = "banner_blog";
+    else if (isContact) key = "banner_contact";
+
+    if (key) {
+      const saved = localStorage.getItem(key);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          setLocalData({
+            title: parsed.title || title,
+            highlightedWord: parsed.highlightedWord || highlightedWord,
+            badge: parsed.badge !== undefined ? parsed.badge : badge,
+            description: parsed.description !== undefined ? parsed.description : description
+          });
+        } catch (e) {
+          console.error("Failed to parse local banner data for key:", key, e);
+        }
+      }
+    }
+  }, [title, highlightedWord, badge, description, breadcrumbs]);
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[var(--warm-cream)] via-[var(--warm-peach)] to-[var(--warm-cream)] py-20 border-b border-primary/10">
       <div className="absolute inset-0 paw-pattern opacity-40" />
@@ -89,13 +124,13 @@ export function PageHero({
           ))}
         </motion.div>
 
-        {badge && (
+        {localData.badge && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-lg bg-primary/10 text-primary font-semibold text-xs tracking-widest uppercase mb-6 border border-primary/20"
           >
-            {badge}
+            {localData.badge}
           </motion.div>
         )}
 
@@ -104,17 +139,17 @@ export function PageHero({
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl md:text-6xl font-heading font-black text-secondary mb-6"
         >
-          {title} <span className="gradient-text">{highlightedWord}</span>
+          {localData.title} <span className="gradient-text">{localData.highlightedWord}</span>
         </motion.h1>
 
-        {description && (
+        {localData.description && (
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="text-xl text-secondary/60 max-w-3xl mx-auto leading-relaxed"
           >
-            {description}
+            {localData.description}
           </motion.p>
         )}
       </div>

@@ -1,5 +1,9 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { footerApi } from "@/lib/api/footer";
 
 const FacebookIcon = () => (
   <svg
@@ -103,6 +107,31 @@ const PawIcon = () => (
 );
 
 export function Footer() {
+  const [footerData, setFooterData] = useState<any>({
+    description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
+    location: "7321 San Antonio Dr NE, Albuquerque, NM 87109",
+    phoneNumber: "(505) 990-2014",
+    email: "info@simplydlegos.com"
+  });
+
+  useEffect(() => {
+    async function loadFooter() {
+      try {
+        const res = await footerApi.get();
+        if (res?.data) {
+          // If array, grab the first element
+          const record = Array.isArray(res.data) ? res.data[0] : res.data;
+          if (record) {
+            setFooterData(record);
+          }
+        }
+      } catch (e) {
+        console.error("Failed to load footer data:", e);
+      }
+    }
+    loadFooter();
+  }, []);
+
   return (
     <footer className="bg-gradient-to-b from-primary to-[#600030] text-white/80 relative overflow-hidden">
       {/* Paw pattern overlay */}
@@ -126,9 +155,7 @@ export function Footer() {
               />
             </Link>
             <p className="text-base leading-relaxed text-white/50">
-              Albuquerque&apos;s premier natural pet food market. We focus on
-              providing the best nutrition and care for your furry family
-              members since 2008.
+              {footerData.description}
             </p>
             <div className="flex space-x-3">
               <Link
@@ -208,28 +235,26 @@ export function Footer() {
               <PawIcon />
               Visit Us
             </h3>
-            <ul className="space-y-6 text-base">
+             <ul className="space-y-6 text-base">
               <li className="flex items-start space-x-4">
                 <div className="mt-1 w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MapPinIcon />
                 </div>
                 <span>
-                  7321 San Antonio Dr NE
-                  <br />
-                  Albuquerque, NM 87109
+                  {footerData.location}
                 </span>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <PhoneIcon />
                 </div>
-                <span>(505) 990-2014</span>
+                <span>{footerData.phoneNumber}</span>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MailIcon />
                 </div>
-                <span>info@simplydlegos.com</span>
+                <span>{footerData.email}</span>
               </li>
             </ul>
           </div>

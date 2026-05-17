@@ -7,6 +7,7 @@ import { Edit3, Loader2 } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { Skeleton } from "@/components/admin/Skeleton";
 import { Modal } from "@/components/admin/Modal";
+import { toast } from "react-toastify";
 
 export default function AdminBlogBannerPage() {
 
@@ -39,7 +40,7 @@ export default function AdminBlogBannerPage() {
   }, []);
 
   const openEditModal = () => {
-    if (!user) return alert("Please login first to edit banners");
+    if (!user) return toast.error("Please login first to edit banners");
     setTitle(bannerData.title);
     setHighlightedWord(bannerData.highlightedWord);
     setBadge(bannerData.badge);
@@ -49,7 +50,7 @@ export default function AdminBlogBannerPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return alert("Unauthorized");
+    if (!user) return toast.error("Unauthorized");
     
     setSaving(true);
     const updated = { title, highlightedWord, badge, description };
@@ -58,6 +59,7 @@ export default function AdminBlogBannerPage() {
     
     setTimeout(() => {
       setSaving(false);
+      toast.success("Blog Banner Hero updated successfully!");
       setActiveModal(false);
     }, 400);
   };
