@@ -163,6 +163,7 @@ export default function ServicesPage() {
                             src={service.imageUrl}
                             alt={service.name}
                             fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             className="w-full h-full object-cover"
                           />
                         )}
