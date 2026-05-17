@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar/navbar";
-import { Footer } from "@/components/footer/footer";
-import { LayoutWrapper } from "@/components/ui/LayoutWrapper";
+import { ConditionalLayout } from "@/components/ui/ConditionalLayout";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,11 +25,7 @@ export default function RootLayout({
         className={`${poppins.variable} antialiased min-h-screen flex flex-col`}
         suppressHydrationWarning
       >
-        <Navbar />
-        <LayoutWrapper>
-          {children}
-        </LayoutWrapper>
-        <Footer />
+        <ConditionalLayout>{children}</ConditionalLayout>
       </body>
     </html>
   );
