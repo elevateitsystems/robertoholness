@@ -83,7 +83,6 @@ const PhoneIcon = ({ className }: { className?: string }) => (
 
 const navItems = [
   { name: "Services", href: "/services" },
-  { name: "Sales", href: "/sales" },
   { name: "Gallery", href: "/gallery" },
   { name: "Blog", href: "/blog" },
   { name: "Reviews", href: "/reviews" },

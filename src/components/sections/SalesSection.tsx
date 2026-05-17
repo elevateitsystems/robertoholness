@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 
 export function SalesSection() {
   return (
@@ -64,7 +65,13 @@ export function SalesSection() {
               variant="outline"
               className="border-2 rounded-[5px] border-white/50 text-white hover:bg-white hover:text-black bg-transparent px-12 py-6 text-sm font-bold tracking-widest uppercase transition-all duration-300"
             >
-              Shop Now
+              <Link
+                href="https://shop.simplydiegos.com/products/shop/"
+                target="_blank"
+                className="flex items-center gap-2"
+              >
+                Shop Now
+              </Link>
             </Button>
 
             {/* Bottom Right Diagonal Lines */}
