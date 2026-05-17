@@ -37,8 +37,13 @@ export default function LoginPage() {
     setError(null);
     try {
       const response = await authApi.login(data);
-      setUser(response.data.user);
-      router.push("/"); // Redirect to home or dashboard
+      const loggedUser = response.data.user;
+      setUser(loggedUser);
+      if (loggedUser && loggedUser.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (err: any) {
       setError(err.message || "Failed to login");
     }

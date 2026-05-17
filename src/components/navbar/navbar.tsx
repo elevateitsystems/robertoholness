@@ -2,11 +2,11 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { navBarApi } from "@/lib/api/navBar";
 
 const MenuIcon = ({ className }: { className?: string }) => (
   <svg
@@ -93,10 +93,35 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  
+  const [navBarData, setNavBarData] = React.useState({
+    contactNumber: "(505) 990-2014",
+    timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm",
+    deliveryOffer: "🐾 Free delivery on orders over $50!",
+    navLogoUrl: "/assets/logo-without-bg.png"
+  });
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
+    
+    const fetchNavBar = async () => {
+      try {
+        const res = await navBarApi.get();
+        if (res && res.data) {
+          setNavBarData({
+            contactNumber: res.data.contactNumber || "(505) 990-2014",
+            timeLine: res.data.timeLine || "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm",
+            deliveryOffer: res.data.deliveryOffer || "🐾 Free delivery on orders over $50!",
+            navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png"
+          });
+        }
+      } catch (e) {
+        console.error("Failed to fetch nav bar data:", e);
+      }
+    };
+    fetchNavBar();
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -116,12 +141,12 @@ export function Navbar() {
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-1.5">
                 <PhoneIcon className="h-3 w-3" />
-                (505) 990-2014
+                {navBarData.contactNumber}
               </span>
-              <span>Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm</span>
+              <span>{navBarData.timeLine}</span>
             </div>
-            <span className="text-accent-green font-bold">
-              🐾 Free delivery on orders over $50!
+            <span className="text-accent-green font-bold flex items-center gap-1">
+              {navBarData.deliveryOffer ? `🐾 ${navBarData.deliveryOffer.replace(/^[🐾\s]+/, "")}` : ""}
             </span>
           </div>
         </div>
@@ -131,13 +156,12 @@ export function Navbar() {
         <div className="flex h-20 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <Image
-              src="/assets/logo-without-bg.png"
+            <img
+              src={navBarData.navLogoUrl}
               alt="Simply Diego's Logo"
               width={180}
               height={60}
               className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-              priority
             />
           </Link>
 

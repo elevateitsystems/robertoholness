@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Edit3, Loader2 } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { Skeleton } from "@/components/admin/Skeleton";
+import { Modal } from "@/components/admin/Modal";
 
 export default function AdminContactBannerPage() {
 
@@ -128,71 +129,57 @@ export default function AdminContactBannerPage() {
       </div>
 
       {/* EDIT MODAL */}
-      {activeModal && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-100">
-            
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="text-base font-bold text-gray-900">Update Contact Banner Hero</h3>
-              <button onClick={() => setActiveModal(false)} className="text-gray-400 hover:text-gray-600">&times;</button>
-            </div>
+      <Modal
+        isOpen={activeModal}
+        onClose={() => setActiveModal(false)}
+        title="Update Contact Banner Hero"
+        onSubmit={handleSubmit}
+        isSaving={saving}
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Badge Text</label>
+            <input 
+              type="text" 
+              value={badge} 
+              onChange={e => setBadge(e.target.value)} 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
+          </div>
 
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Badge Text</label>
-                <input 
-                  type="text" 
-                  value={badge} 
-                  onChange={e => setBadge(e.target.value)} 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Title Main Heading</label>
+            <input 
+              type="text" 
+              value={title} 
+              onChange={e => setTitle(e.target.value)} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
+          </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Title Main Heading</label>
-                <input 
-                  type="text" 
-                  value={title} 
-                  onChange={e => setTitle(e.target.value)} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Highlighted Suffix Word</label>
+            <input 
+              type="text" 
+              value={highlightedWord} 
+              onChange={e => setHighlightedWord(e.target.value)} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
+          </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Highlighted Suffix Word</label>
-                <input 
-                  type="text" 
-                  value={highlightedWord} 
-                  onChange={e => setHighlightedWord(e.target.value)} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Description Paragraph</label>
-                <textarea 
-                  value={description} 
-                  onChange={e => setDescription(e.target.value)} 
-                  rows={3} 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <Button type="button" onClick={() => setActiveModal(false)} variant="outline">Cancel</Button>
-                <Button type="submit" disabled={saving} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
-                  {saving && <Loader2 className="h-4 w-4 animate-spin" />}
-                  {saving ? "Saving..." : "Save Changes"}
-                </Button>
-              </div>
-
-            </form>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Description Paragraph</label>
+            <textarea 
+              value={description} 
+              onChange={e => setDescription(e.target.value)} 
+              rows={3} 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
           </div>
         </div>
-      )}
+      </Modal>
 
     </div>
   );

@@ -45,8 +45,13 @@ function VerifyEmailForm() {
     setError(null);
     try {
       const response = await authApi.verifyEmail({ email, code: data.code });
-      setUser(response.data.user);
-      router.push("/");
+      const verifiedUser = response.data.user;
+      setUser(verifiedUser);
+      if (verifiedUser && verifiedUser.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
     } catch (err: any) {
       setError(err.message || "Failed to verify email");
     }

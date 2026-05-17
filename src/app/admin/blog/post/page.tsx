@@ -7,6 +7,7 @@ import { Plus, Edit, Trash2, Loader2, Upload } from "lucide-react";
 import { blogApi } from "@/lib/api/blog";
 import { useAppStore } from "@/lib/store";
 import { Skeleton } from "@/components/admin/Skeleton";
+import { Modal } from "@/components/admin/Modal";
 
 export default function AdminBlogPostPage() {
 
@@ -190,77 +191,65 @@ export default function AdminBlogPostPage() {
       </div>
 
       {/* FORM MODAL */}
-      {isFormOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full overflow-hidden border border-gray-100">
-            
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="text-base font-bold text-gray-900">{editingId ? "Edit" : "Add"} Blog Post</h3>
-              <button onClick={() => setIsFormOpen(false)} className="text-gray-400 hover:text-gray-600">&times;</button>
+      <Modal
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        title={`${editingId ? "Edit" : "Add"} Blog Post`}
+        onSubmit={handleSubmit}
+        isSaving={saving}
+        submitText="Save Post"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Article Title</label>
+            <input 
+              type="text" 
+              value={title} 
+              onChange={e => setTitle(e.target.value)} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Blog Category</label>
+            <select 
+              value={categoryId} 
+              onChange={e => setCategoryId(e.target.value)} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white"
+            >
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>{c.name}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Description / Content</label>
+            <textarea 
+              value={description} 
+              onChange={e => setDescription(e.target.value)} 
+              rows={6} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Cover Image</label>
+            <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50/50 hover:border-blue-500 transition-colors">
+              {imagePreview && (
+                <img src={imagePreview} alt="Preview" className="h-20 w-auto object-contain mb-3 rounded" />
+              )}
+              <label className="cursor-pointer bg-white px-4 py-1.5 border border-gray-300 rounded-md shadow-sm text-xs font-semibold hover:bg-gray-50 flex items-center gap-2">
+                Select File
+                <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
+              </label>
             </div>
-
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Article Title</label>
-                <input 
-                  type="text" 
-                  value={title} 
-                  onChange={e => setTitle(e.target.value)} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Blog Category</label>
-                <select 
-                  value={categoryId} 
-                  onChange={e => setCategoryId(e.target.value)} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm bg-white"
-                >
-                  {categories.map((c) => (
-                    <option key={c.id} value={c.id}>{c.name}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Description / Content</label>
-                <textarea 
-                  value={description} 
-                  onChange={e => setDescription(e.target.value)} 
-                  rows={6} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Cover Image</label>
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50/50 hover:border-blue-500 transition-colors">
-                  {imagePreview && (
-                    <img src={imagePreview} alt="Preview" className="h-20 w-auto object-contain mb-3 rounded" />
-                  )}
-                  <label className="cursor-pointer bg-white px-4 py-1.5 border border-gray-300 rounded-md shadow-sm text-xs font-semibold hover:bg-gray-50 flex items-center gap-2">
-                    Select File
-                    <input type="file" onChange={handleImageChange} className="hidden" accept="image/*" />
-                  </label>
-                </div>
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <Button type="button" onClick={() => setIsFormOpen(false)} variant="outline">Cancel</Button>
-                <Button type="submit" disabled={saving} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
-                  {saving && <Loader2 className="h-4 w-4 animate-spin" />}
-                  {saving ? "Saving..." : "Save Post"}
-                </Button>
-              </div>
-
-            </form>
           </div>
         </div>
-      )}
+      </Modal>
 
     </div>
   );

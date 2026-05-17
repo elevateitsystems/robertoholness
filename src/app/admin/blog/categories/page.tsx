@@ -7,6 +7,7 @@ import { Plus, Edit, Trash2, Loader2, CheckCircle2 } from "lucide-react";
 import { blogApi } from "@/lib/api/blog";
 import { useAppStore } from "@/lib/store";
 import { Skeleton } from "@/components/admin/Skeleton";
+import { Modal } from "@/components/admin/Modal";
 
 export default function AdminBlogCategoriesPage() {
 
@@ -137,39 +138,27 @@ export default function AdminBlogCategoriesPage() {
       </div>
 
       {/* FORM MODAL */}
-      {isFormOpen && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-2xl max-w-sm w-full overflow-hidden border border-gray-100">
-            
-            <div className="bg-gray-50 px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-              <h3 className="text-base font-bold text-gray-900">{editingId ? "Edit" : "Add"} Category</h3>
-              <button onClick={() => setIsFormOpen(false)} className="text-gray-400 hover:text-gray-600">&times;</button>
-            </div>
-
-            <form onSubmit={handleSubmit} className="p-6 space-y-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Category Name</label>
-                <input 
-                  type="text" 
-                  value={name} 
-                  onChange={e => setName(e.target.value)} 
-                  required 
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-4 border-t border-gray-100">
-                <Button type="button" onClick={() => setIsFormOpen(false)} variant="outline">Cancel</Button>
-                <Button type="submit" disabled={saving || !name} className="bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-2">
-                  {saving && <Loader2 className="h-4 w-4 animate-spin" />}
-                  {saving ? "Saving..." : "Save Category"}
-                </Button>
-              </div>
-
-            </form>
+      <Modal
+        isOpen={isFormOpen}
+        onClose={() => setIsFormOpen(false)}
+        title={`${editingId ? "Edit" : "Add"} Category`}
+        onSubmit={handleSubmit}
+        isSaving={saving}
+        submitText="Save Category"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Category Name</label>
+            <input 
+              type="text" 
+              value={name} 
+              onChange={e => setName(e.target.value)} 
+              required 
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-sm transition-all" 
+            />
           </div>
         </div>
-      )}
+      </Modal>
 
     </div>
   );
