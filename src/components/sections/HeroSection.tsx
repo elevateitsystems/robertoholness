@@ -235,7 +235,7 @@ export function HeroSection() {
               <Button
                 asChild
                 size="lg"
-                className="h-14 px-8 rounded-[5px] text-lg font-bold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 bg-primary hover:bg-primary/90"
+                className="h-14 px-8 rounded-[5px] text-lg font-bold shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 bg-secondary hover:bg-secondary/90"
               >
                 <Link
                   href="https://shop.simplydiegos.com/products/shop/"
