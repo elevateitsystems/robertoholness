@@ -1,11 +1,64 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
 export function SalesSection() {
+  const [salesData, setSalesData] = useState<any>({
+    badgeText: "Early Deal",
+    title: "BLACK friday",
+    discountText: "20% OFF",
+    codeText: "USE CODE: ED200FF",
+    imageUrl:
+      "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=1200",
+    isShow: true,
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const saved = localStorage.getItem("admin_sales_data");
+    if (saved) {
+      try {
+        setSalesData(JSON.parse(saved));
+      } catch (e) {
+        console.error("Failed to parse admin_sales_data", e);
+      }
+    }
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <section className="py-16 md:py-24 relative overflow-hidden bg-white animate-pulse">
+        <div className="container mx-auto px-4 md:px-6 relative z-10">
+          <div className="relative rounded-2xl overflow-hidden flex flex-col md:flex-row shadow-2xl h-[450px]">
+            {/* Shimmer Left side */}
+            <div className="md:w-1/2 bg-gray-200" />
+            {/* Shimmer Right side */}
+            <div className="md:w-1/2 bg-gray-300 flex flex-col justify-center items-center p-12 space-y-6">
+              <div className="h-4 bg-white/20 rounded-[5px] w-24" />
+              <div className="h-10 bg-white/20 rounded-[5px] w-48" />
+              <div className="h-8 bg-white/20 rounded-[5px] w-36" />
+              <div className="h-4 bg-white/20 rounded-[5px] w-40" />
+              <div className="h-12 bg-white/20 rounded-[5px] w-32" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // HIDE SECTION COMPLETELY IF IS_SHOW FLAG IS FALSE
+  if (salesData.isShow === false) {
+    return null;
+  }
+
+  const titleFirstWord = salesData.title ? salesData.title.split(" ")[0] : "BLACK";
+  const titleSecondWord = salesData.title ? salesData.title.split(" ").slice(1).join(" ") : "friday";
+
   return (
     <section className="py-16 md:py-24 relative overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
@@ -17,12 +70,10 @@ export function SalesSection() {
         >
           {/* Left Side: Image */}
           <div className="md:w-1/2 relative min-h-[300px] md:min-h-[500px]">
-            <Image
-              src="https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=1200"
-              alt="Happy golden retriever"
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
+            <img
+              src={salesData.imageUrl}
+              alt="Promo dog"
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
 
@@ -42,28 +93,31 @@ export function SalesSection() {
             </div>
 
             <p className="text-sm md:text-base font-bold tracking-[0.2em] mb-4 uppercase text-white/90">
-              Early Deal
+              {salesData.badgeText}
             </p>
 
             <div className="flex flex-col items-center justify-center mb-6">
               <h2 className="text-5xl md:text-7xl font-black font-heading uppercase tracking-tighter flex items-end">
-                BLACK
-                <span className="text-4xl md:text-6xl italic font-serif font-light lowercase tracking-normal -ml-1 text-white/90">
-                  friday
-                </span>
+                {titleFirstWord}
+                {titleSecondWord && (
+                  <span className="text-4xl md:text-6xl italic font-serif font-light lowercase tracking-normal -ml-1 text-white/90">
+                    {titleSecondWord}
+                  </span>
+                )}
               </h2>
             </div>
 
             <div className="text-5xl md:text-7xl font-black mb-6 tracking-tight">
-              20% OFF
+              {salesData.discountText}
             </div>
 
             <p className="text-lg md:text-xl font-bold tracking-widest mb-10 text-white/80">
-              USE CODE: ED200FF
+              {salesData.codeText}
             </p>
 
             <Button
               variant="outline"
+              asChild
               className="border-2 rounded-[5px] border-white/50 text-white hover:bg-white hover:text-black bg-transparent px-12 py-6 text-sm font-bold tracking-widest uppercase transition-all duration-300"
             >
               <Link

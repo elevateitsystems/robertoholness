@@ -1,9 +1,11 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { aboutApi } from "@/lib/api/about";
 
 const ArrowRightIcon = ({ className }: { className?: string }) => (
   <svg
@@ -24,8 +26,94 @@ const ArrowRightIcon = ({ className }: { className?: string }) => (
 );
 
 export function WelcomeSection() {
+  const [aboutData, setAboutData] = useState<any>({
+    title: "Welcome to Simply Diego's Local Healthy Pet Store!",
+    description1: "We are your premier Pet Food Store in the Albuquerque/New Mexico area. We offer a wide selection of natural pet food, supplies, toys and treats for your four-legged friend. Be sure to stop by if you're looking for a DIY dog wash! We look forward to seeing you soon.",
+    description2: "\"Simply Diego’s has a great selection of pet products and a clean, well-organized store. Their staff is friendly and helpful, and the prices are reasonable. They also have a rewards program.\"",
+    footerText: "— Pet News Daily (Top Pet Store in Albuquerque)",
+    imageUrl: "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800"
+  });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadAbout() {
+      try {
+        const res = await aboutApi.get();
+        if (res?.data) {
+          setAboutData({
+            title: res.data.title || "Welcome to Simply Diego's Local Healthy Pet Store!",
+            description1: res.data.description1 || "We are your premier Pet Food Store in the Albuquerque/New Mexico area. We offer a wide selection of natural pet food, supplies, toys and treats for your four-legged friend. Be sure to stop by if you're looking for a DIY dog wash! We look forward to seeing you soon.",
+            description2: res.data.description2 || "\"Simply Diego’s has a great selection of pet products and a clean, well-organized store. Their staff is friendly and helpful, and the prices are reasonable. They also have a rewards program.\"",
+            footerText: res.data.footerText || "— Pet News Daily (Top Pet Store in Albuquerque)",
+            imageUrl: res.data.image?.url || "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800"
+          });
+        }
+      } catch (e) {
+        console.error("Failed to fetch dynamic WelcomeSection data:", e);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadAbout();
+  }, []);
+
+  const renderTitle = (titleText: string) => {
+    const keyword = "Simply Diego's";
+    if (titleText.includes(keyword)) {
+      const parts = titleText.split(keyword);
+      return (
+        <>
+          {parts[0]}
+          {keyword}
+          <span className="text-primary">
+            {parts.slice(1).join(keyword)}
+          </span>
+        </>
+      );
+    }
+    // Fallback: highlight the last 3 words
+    const words = titleText.split(" ");
+    if (words.length > 3) {
+      const mainPart = words.slice(0, -3).join(" ");
+      const highlightPart = words.slice(-3).join(" ");
+      return (
+        <>
+          {mainPart}{" "}
+          <span className="text-primary">{highlightPart}</span>
+        </>
+      );
+    }
+    return titleText;
+  };
+
+  if (loading) {
+    return (
+      <section className="py-24 overflow-hidden animate-pulse">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col lg:flex-row items-center gap-16">
+            {/* Shimmer Left Side */}
+            <div className="flex-1 w-full max-w-[500px] mx-auto aspect-square rounded-[40%_60%_70%_30%/40%_50%_60%_50%] bg-gray-200 animate-pulse" />
+            
+            {/* Shimmer Right Side */}
+            <div className="flex-1 space-y-6 w-full animate-pulse">
+              <div className="h-8 md:h-12 bg-gray-200 rounded-[5px] w-3/4 animate-pulse" />
+              <div className="h-8 md:h-12 bg-gray-200 rounded-[5px] w-1/2 animate-pulse" />
+              <div className="space-y-2 pt-4">
+                <div className="h-4 bg-gray-200 rounded-[5px] w-full animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded-[5px] w-11/12 animate-pulse" />
+                <div className="h-4 bg-gray-200 rounded-[5px] w-4/5 animate-pulse" />
+              </div>
+              <div className="h-24 bg-gray-200 rounded-[5px] w-full border-l-4 border-gray-300 animate-pulse" />
+              <div className="h-12 bg-gray-200 rounded-[5px] w-32 mt-6 animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <section className="py-24 overflow-hidden">
+    <section className="py-24 overflow-hidden bg-white">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col lg:flex-row items-center gap-16">
           {/* Left Side: Image with Blob Shape */}
@@ -98,12 +186,10 @@ export function WelcomeSection() {
 
               {/* Main Image with Mask */}
               <div className="relative w-full h-full overflow-hidden border-[8px] border-primary/10 rounded-[40%_60%_70%_30%/40%_50%_60%_50%] shadow-2xl">
-                <Image
-                  src="https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&q=80&w=800"
+                <img
+                  src={aboutData.imageUrl}
                   alt="Simply Diego's Store"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 500px"
-                  className="object-cover"
+                  className="w-full h-full object-cover"
                 />
               </div>
             </motion.div>
@@ -118,29 +204,25 @@ export function WelcomeSection() {
               className="space-y-6"
             >
               <h2 className="text-4xl md:text-5xl font-heading font-black text-secondary leading-tight">
-                Welcome to Simply Diego&apos;s{" "}
-                <span className="text-primary">Local Healthy Pet Store!</span>
+                {renderTitle(aboutData.title)}
               </h2>
 
               <p className="text-lg text-secondary/70 leading-relaxed">
-                We are your premier Pet Food Store in the Albuquerque/New Mexico
-                area. We offer a wide selection of natural pet food, supplies,
-                toys and treats for your four-legged friend. Be sure to stop by
-                if you&apos;re looking for a DIY dog wash! We look forward to
-                seeing you soon.
+                {aboutData.description1}
               </p>
 
-              <div className="bg-primary/5 p-6 border-l-4 border-primary rounded-[5px]">
-                <p className="text-secondary/80 italic text-lg leading-relaxed">
-                  &quot;Simply Diego’s has a great selection of pet products and
-                  a clean, well-organized store. Their staff is friendly and
-                  helpful, and the prices are reasonable. They also have a
-                  rewards program.&quot;
-                  <span className="block mt-4 font-bold text-secondary">
-                    — Pet News Daily (Top Pet Store in Albuquerque)
-                  </span>
-                </p>
-              </div>
+              {aboutData.description2 && (
+                <div className="bg-primary/5 p-6 border-l-4 border-primary rounded-[5px]">
+                  <p className="text-secondary/80 italic text-lg leading-relaxed">
+                    {aboutData.description2}
+                    {aboutData.footerText && (
+                      <span className="block mt-4 font-bold text-secondary">
+                        {aboutData.footerText}
+                      </span>
+                    )}
+                  </p>
+                </div>
+              )}
 
               <h3 className="text-2xl font-black text-secondary pt-4">
                 24/7 Online Ordering With Local Delivery and In-Store Pickup.

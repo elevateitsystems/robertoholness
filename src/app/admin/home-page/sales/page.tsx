@@ -20,6 +20,7 @@ export default function AdminSalesPage() {
     codeText: "USE CODE: ED200FF",
     imageUrl:
       "https://images.unsplash.com/photo-1552053831-71594a27632d?auto=format&fit=crop&q=80&w=1200",
+    isShow: true,
   });
 
   const [loading, setLoading] = useState(true);
@@ -41,6 +42,16 @@ export default function AdminSalesPage() {
     }
     setLoading(false);
   }, []);
+
+  const handleToggleVisibility = (checked: boolean) => {
+    if (!user) return alert("Please login first");
+    const updated = {
+      ...salesData,
+      isShow: checked
+    };
+    localStorage.setItem("admin_sales_data", JSON.stringify(updated));
+    setSalesData(updated);
+  };
 
   const openEditModal = (type: "text" | "image") => {
     if (!user) return alert("Please login first to edit sales");
@@ -83,6 +94,7 @@ export default function AdminSalesPage() {
         activeModal === "text" ? discountText : salesData.discountText,
       codeText: activeModal === "text" ? codeText : salesData.codeText,
       imageUrl: newImageUrl,
+      isShow: salesData.isShow !== false,
     };
 
     localStorage.setItem("admin_sales_data", JSON.stringify(updated));
@@ -106,11 +118,30 @@ export default function AdminSalesPage() {
       />
 
       <div className="bg-gray-100 p-8 rounded-xl border border-gray-200 shadow-sm relative overflow-hidden">
-        <div className="mb-4 flex items-center justify-between">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-            Live Preview (Hover to Edit)
-          </span>
-          <span className="text-xs text-gray-400">Sales Banner Component</span>
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-gray-200 pb-4">
+          <div>
+            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider block">
+              Live Preview (Hover to Edit)
+            </span>
+            <span className="text-xs text-gray-400">Sales Banner Component</span>
+          </div>
+
+          {/* Visibility Toggle */}
+          <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
+            <span className="text-xs font-bold text-gray-700">Show Section on Website:</span>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input 
+                type="checkbox" 
+                checked={salesData.isShow !== false} 
+                onChange={(e) => handleToggleVisibility(e.target.checked)}
+                className="sr-only peer" 
+              />
+              <div className="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-500"></div>
+            </label>
+            <span className={`text-xs font-extrabold uppercase tracking-wide ${salesData.isShow !== false ? 'text-emerald-600' : 'text-rose-500'}`}>
+              {salesData.isShow !== false ? 'Active' : 'Hidden'}
+            </span>
+          </div>
         </div>
 
         {/* REPLICA SALES BANNER */}
