@@ -9,13 +9,19 @@ import { Modal } from "@/components/admin/Modal";
 import { BannerPreview } from "./BannerPreview";
 import { BannerModalContent } from "./BannerModalContent";
 
+const HERO_TITLE =
+  "Welcome to Simply Diego's, your favorite premier pet food store in Albuquerque, New Mexico!";
+
+const HERO_DESCRIPTION =
+  "With expert nutritional counseling, we offer a wide selection of all natural pet food, supplies, toys and treats for your furry friend.\n\nBring your pet in for THE BEST DIY dog wash!\n\nWe're more than a pet food store - we're a community for pet lovers!";
+
 export default function AdminHeroBannerPageClient() {
   const user = useAppStore((state: any) => state.user);
   
   // Database States
   const [heroData, setHeroData] = useState<any>({
-    title: "Find Out Your Companion On Pet Adorin.",
-    description: "Premium natural pet food, DIY dog wash stations, and expert nutritional counseling. We're more than a store – we're a community for pet lovers.",
+    title: HERO_TITLE,
+    description: HERO_DESCRIPTION,
     imageUrl: ""
   });
 

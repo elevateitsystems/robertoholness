@@ -14,8 +14,8 @@ export default function AdminHeaderPageClient() {
 
   // Database States
   const [navBarData, setNavBarData] = useState<any>({
-    contactNumber: "(505) 990-2014",
-    timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm",
+    contactNumber: "505-990-0099",
+    timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
     deliveryOffer: "🐾 Free delivery on orders over $50!",
     navLogoUrl: "/assets/logo-without-bg.png",
   });

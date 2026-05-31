@@ -4,9 +4,21 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
-import heroImg from "../../../assets/pet-store-Albuquerque (1).png";
+import heroImg from "../../../assets/robarto-holeness_banner.jpeg";
 import { heroApi } from "@/lib/api/hero";
+
+const HERO_TITLE =
+  "Welcome to Simply Diego's, your favorite premier pet food store in Albuquerque, New Mexico!";
+
+const HERO_DESCRIPTION_LINES = [
+  "With expert nutritional counseling, we offer a wide selection of all natural pet food, supplies, toys and treats for your furry friend.",
+  "Bring your pet in for THE BEST DIY dog wash!",
+  "We're more than a pet food store - we're a community for pet lovers!",
+];
+
+const HERO_TITLE_HIGHLIGHT = "Simply Diego's";
 
 const ShoppingCartIcon = ({ className }: { className?: string }) => (
   <svg
@@ -111,8 +123,8 @@ function FloatingParticle({
 
 export function HeroSection() {
   const [heroData, setHeroData] = useState<any>({
-    title: "Find Out Your Companion On Pet Adorin.",
-    description: "Premium natural pet food, DIY dog wash stations, and expert nutritional counseling. We're more than a store – we're a community for pet lovers.",
+    title: HERO_TITLE,
+    description: HERO_DESCRIPTION_LINES.join("\n\n"),
     imageUrl: null
   });
   const [loading, setLoading] = useState(true);
@@ -123,8 +135,8 @@ export function HeroSection() {
         const res = await heroApi.get();
         if (res?.data) {
           setHeroData({
-            title: res.data.title || "Find Out Your Companion On Pet Adorin.",
-            description: res.data.description || "Premium natural pet food, DIY dog wash stations, and expert nutritional counseling. We're more than a store – we're a community for pet lovers.",
+            title: HERO_TITLE,
+            description: HERO_DESCRIPTION_LINES.join("\n\n"),
             imageUrl: res.data.image?.url || null
           });
         }
@@ -137,28 +149,25 @@ export function HeroSection() {
     loadHero();
   }, []);
 
-  const renderTitle = (titleText: string) => {
-    const parts = titleText.split(" ");
-    if (parts.length > 2) {
-      const lastWords = parts.slice(-2).join(" ");
-      const mainWords = parts.slice(0, -2).join(" ");
-      return (
-        <>
-          {mainWords}{" "}
-          <motion.span
-            className="inline-block gradient-text"
-            animate={{
-              backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-            }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-            style={{ backgroundSize: "200% 200%" }}
-          >
-            {lastWords}
-          </motion.span>
-        </>
-      );
-    }
-    return titleText;
+  const renderTitle = (title: string) => {
+    const [beforeHighlight, afterHighlight] = title.split(HERO_TITLE_HIGHLIGHT);
+
+    return (
+      <>
+        {beforeHighlight}
+        <motion.span
+          className="inline-block gradient-text"
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+          style={{ backgroundSize: "200% 200%" }}
+        >
+          {HERO_TITLE_HIGHLIGHT}
+        </motion.span>
+        {afterHighlight}
+      </>
+    );
   };
 
   if (loading) {
@@ -302,7 +311,7 @@ export function HeroSection() {
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           {/* ── Content Side ── */}
-          <div className="flex-1 text-center lg:text-left space-y-8">
+          <div className="flex-1 text-center lg:text-left space-y-6">
             {/* <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -317,19 +326,26 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-5xl md:text-6xl lg:text-7xl font-heading font-black text-white leading-[1.05]"
+              className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-heading font-black text-white leading-[1.12] max-w-3xl mx-auto lg:mx-0"
             >
               {renderTitle(heroData.title)}
             </motion.h1>
 
-            <motion.p
+            <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-lg md:text-xl text-white/80 max-w-xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
-              {heroData.description}
-            </motion.p>
+              <ul className="space-y-3 text-left">
+                {heroData.description.split("\n\n").map((line: string, index: number) => (
+                  <li key={line} className="flex gap-3">
+                    <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-secondary shadow-[0_0_18px_rgba(250,183,60,0.7)]" />
+                    <span className={index === 1 ? "font-normal text-white" : ""}>{line}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -373,18 +389,30 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4"
+              className="flex w-full max-w-3xl flex-wrap items-center justify-center gap-x-8 gap-y-4 pt-4 lg:justify-start"
             >
               {[
-                { label: "Happy Pets", value: "2K+" },
-                { label: "Years Serving", value: "17+" },
-                { label: "Google Rating", value: "4.9★" },
+                { label: "Years of Caring for Your Pets", value: "9+" },
+                { label: "Google Rating", value: "4.9★"},
               ].map((stat) => (
-                <div key={stat.label} className="flex items-center gap-2">
-                  <span className="text-2xl font-black text-secondary">
+                <div
+                  key={stat.label}
+                  className="flex items-baseline gap-2"
+                >
+                  <span
+                    className={cn(
+                      "text-3xl font-black leading-none text-secondary drop-shadow-[0_4px_10px_rgba(1,124,232,0.35)]",
+                      
+                    )}
+                  >
                     {stat.value}
                   </span>
-                  <span className="text-xs text-white/70 font-medium uppercase tracking-wider">
+                  <span
+                    className={cn(
+                      "text-sm font-semibold uppercase tracking-wider text-white/90",
+                  "text-white",
+                    )}
+                  >
                     {stat.label}
                   </span>
                 </div>
@@ -413,8 +441,10 @@ export function HeroSection() {
               {/* Main image container */}
               <div className="relative aspect-[4/5] md:aspect-square rounded-[5px] overflow-hidden shadow-2xl shadow-black/40 border-2 border-white/10 w-full h-full">
                 {heroData.imageUrl ? (
-                  <img
+                  <Image
                     src={heroData.imageUrl}
+                    width={500}
+                    height={600}
                     alt="Simply Diego's Local Healthy Pet Store"
                     className="w-full h-full object-cover object-left-center"
                   />

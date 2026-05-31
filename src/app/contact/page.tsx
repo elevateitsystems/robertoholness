@@ -3,6 +3,9 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 
+const GOOGLE_BUSINESS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Simply%20Diego%27s%203301%20Menaul%20Blvd%20NE%20Suite%2010%20Albuquerque%20NM%2087107";
+
 const MapPinIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
 );
@@ -35,9 +38,9 @@ const PawIcon = ({ className }: { className?: string }) => (
 
 const contactInfo = [
   { icon: MapPinIcon, title: 'Address', text: '7321 San Antonio Dr NE\nAlbuquerque, NM 87109', color: 'from-primary to-warm-orange' },
-  { icon: PhoneIcon, title: 'Phone', text: '(505) 990-2014', color: 'from-secondary to-deep-teal' },
+  { icon: PhoneIcon, title: 'Phone', text: '505-990-0099', color: 'from-secondary to-deep-teal' },
   { icon: MailIcon, title: 'Email', text: 'info@simplydlegos.com', color: 'from-accent-green to-[#6BA033]' },
-  { icon: ClockIcon, title: 'Store Hours', text: 'Mon - Fri: 9am - 7pm\nSat: 9am - 6pm\nSun: 10am - 5pm', color: 'from-warm-orange to-primary' },
+  { icon: ClockIcon, title: 'Store Hours', text: 'Mon - Fri: 9am - 7pm\nSat: 9am - 6pm\nSun: 10am - 6pm', color: 'from-warm-orange to-primary', href: GOOGLE_BUSINESS_URL },
 ];
 
 export default function ContactPage() {
@@ -119,7 +122,18 @@ export default function ContactPage() {
                         <item.icon />
                       </div>
                       <div>
-                        <h4 className="text-lg font-black text-secondary mb-1">{item.title}</h4>
+                        {item.href ? (
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block text-lg font-black text-secondary mb-1 hover:text-primary transition-colors"
+                          >
+                            {item.title}
+                          </a>
+                        ) : (
+                          <h4 className="text-lg font-black text-secondary mb-1">{item.title}</h4>
+                        )}
                         <p className="text-secondary/60 leading-relaxed whitespace-pre-line">{item.text}</p>
                       </div>
                     </motion.div>

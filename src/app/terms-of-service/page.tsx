@@ -8,39 +8,68 @@ export const metadata = {
 
 const sections = [
   {
-    title: "Agreement to Terms",
+    title: "Welcome",
     content:
-      "By accessing or using our website, you agree to be bound by these Terms of Service and all applicable laws and regulations.",
+      "Thanks for choosing Simply Diego's! These Terms explain how our services work and what we expect from each other. By using our website or services, you agree to these terms.",
   },
   {
-    title: "Use of the Site",
+    title: "Our Services",
+    content:
+      "We provide products and/or services related to our business. We may update or change services at any time to improve your experience.",
+  },
+  {
+    title: "Using Our Services",
     content: [
-      "You may use our site for lawful purposes only and in accordance with these Terms.",
-      "You are responsible for maintaining the confidentiality of your account information.",
-      "We reserve the right to refuse service, terminate accounts, or cancel orders at our discretion.",
+      "Provide accurate information.",
+      "Use our services responsibly.",
+      "Do not misuse or disrupt our systems.",
+      "Respect our business operations.",
+    ],
+  },
+  {
+    title: "Payments",
+    content:
+      "If you make a purchase, you agree to pay the listed price, including any applicable taxes. We may cancel orders if necessary, for example suspected fraud or pricing errors.",
+  },
+  {
+    title: "SMS & Communication",
+    content: [
+      "If you provide your contact info, you may receive messages from us.",
+      "Text message frequency may vary.",
+      "Message and data rates may apply.",
+      "Reply STOP to unsubscribe.",
+      "Reply HELP for help.",
+      "All messages come directly from Simply Diego's.",
     ],
   },
   {
     title: "Intellectual Property",
     content:
-      "All content on this site, including text, graphics, logos, and images, is the property of Simply Diego's and is protected by copyright and other intellectual property laws.",
-  },
-  {
-    title: "Product Information and Pricing",
-    content: [
-      "We strive to provide accurate product descriptions and pricing, but errors may occur.",
-      "We reserve the right to correct any errors and to change or update information at any time without prior notice.",
-    ],
+      "All content, branding, and materials from Simply Diego's belong to us and may not be used without permission.",
   },
   {
     title: "Limitation of Liability",
     content:
-      "Simply Diego's shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use or inability to use our website or products.",
+      "We do our best to provide reliable services, but we cannot guarantee perfection. We are not responsible for indirect or unexpected damages related to use of our services.",
   },
   {
-    title: "Governing Law",
+    title: "Responsibility",
     content:
-      "These Terms shall be governed by and construed in accordance with the laws of the State of New Mexico, without regard to its conflict of law provisions.",
+      "You agree to use our services responsibly and to hold Simply Diego's harmless from issues caused by misuse or violation of these terms.",
+  },
+  {
+    title: "Changes to Terms",
+    content:
+      "We may update these Terms occasionally. Continued use of our services means you accept any updates.",
+  },
+  {
+    title: "Contact Information",
+    content: [
+      "If you have questions, reach out anytime:",
+      "Simply Diego's Email: info@simplydiegos.com",
+      "Phone: 505-990-0099",
+      "Website: www.SimplyDiegos.com",
+    ],
   },
 ];
 
@@ -50,7 +79,7 @@ export default function TermsOfServicePage() {
       <PageHero
         title="Terms of"
         highlightedWord="Service"
-        description="Please read these terms carefully before using our website. They outline our mutual rights and responsibilities."
+        description="Effective Date: May 21, 2026. Please read these terms carefully before using our website or services."
         breadcrumbs={[{ label: "Home", href: "/" }, { label: "Terms of Service" }]}
       />
       <PolicyContent sections={sections} />

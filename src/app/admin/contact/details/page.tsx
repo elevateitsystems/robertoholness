@@ -14,10 +14,10 @@ export default function AdminContactDetailsPage() {
   
   // LocalStorage Persisted States
   const [contactData, setContactData] = useState<any>({
-    phone: "(505) 999-9999",
+    phone: "505-990-0099",
     email: "info@simplydiegos.com",
     address: "Simply Diego's, Albuquerque, NM",
-    hours: "Mon - Sat: 9:00 AM - 6:00 PM | Sun: 11:00 AM - 4:00 PM"
+    hours: "Mon - Fri: 9:00 AM - 7:00 PM | Sat: 9:00 AM - 6:00 PM | Sun: 10:00 AM - 6:00 PM"
   });
 
   const [loading, setLoading] = useState(true);

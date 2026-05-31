@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/navbar/navbar';
 import { Footer } from '@/components/footer/footer';
+import { FloatingChatButton } from '@/components/ui/FloatingChatButton';
 import { LayoutWrapper } from '@/components/ui/LayoutWrapper';
 import { useAppStore } from '@/lib/store';
 import { authApi } from '@/lib/api/auth';
@@ -86,6 +87,7 @@ export function ConditionalLayout({ children }: { children: React.ReactNode }) {
       <LayoutWrapper>
         {children}
       </LayoutWrapper>
+      <FloatingChatButton />
       <Footer />
     </>
   );

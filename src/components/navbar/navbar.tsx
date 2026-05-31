@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { navBarApi } from "@/lib/api/navBar";
+import Image from "next/image";
 
 const MenuIcon = ({ className }: { className?: string }) => (
   <svg
@@ -89,15 +90,18 @@ const navItems = [
   { name: "Contact", href: "/contact" },
 ];
 
+const GOOGLE_BUSINESS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Simply%20Diego%27s%203301%20Menaul%20Blvd%20NE%20Suite%2010%20Albuquerque%20NM%2087107";
+
 export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
   
   const [navBarData, setNavBarData] = React.useState({
-    contactNumber: "(505) 990-2014",
-    timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm",
-    deliveryOffer: "🐾 Free delivery on orders over $50!",
+    contactNumber: "505-990-0099",
+    timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
+    deliveryOffer: "Free Delivery on Orders Over $49",
     navLogoUrl: "/assets/logo-without-bg.png"
   });
 
@@ -110,9 +114,9 @@ export function Navbar() {
         const res = await navBarApi.get();
         if (res && res.data) {
           setNavBarData({
-            contactNumber: res.data.contactNumber || "(505) 990-2014",
-            timeLine: res.data.timeLine || "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-5pm",
-            deliveryOffer: res.data.deliveryOffer || "🐾 Free delivery on orders over $50!",
+            contactNumber: "505-990-0099",
+            timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
+            deliveryOffer: "Free Delivery on Orders Over $49",
             navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png"
           });
         }
@@ -137,31 +141,39 @@ export function Navbar() {
       {/* Top info bar */}
       <div className="hidden lg:block bg-primary text-white">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="flex items-center justify-between h-9 text-xs font-medium">
-            <div className="flex items-center gap-6">
-              <span className="flex items-center gap-1.5">
-                <PhoneIcon className="h-3 w-3" />
+          <div className="flex min-h-9 items-center justify-between gap-4 py-1 text-sm font-bold">
+            <div className="flex items-center gap-7">
+              <a href="tel:+15059900099" className="flex items-center gap-2 text-base hover:text-accent-green transition-colors">
+                <PhoneIcon className="h-4 w-4" />
                 {navBarData.contactNumber}
-              </span>
-              <span>{navBarData.timeLine}</span>
+              </a>
+              <Link
+                href={GOOGLE_BUSINESS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm hover:text-accent-green transition-colors"
+                aria-label="View Simply Diego's current business hours on Google"
+              >
+                {navBarData.timeLine}
+              </Link>
             </div>
-            <span className="text-accent-green font-bold flex items-center gap-1">
-              {navBarData.deliveryOffer ? `🐾 ${navBarData.deliveryOffer.replace(/^[🐾\s]+/, "")}` : ""}
+            <span className="rounded-[5px] px-4 py-1.5 text-sm font-black uppercase tracking-wide text-white">
+              🐾 {navBarData.deliveryOffer}
             </span>
           </div>
         </div>
       </div>
 
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex h-20 items-center justify-between">
+        <div className="flex min-h-16 items-center justify-between py-1 lg:min-h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <img
+            <Image
               src={navBarData.navLogoUrl}
               alt="Simply Diego's Logo"
-              width={180}
-              height={60}
-              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              width={220}
+              height={80}
+              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-16 lg:h-20"
             />
           </Link>
 
@@ -197,7 +209,7 @@ export function Navbar() {
             <Button
               asChild
               size="lg"
-              className="rounded-[5px] font-bold shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 bg-primary hover:bg-primary/90"
+              className="rounded-[5px] bg-secondary font-black text-white shadow-lg shadow-secondary/25 transition-all hover:scale-105 hover:bg-deep-teal hover:shadow-xl hover:shadow-secondary/35 active:scale-95 focus-visible:ring-secondary flex items-center gap-2"
             >
               <Link
                 href="https://shop.simplydiegos.com/products/shop/"
@@ -266,7 +278,7 @@ export function Navbar() {
               <div className="pt-4 border-t border-primary/10">
                 <Button
                   asChild
-                  className="w-full rounded-[5px] font-bold h-14 shadow-lg shadow-primary/20 flex items-center justify-center gap-2 bg-primary hover:bg-primary/90"
+                  className="w-full rounded-[5px] bg-secondary font-black text-white h-14 shadow-lg shadow-secondary/25 hover:bg-deep-teal focus-visible:ring-secondary flex items-center justify-center gap-2"
                 >
                   <Link
                     href="https://shop.simplydiegos.com/products/shop/"
@@ -277,6 +289,20 @@ export function Navbar() {
                     <span>Shop Online</span>
                   </Link>
                 </Button>
+                <div className="mt-4 rounded-[5px] bg-white p-4 text-sm font-bold text-foreground shadow-sm">
+                  <a href="tel:+15059900099" className="flex items-center gap-2 text-base text-secondary">
+                    <PhoneIcon className="h-4 w-4" />
+                    505-990-0099
+                  </a>
+                  <Link
+                    href={GOOGLE_BUSINESS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2 block text-muted-foreground hover:text-secondary"
+                  >
+                    Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm
+                  </Link>
+                </div>
               </div>
             </div>
           </motion.div>

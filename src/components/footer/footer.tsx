@@ -3,7 +3,25 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { footerApi } from "@/lib/api/footer";
+
+const GOOGLE_BUSINESS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Simply%20Diego%27s%203301%20Menaul%20Blvd%20NE%20Suite%2010%20Albuquerque%20NM%2087107";
+
+const HOME_FOOTER_DESCRIPTION =
+  "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2016.";
+
+const HOME_FOOTER_LOCATION =
+  "3301 Menaul Blvd NE, Suite 10, Albuquerque, NM 87107";
+
+const homeQuickLinks = [
+  { label: "Services", href: "/services" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Blog", href: "/blog" },
+  { label: "Reviews", href: "/reviews" },
+  { label: "Contact", href: "/contact" },
+];
 
 const FacebookIcon = () => (
   <svg
@@ -107,10 +125,12 @@ const PawIcon = () => (
 );
 
 export function Footer() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const [footerData, setFooterData] = useState<any>({
     description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
     location: "7321 San Antonio Dr NE, Albuquerque, NM 87109",
-    phoneNumber: "(505) 990-2014",
+    phoneNumber: "505-990-0099",
     email: "info@simplydlegos.com"
   });
 
@@ -122,7 +142,10 @@ export function Footer() {
           // If array, grab the first element
           const record = Array.isArray(res.data) ? res.data[0] : res.data;
           if (record) {
-            setFooterData(record);
+            setFooterData({
+              ...record,
+              phoneNumber: "505-990-0099",
+            });
           }
         }
       } catch (e) {
@@ -131,6 +154,29 @@ export function Footer() {
     }
     loadFooter();
   }, []);
+
+  const displayFooterData = isHomePage
+    ? {
+        ...footerData,
+        description: HOME_FOOTER_DESCRIPTION,
+        location: HOME_FOOTER_LOCATION,
+        phoneNumber: "505-990-0099",
+      }
+    : footerData;
+
+  const quickLinks = isHomePage
+    ? homeQuickLinks
+    : [
+        { label: "Our Services", href: "/services" },
+        { label: "Customer Reviews", href: "/reviews" },
+        { label: "Pet Gallery", href: "/gallery" },
+        { label: "Pet Care Blog", href: "/blog" },
+        {
+          label: "Shop Online Store",
+          href: "https://shop.simplydiegos.com/products/shop/",
+          external: true,
+        },
+      ];
 
   return (
     <footer className="bg-gradient-to-b from-primary to-[#600030] text-white/80 relative overflow-hidden">
@@ -149,13 +195,13 @@ export function Footer() {
               <Image
                 src="/assets/logo-without-bg.png"
                 alt="Simply Diego's Logo"
-                width={180}
-                height={60}
-                className="h-24 w-auto object-contain brightness-0 invert"
+                width={isHomePage ? 300 : 180}
+                height={isHomePage ? 120 : 60}
+                className={isHomePage ? "h-36 w-auto object-contain" : "h-24 w-auto object-contain brightness-0 invert"}
               />
             </Link>
             <p className="text-base leading-relaxed text-white/50">
-              {footerData.description}
+              {displayFooterData.description}
             </p>
             <div className="flex space-x-3">
               <Link
@@ -180,52 +226,19 @@ export function Footer() {
               Quick Links
             </h3>
             <ul className="space-y-4 text-base">
-              <li>
-                <Link
-                  href="/services"
-                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
-                  Our Services
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/reviews"
-                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
-                  Customer Reviews
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/gallery"
-                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
-                  Pet Gallery
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="hover:text-accent-green transition-colors flex items-center gap-2 group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
-                  Pet Care Blog
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="https://shop.simplydiegos.com/products/shop/"
-                  target="_blank"
-                  className="text-secondary font-bold hover:text-accent-green transition-colors flex items-center gap-2 group"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-secondary group-hover:bg-accent-green group-hover:scale-125 transition-all" />
-                  Shop Online Store
-                </Link>
-              </li>
+              {quickLinks.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    target={"external" in item && item.external ? "_blank" : undefined}
+                    rel={"external" in item && item.external ? "noopener noreferrer" : undefined}
+                    className="hover:text-accent-green transition-colors flex items-center gap-2 group"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -241,48 +254,54 @@ export function Footer() {
                   <MapPinIcon />
                 </div>
                 <span>
-                  {footerData.location}
+                  {displayFooterData.location}
                 </span>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <PhoneIcon />
                 </div>
-                <span>{footerData.phoneNumber}</span>
+                <span>{displayFooterData.phoneNumber}</span>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MailIcon />
                 </div>
-                <span>{footerData.email}</span>
+                <span>{displayFooterData.email}</span>
               </li>
             </ul>
           </div>
 
           {/* Hours */}
           <div>
-            <h3 className="mb-8 text-sm font-bold uppercase tracking-[0.2em] text-white flex items-center gap-2">
+            <Link
+              href={GOOGLE_BUSINESS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mb-8 text-sm font-bold uppercase tracking-[0.2em] text-white flex items-center gap-2 hover:text-accent-green transition-colors"
+              aria-label="View Simply Diego's store hours on Google Business"
+            >
               <PawIcon />
               Store Hours
-            </h3>
+            </Link>
             <ul className="space-y-3 text-base">
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Mon - Fri</span>{" "}
-                <span className="text-secondary font-bold">9:00 - 7:00</span>
+                <span className="text-warm-orange font-bold">9:00 AM - 7:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Saturday</span>{" "}
-                <span className="text-secondary font-bold">9:00 - 6:00</span>
+                <span className="text-warm-orange font-bold">9:00 AM - 6:00 PM</span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Sunday</span>{" "}
-                <span className="text-secondary font-bold">10:00 - 5:00</span>
+                <span className="text-warm-orange font-bold">10:00 AM - 6:00 PM</span>
               </li>
             </ul>
             {/* Fun CTA */}
-            <div className="mt-6 p-4 rounded-[5px] bg-white/10 border border-white/20">
-              <p className="text-sm text-white/70">
-                🐾 Bring your furry friend in for a visit!
+            <div className="mt-6 p-4 rounded-[5px] bg-white/15 border border-white/30">
+              <p className="text-lg font-black text-white">
+                Bring your furry friend in for a visit!
               </p>
             </div>
           </div>
@@ -296,13 +315,13 @@ export function Footer() {
           <div className="flex gap-8">
             <Link
               href="/privacy-policy"
-              className="hover:text-secondary transition-colors"
+              className="hover:text-warm-orange transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms-of-service"
-              className="hover:text-secondary transition-colors"
+              className="hover:text-warm-orange transition-colors"
             >
               Terms of Service
             </Link>

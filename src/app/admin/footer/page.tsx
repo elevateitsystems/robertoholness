@@ -17,7 +17,7 @@ export default function AdminFooterPage() {
   const [footerData, setFooterData] = useState<any>({
     description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
     location: "7321 San Antonio Dr NE, Albuquerque, NM 87109",
-    phoneNumber: "(505) 990-2014",
+    phoneNumber: "505-990-0099",
     email: "info@simplydlegos.com"
   });
 
@@ -145,7 +145,7 @@ export default function AdminFooterPage() {
                   <span>Saturday</span> <span className="font-bold">9:00 - 6:00</span>
                 </p>
                 <p className="flex justify-between border-b border-white/10 pb-1">
-                  <span>Sunday</span> <span className="font-bold">10:00 - 5:00</span>
+                  <span>Sunday</span> <span className="font-bold">10:00 - 6:00</span>
                 </p>
               </div>
             </div>
