@@ -120,8 +120,8 @@ export function Navbar() {
             navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png"
           });
         }
-      } catch (e) {
-        console.error("Failed to fetch nav bar data:", e);
+      } catch {
+        // Static navbar content is used when database content is unavailable.
       }
     };
     fetchNavBar();
@@ -174,6 +174,8 @@ export function Navbar() {
               width={220}
               height={80}
               className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-16 lg:h-20"
+              style={{ width: "auto" }}
+              priority
             />
           </Link>
 

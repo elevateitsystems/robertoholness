@@ -133,13 +133,13 @@ export function HeroSection() {
         const res = await heroApi.get();
         if (res?.data) {
           setHeroData({
-            title: HERO_TITLE,
-            description: HERO_DESCRIPTION_LINES.join("\n\n"),
+            title: res.data.title || HERO_TITLE,
+            description: res.data.description || HERO_DESCRIPTION_LINES.join("\n\n"),
             imageUrl: res.data.image?.url || null
           });
         }
-      } catch (e) {
-        console.error("Failed to fetch dynamic hero data:", e);
+      } catch {
+        // Static hero content is used when database content is unavailable.
       } finally {
         setLoading(false);
       }
@@ -340,7 +340,14 @@ const renderTitle = (title: string) => {
               <ul className="space-y-3 text-left">
                 {heroData.description.split("\n\n").map((line: string, index: number) => (
                   <li key={line} className="flex gap-3">
-                    <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-secondary shadow-[0_0_18px_rgba(250,183,60,0.7)]" />
+                    <Image
+                      src="/assets/Pink Paw.png"
+                      alt=""
+                      width={18}
+                      height={18}
+                      className="mt-1.5 h-4 w-4 shrink-0 object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]"
+                      aria-hidden="true"
+                    />
                     <span className={index === 1 ? "font-normal text-white" : ""}>{line}</span>
                   </li>
                 ))}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CheckCircle2, Truck } from "lucide-react";
+import { ArrowRight, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
 const SHOP_URL = "https://shop.simplydiegos.com/products/shop/";
@@ -17,8 +17,9 @@ const deliveryDetails = [
 export function DeliveryInfoSection() {
   return (
     <section className="relative overflow-hidden bg-white py-16 md:py-24">
+      <div className="pink-paw-pattern absolute inset-0 opacity-[0.035]" />
       <div className="absolute inset-x-0 top-0 h-1 bg-secondary" />
-      <div className="container mx-auto px-4 md:px-6">
+      <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div
             initial={{ opacity: 0, y: 24 }}
@@ -45,7 +46,14 @@ export function DeliveryInfoSection() {
             <ul className="space-y-4 text-sm text-foreground md:text-base">
               {deliveryDetails.map((detail) => (
                 <li key={detail} className="flex gap-3">
-                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-secondary" />
+                  <Image
+                    src="/assets/Pink Paw.png"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="mt-0.5 h-5 w-5 shrink-0 object-contain"
+                    aria-hidden="true"
+                  />
                   <span>{detail}</span>
                 </li>
               ))}

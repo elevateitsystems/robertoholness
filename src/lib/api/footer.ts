@@ -2,12 +2,15 @@ const API_URL = process.env.BACKEND_URL;
 
 export const footerApi = {
   get: async () => {
-    const res = await fetch(`${API_URL}/footers`);
-    if (!res.ok) {
-      if (res.status === 404) return { data: null };
-      throw new Error('Failed to fetch Footer');
+    if (!API_URL) return { data: null };
+
+    try {
+      const res = await fetch(`${API_URL}/footers`);
+      if (!res.ok) return { data: null };
+      return res.json();
+    } catch {
+      return { data: null };
     }
-    return res.json();
   },
   
   upsert: async (formData: FormData) => {

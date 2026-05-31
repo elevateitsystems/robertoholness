@@ -63,6 +63,7 @@ export function BottomShopCTA() {
     <section className="py-24 bg-gradient-to-br from-primary via-primary-dark to-[#800040] overflow-hidden relative">
       {/* Decorative Elements */}
       <div className="absolute inset-0 paw-pattern-light" />
+      <div className="pink-paw-pattern absolute inset-0 opacity-[0.06]" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1200px] h-[500px] bg-primary/15 rounded-full blur-[150px] opacity-60" />
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-accent-green/10 rounded-full blur-[100px]" />
 

@@ -148,8 +148,8 @@ export function Footer() {
             });
           }
         }
-      } catch (e) {
-        console.error("Failed to load footer data:", e);
+      } catch {
+        // Static footer content is used when database content is unavailable.
       }
     }
     loadFooter();
@@ -198,6 +198,7 @@ export function Footer() {
                 width={isHomePage ? 300 : 180}
                 height={isHomePage ? 120 : 60}
                 className={isHomePage ? "h-36 w-auto object-contain" : "h-24 w-auto object-contain brightness-0 invert"}
+                style={{ width: "auto" }}
               />
             </Link>
             <p className="text-base leading-relaxed text-white/50">

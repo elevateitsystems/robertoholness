@@ -2,12 +2,15 @@ const API_URL = process.env.BACKEND_URL;
 
 export const heroApi = {
   get: async () => {
-    const res = await fetch(`${API_URL}/hero-section`);
-    if (!res.ok) {
-      if (res.status === 404) return { data: null };
-      throw new Error('Failed to fetch HeroSection');
+    if (!API_URL) return { data: null };
+
+    try {
+      const res = await fetch(`${API_URL}/hero-section`);
+      if (!res.ok) return { data: null };
+      return res.json();
+    } catch {
+      return { data: null };
     }
-    return res.json();
   },
   
   upsert: async (formData: FormData) => {
