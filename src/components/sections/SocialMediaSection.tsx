@@ -62,11 +62,14 @@ export function SocialMediaSection() {
           transition={{ duration: 0.6 }}
           className="mx-auto max-w-4xl text-center"
         >
-          <p className="mx-auto inline-flex rounded-[5px] border border-primary/15 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.22em] text-primary shadow-lg shadow-primary/5">
-           Stay <span className="text-secondary ml-1">Connected</span>  
+          <p className="mx-auto inline-flex rounded-[5px] border border-primary/15 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.22em] text-secondary shadow-lg shadow-primary/5">
+            Stay Connected
           </p>
-          <h2 className="mt-3 text-3xl font-black text-foreground sm:text-4xl">
-            {"Follow Simply Diego's for pet care tips, updates, and local favorites."}
+          <h2 className="mt-3 text-2xl font-black sm:text-3xl md:text-5xl">
+            <span className="text-secondary">
+              Follow Simply Diego&apos;s for pet care tips, updates, and{" "}
+            </span>
+            <span className="text-primary">local favorites.</span>
           </h2>
 
           <div className="mt-9 flex justify-center gap-4">

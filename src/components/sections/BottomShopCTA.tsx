@@ -123,11 +123,11 @@ export function BottomShopCTA() {
           <div className="inline-flex p-4 rounded-[5px] bg-primary/20 text-white mb-4 animate-pulse-glow">
             <ShoppingBagIcon className="h-8 w-8" />
           </div>
-          <h2 className="text-4xl md:text-6xl font-heading font-black text-white leading-tight">
+          <h2 className="text-2xl sm:text-3xl md:text-5xl font-heading font-black text-white leading-tight">
             Ready to Give Your Pet <br />
             The <span className="text-warm-orange">Very Best?</span>
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto">
+          <p className="text-lg text-white/60 max-w-2xl mx-auto">
             Browse our full catalog of natural food, healthy treats, and premium
             supplies. Fast local delivery and easy pickup available.
           </p>

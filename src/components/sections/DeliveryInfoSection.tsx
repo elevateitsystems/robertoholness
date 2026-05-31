@@ -27,22 +27,22 @@ export function DeliveryInfoSection() {
             transition={{ duration: 0.6 }}
             className="space-y-7"
           >
-            <div className="inline-flex items-center gap-3 rounded-[5px] border border-secondary/20 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.22em] shadow-lg shadow-secondary/10">
+            <div className="inline-flex items-center gap-3 rounded-[5px] border border-secondary/20 bg-white px-5 py-3 text-sm font-black uppercase tracking-[0.22em] text-secondary shadow-lg shadow-secondary/10">
               <Truck className="h-5 w-5" />
-              <span className="text-primary">Local</span>
-              <span className="text-secondary">Delivery</span>
+              Local Delivery
             </div>
 
             <div className="space-y-4">
-              <h2 className="max-w-3xl text-3xl font-black leading-tight text-foreground sm:text-4xl md:text-5xl">
-                Get your pet&apos;s food delivered right to your door!
+              <h2 className="max-w-3xl text-2xl font-black leading-tight sm:text-3xl md:text-5xl">
+                <span className="text-secondary">Get your pet&apos;s food delivered right to </span>
+                <span className="text-primary">your door!</span>
               </h2>
-              <p className="text-lg font-semibold text-muted-foreground md:text-xl">
+              <p className="text-base font-semibold text-muted-foreground md:text-lg">
                 Place your order today and let Simply Diego&apos;s handle the rest.
               </p>
             </div>
 
-            <ul className="space-y-4 text-base text-foreground md:text-lg">
+            <ul className="space-y-4 text-sm text-foreground md:text-base">
               {deliveryDetails.map((detail) => (
                 <li key={detail} className="flex gap-3">
                   <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-secondary" />

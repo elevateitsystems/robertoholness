@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { heroApi } from "@/lib/api/hero";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import heroImg from "../../../assets/robarto-holeness_banner.jpeg";
-import { heroApi } from "@/lib/api/hero";
 
 const HERO_TITLE =
   "Welcome to Simply Diego's, your favorite premier pet food store in Albuquerque, New Mexico!";
@@ -17,8 +17,6 @@ const HERO_DESCRIPTION_LINES = [
   "Bring your pet in for THE BEST DIY dog wash!",
   "We're more than a pet food store - we're a community for pet lovers!",
 ];
-
-const HERO_TITLE_HIGHLIGHT = "Simply Diego's";
 
 const ShoppingCartIcon = ({ className }: { className?: string }) => (
   <svg
@@ -149,26 +147,28 @@ export function HeroSection() {
     loadHero();
   }, []);
 
-  const renderTitle = (title: string) => {
-    const [beforeHighlight, afterHighlight] = title.split(HERO_TITLE_HIGHLIGHT);
+const renderTitle = (title: string) => {
+  const words = title.trim().split(" ");
 
-    return (
-      <>
-        {beforeHighlight}
-        <motion.span
-          className="inline-block gradient-text"
-          animate={{
-            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-          }}
-          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-          style={{ backgroundSize: "200% 200%" }}
-        >
-          {HERO_TITLE_HIGHLIGHT}
-        </motion.span>
-        {afterHighlight}
-      </>
-    );
-  };
+  const highlightedText = words.slice(0, 4).join(" ");
+  const remainingText = words.slice(4).join(" ");
+
+  return (
+    <>
+      <motion.span
+        className="inline-block gradient-text"
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+        }}
+        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+        style={{ backgroundSize: "200% 200%" }}
+      >
+        {highlightedText}
+      </motion.span>
+      {remainingText && ` ${remainingText}`}
+    </>
+  );
+};
 
   if (loading) {
     return (
@@ -326,7 +326,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-3xl sm:text-4xl md:text-5xl xl:text-6xl font-heading font-black text-white leading-[1.12] max-w-3xl mx-auto lg:mx-0"
+              className="text-2xl sm:text-3xl md:text-5xl font-heading font-black text-white leading-[1.12] max-w-3xl mx-auto lg:mx-0"
             >
               {renderTitle(heroData.title)}
             </motion.h1>
@@ -335,7 +335,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
               <ul className="space-y-3 text-left">
                 {heroData.description.split("\n\n").map((line: string, index: number) => (
