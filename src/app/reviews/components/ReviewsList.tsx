@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ReviewSummary } from "./ReviewSummary";
 import { ReviewCard } from "./ReviewCard";
 import { ChevronDown, MessageSquare } from "lucide-react";
@@ -58,6 +59,44 @@ const reviewData = {
 };
 
 export function ReviewsList() {
+  const [reviews, setReviews] = useState(reviewData);
+
+  useEffect(() => {
+    async function loadGoogleReviews() {
+      try {
+        const response = await fetch("/api/google-reviews");
+        const payload = await response.json();
+
+        if (payload?.data?.reviews?.length) {
+          const dynamicReviews = payload.data.reviews;
+          const total = payload.data.totalRatings || dynamicReviews.length;
+
+          setReviews({
+            ...reviewData,
+            averageRating: payload.data.averageRating || reviewData.averageRating,
+            totalRatings: total,
+            distribution: reviewData.distribution.map((item) => ({
+              ...item,
+              count: item.stars === 5 ? String(total) : "0",
+              percentage: item.stars === 5 ? 100 : 0,
+            })),
+            reviews: dynamicReviews.map((review: any) => ({
+              author: review.author || "Google reviewer",
+              avatar: review.avatar || "https://i.pravatar.cc/150?u=google",
+              date: review.date || "",
+              rating: review.rating || 5,
+              comment: review.comment || "",
+            })),
+          });
+        }
+      } catch {
+        // Static review content is used when Google integration is not configured.
+      }
+    }
+
+    loadGoogleReviews();
+  }, []);
+
   return (
     <div className="py-12 md:py-20 bg-background">
       <div className="container mx-auto px-4 md:px-6">
@@ -67,10 +106,10 @@ export function ReviewsList() {
           {/* Left Column: Summary and Leave Review */}
           <div className="space-y-6">
             <ReviewSummary
-              averageRating={reviewData.averageRating}
-              totalRatings={reviewData.totalRatings}
-              distribution={reviewData.distribution}
-              subScores={reviewData.subScores}
+              averageRating={reviews.averageRating}
+              totalRatings={reviews.totalRatings}
+              distribution={reviews.distribution}
+              subScores={reviews.subScores}
             />
 
             {/* Leave Review Section: Hidden on mobile (will show at bottom) */}
@@ -82,7 +121,7 @@ export function ReviewsList() {
           {/* Right Column: Reviews List */}
 
           <div className="bg-white rounded-[5px] shadow-sm border border-black/5 px-6 md:px-12">
-            {reviewData.reviews.map((review, i) => (
+            {reviews.reviews.map((review, i) => (
               <ReviewCard key={i} {...review} index={i} />
             ))}
 

@@ -9,11 +9,11 @@ import { Skeleton } from "@/components/admin/Skeleton";
 import Image from "next/image";
 import { Modal } from "@/components/admin/Modal";
 import { toast } from "react-toastify";
+import { salesApi } from "@/lib/api/sales";
 
 export default function AdminSalesPage() {
   const user = useAppStore((state: any) => state.user);
 
-  // LocalStorage Persisted States
   const [salesData, setSalesData] = useState<any>({
     badgeText: "Early Deal",
     title: "BLACK friday",
@@ -37,25 +37,45 @@ export default function AdminSalesPage() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("admin_sales_data");
-    if (saved) {
-      setSalesData(JSON.parse(saved));
+    async function loadSales() {
+      try {
+        const res = await salesApi.get();
+        if (res?.data) {
+          setSalesData({
+            ...res.data,
+            isShow: res.data.isHidden !== true,
+          });
+        }
+      } catch {
+        // Static preview content is used when CMS content is unavailable.
+      } finally {
+        setLoading(false);
+      }
     }
-    setLoading(false);
+
+    loadSales();
   }, []);
 
-  const handleToggleVisibility = (checked: boolean) => {
+  const handleToggleVisibility = async (checked: boolean) => {
     if (!user) {
       toast.error("Please login first");
       return;
     }
-    const updated = {
-      ...salesData,
-      isShow: checked
-    };
-    localStorage.setItem("admin_sales_data", JSON.stringify(updated));
-    setSalesData(updated);
-    toast.success(`Sales section ${checked ? "enabled" : "hidden"} successfully!`);
+
+    const formData = new FormData();
+    formData.append("title", salesData.title);
+    formData.append("badgeText", salesData.badgeText);
+    formData.append("discountText", salesData.discountText);
+    formData.append("codeText", salesData.codeText);
+    formData.append("isHidden", String(!checked));
+
+    try {
+      const res = await salesApi.upsert(formData);
+      setSalesData({ ...res.data, isShow: res.data.isHidden !== true });
+      toast.success(`Sales section ${checked ? "enabled" : "hidden"} successfully!`);
+    } catch {
+      toast.error("Failed to update sales visibility");
+    }
   };
 
   const openEditModal = (type: "text" | "image") => {
@@ -113,30 +133,27 @@ export default function AdminSalesPage() {
     }
 
     setSaving(true);
-    let newImageUrl = salesData.imageUrl;
 
-    if (activeModal === "image" && imagePreview) {
-      newImageUrl = imagePreview; // Save the base64 or preview url locally
+    const formData = new FormData();
+    formData.append("title", activeModal === "text" ? title : salesData.title);
+    formData.append("badgeText", activeModal === "text" ? badgeText : salesData.badgeText);
+    formData.append("discountText", activeModal === "text" ? discountText : salesData.discountText);
+    formData.append("codeText", activeModal === "text" ? codeText : salesData.codeText);
+    formData.append("isHidden", String(salesData.isShow === false));
+    if (activeModal === "image" && imageFile) {
+      formData.append("image", imageFile);
     }
 
-    const updated = {
-      badgeText: activeModal === "text" ? badgeText : salesData.badgeText,
-      title: activeModal === "text" ? title : salesData.title,
-      discountText:
-        activeModal === "text" ? discountText : salesData.discountText,
-      codeText: activeModal === "text" ? codeText : salesData.codeText,
-      imageUrl: newImageUrl,
-      isShow: salesData.isShow !== false,
-    };
-
-    localStorage.setItem("admin_sales_data", JSON.stringify(updated));
-    setSalesData(updated);
-
-    setTimeout(() => {
-      setSaving(false);
+    try {
+      const res = await salesApi.upsert(formData);
+      setSalesData({ ...res.data, isShow: res.data.isHidden !== true });
       setActiveModal(null);
       toast.success("Sales section updated successfully!");
-    }, 400);
+    } catch {
+      toast.error("Failed to update sales section");
+    } finally {
+      setSaving(false);
+    }
   };
 
   if (loading) {

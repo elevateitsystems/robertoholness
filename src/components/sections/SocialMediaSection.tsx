@@ -39,13 +39,13 @@ const InstagramIcon = ({ className }: { className?: string }) => (
 const socialLinks = [
   {
     label: "Facebook",
-    href: "https://www.facebook.com/SimplyDiegos",
+    href: process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/SimplyDiegos",
     icon: FacebookIcon,
     iconClassName: "h-8 w-8 text-[#1877F2] transition-transform group-hover:scale-110",
   },
   {
     label: "Instagram",
-    href: "https://www.instagram.com/simplydiegos",
+    href: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/simplydiegos",
     icon: InstagramIcon,
     iconClassName: "h-9 w-9 transition-transform group-hover:scale-110",
   },

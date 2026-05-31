@@ -52,6 +52,9 @@ const fallbackImages = [
   { url: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&q=80&w=600", link: "https://instagram.com/simplydiegos" },
 ];
 
+const INSTAGRAM_URL =
+  process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/simplydiegos";
+
 export function InstagramFeed() {
   const [instagramData, setInstagramData] = useState<any>({
     title: "JOIN US ON INSTAGRAM",
@@ -77,6 +80,15 @@ export function InstagramFeed() {
             instagramHandle: record.instagramHandle || "🐾 Follow us @simplydiegos",
             joinUsImages: record.joinUsImages || []
           });
+        }
+
+        const socialRes = await fetch("/api/social/instagram");
+        const socialPayload = await socialRes.json();
+        if (Array.isArray(socialPayload?.data) && socialPayload.data.length > 0) {
+          setInstagramData((current: any) => ({
+            ...current,
+            joinUsImages: socialPayload.data,
+          }));
         }
       } catch (e) {
         console.error("Failed to load dynamic Instagram feed data:", e);
@@ -186,7 +198,7 @@ export function InstagramFeed() {
                     {content}
                   </Link>
                 ) : (
-                  <Link href="https://instagram.com/simplydiegos" target="_blank" rel="noopener noreferrer">
+                  <Link href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer">
                     {content}
                   </Link>
                 )}
@@ -202,7 +214,7 @@ export function InstagramFeed() {
           className="mt-16 text-center"
         >
           <Button asChild variant="outline" size="lg" className="rounded-[5px] px-10 font-bold border-2 border-secondary/20 text-secondary hover:bg-primary hover:text-white hover:border-primary transition-all duration-300">
-            <Link href="https://instagram.com/simplydiegos" target="_blank" className="flex items-center gap-2">
+            <Link href={INSTAGRAM_URL} target="_blank" className="flex items-center gap-2">
               <span>View More on Instagram</span>
               <ArrowRightIcon className="h-4 w-4" />
             </Link>

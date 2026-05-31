@@ -1,4 +1,4 @@
-const API_URL = process.env.BACKEND_URL; // match auth backend port 3030
+import { API_URL } from "@/lib/api/config";
 
 export const servicesApi = {
   getAll: async () => {

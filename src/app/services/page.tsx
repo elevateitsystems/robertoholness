@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { servicesData, iconMap } from "@/lib/services-data";
+import { servicesApi } from "@/lib/api/services";
 
 const PawIcon = ({ className }: { className?: string }) => (
   <svg
@@ -26,7 +27,7 @@ const PawIcon = ({ className }: { className?: string }) => (
 );
 
 export default function ServicesPage() {
-  const services = Object.values(servicesData);
+  const [services, setServices] = useState(Object.values(servicesData));
 
   const [bannerData, setBannerData] = useState<any>({
     title: "Our Professional",
@@ -36,6 +37,38 @@ export default function ServicesPage() {
   });
 
   useEffect(() => {
+    async function loadServices() {
+      try {
+        const res = await servicesApi.getAll();
+        const records = Array.isArray(res?.data?.items)
+          ? res.data.items
+          : Array.isArray(res?.data)
+            ? res.data
+            : [];
+
+        if (records.length > 0) {
+          setServices(
+            records
+              .filter((service: any) => service.status !== "draft")
+              .map((service: any, index: number) => ({
+                id: service.id || String(index),
+                slug: service.slug || service.id || String(index),
+                name: service.title || service.name || "Service",
+                shortDescription: service.description || "",
+                fullDescription: service.description || "",
+                icon: service.icon || "store",
+                imageUrl: service.image?.url || service.imageUrl || "",
+                metadata: service.metadata || {},
+              })),
+          );
+        }
+      } catch {
+        // Static service content is used when CMS content is unavailable.
+      }
+    }
+
+    loadServices();
+
     const saved = localStorage.getItem("banner_service");
     if (saved) {
       try {

@@ -206,13 +206,13 @@ export function Footer() {
             </p>
             <div className="flex space-x-3">
               <Link
-                href="https://facebook.com"
+                href={process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/SimplyDiegos"}
                 className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <FacebookIcon />
               </Link>
               <Link
-                href="https://instagram.com"
+                href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/simplydiegos"}
                 className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <InstagramIcon />

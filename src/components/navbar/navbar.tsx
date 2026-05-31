@@ -114,9 +114,9 @@ export function Navbar() {
         const res = await navBarApi.get();
         if (res && res.data) {
           setNavBarData({
-            contactNumber: "505-990-0099",
-            timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
-            deliveryOffer: "Free Delivery on Orders Over $49",
+            contactNumber: res.data.contactNumber || "505-990-0099",
+            timeLine: res.data.timeLine || "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
+            deliveryOffer: res.data.deliveryOffer || "Free Delivery on Orders Over $49",
             navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png"
           });
         }

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { blogPosts } from "@/lib/blogData";
 import { BlogCard } from "./components/BlogCard";
 import { BlogHeroBanner } from "./components/BlogHeroBanner";
 import { BlogSidebar } from "./components/BlogSidebar";
+import { blogApi } from "@/lib/api/blog";
 
 const PawIcon = ({ className }: { className?: string }) => (
   <svg
@@ -27,8 +28,55 @@ const PawIcon = ({ className }: { className?: string }) => (
 export default function BlogPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
+  const [posts, setPosts] = useState(blogPosts);
 
-  const filteredPosts = blogPosts.filter((post) => {
+  useEffect(() => {
+    async function loadPosts() {
+      try {
+        const res = await blogApi.getPosts();
+        const records = Array.isArray(res?.data?.items)
+          ? res.data.items
+          : Array.isArray(res?.data)
+            ? res.data
+            : [];
+
+        if (records.length > 0) {
+          setPosts(
+            records.map((post: any) => {
+              const createdAt = post.publishDate || post.createdAt || new Date().toISOString();
+              const date = new Date(createdAt);
+
+              return {
+                slug: post.slug || post.id,
+                title: post.title,
+                excerpt: post.shortDesc || post.description || "",
+                content: [post.content || post.description || ""],
+                date: String(date.getDate()).padStart(2, "0"),
+                month: date.toLocaleString("en-US", { month: "short" }).toUpperCase(),
+                year: String(date.getFullYear()),
+                fullDate: date.toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  year: "numeric",
+                }),
+                comments: 0,
+                image: post.image?.url || "https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&q=80&w=800",
+                category: post.category?.name || "Pet Care",
+                author: post.author?.displayName || post.author?.firstName || "Simply Diego's",
+                authorAvatar: post.author?.avatar?.url || "https://i.pravatar.cc/150?img=12",
+              };
+            }),
+          );
+        }
+      } catch {
+        // Static blog content is used when CMS content is unavailable.
+      }
+    }
+
+    loadPosts();
+  }, []);
+
+  const filteredPosts = posts.filter((post) => {
     const matchesCategory =
       activeCategory === "All" || post.category === activeCategory;
     const matchesSearch =

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { salesApi } from "@/lib/api/sales";
 
 export function SalesSection() {
   const [salesData, setSalesData] = useState<any>({
@@ -19,15 +20,23 @@ export function SalesSection() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const saved = localStorage.getItem("admin_sales_data");
-    if (saved) {
+    async function loadSales() {
       try {
-        setSalesData(JSON.parse(saved));
-      } catch (e) {
-        console.error("Failed to parse admin_sales_data", e);
+        const res = await salesApi.get();
+        if (res?.data) {
+          setSalesData({
+            ...res.data,
+            isShow: res.data.isHidden !== true,
+          });
+        }
+      } catch {
+        // Static sales content is used when CMS content is unavailable.
+      } finally {
+        setLoading(false);
       }
     }
-    setLoading(false);
+
+    loadSales();
   }, []);
 
   if (loading) {

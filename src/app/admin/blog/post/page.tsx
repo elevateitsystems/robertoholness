@@ -57,7 +57,7 @@ export default function AdminBlogPostPage() {
       setTitle(post.title);
       setDescription(post.description || "");
       setCategoryId(post.categoryId || "");
-      setImagePreview(post.imageUrl || null);
+      setImagePreview(post.image?.url || post.imageUrl || null);
       setImage(null);
     } else {
       setEditingId(null);
@@ -150,8 +150,8 @@ export default function AdminBlogPostPage() {
                 return (
                   <tr key={p.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="px-6 py-4 flex items-center gap-3">
-                      {p.imageUrl ? (
-                        <img src={p.imageUrl} alt={p.title} className="h-10 w-10 object-cover rounded border border-gray-200" />
+                      {p.image?.url || p.imageUrl ? (
+                        <img src={p.image?.url || p.imageUrl} alt={p.title} className="h-10 w-10 object-cover rounded border border-gray-200" />
                       ) : (
                         <div className="h-10 w-10 bg-gray-100 rounded flex items-center justify-center text-gray-400 border border-gray-200">
                           📰

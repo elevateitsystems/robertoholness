@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { galleryApi } from "@/lib/api/gallery";
 
 const galleryCategories = ["All", "Birds", "Cats", "Dogs", "Kittens"];
 
@@ -66,8 +67,35 @@ const galleryImages = [
 
 export function GalleryContent() {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [images, setImages] = useState(galleryImages);
 
-  const filteredImages = galleryImages.filter(
+  useEffect(() => {
+    async function loadGallery() {
+      try {
+        const res = await galleryApi.get();
+        const dynamicImages = res?.data?.galleryImages;
+
+        if (Array.isArray(dynamicImages) && dynamicImages.length > 0) {
+          setImages(
+            dynamicImages.map((image: any, index: number) => ({
+              id: image.id || index,
+              category: "Gallery",
+              src: image.url,
+              alt: image.title || `Gallery image ${index + 1}`,
+            })),
+          );
+        }
+      } catch {
+        // Static gallery content is used when CMS content is unavailable.
+      }
+    }
+
+    loadGallery();
+  }, []);
+
+  const categories = images === galleryImages ? galleryCategories : ["All", "Gallery"];
+
+  const filteredImages = images.filter(
     (img) => activeCategory === "All" || img.category === activeCategory,
   );
 
@@ -76,7 +104,7 @@ export function GalleryContent() {
       <div className="container mx-auto px-4 md:px-6">
         {/* Filter Buttons */}
         <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {galleryCategories.map((cat) => (
+          {categories.map((cat) => (
             <Button
               key={cat}
               onClick={() => setActiveCategory(cat)}

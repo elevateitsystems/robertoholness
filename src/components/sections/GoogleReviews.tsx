@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -105,13 +105,40 @@ const testimonials = [
 
 export function GoogleReviews() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [items, setItems] = useState(testimonials);
 
   const next = () =>
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    setCurrentIndex((prev) => (prev + 1) % items.length);
   const prev = () =>
     setCurrentIndex(
-      (prev) => (prev - 1 + testimonials.length) % testimonials.length,
+      (prev) => (prev - 1 + items.length) % items.length,
     );
+
+  useEffect(() => {
+    async function loadGoogleReviews() {
+      try {
+        const response = await fetch("/api/google-reviews");
+        const payload = await response.json();
+
+        if (payload?.data?.reviews?.length) {
+          setItems(
+            payload.data.reviews.map((review: any) => ({
+              name: review.author || "Google reviewer",
+              role: "Google Review",
+              text: review.comment || "",
+              avatar: review.avatar || "https://i.pravatar.cc/150?u=google",
+              dogImage: "/assets/placeholder.svg",
+            })),
+          );
+          setCurrentIndex(0);
+        }
+      } catch {
+        // Static review content is used when Google integration is not configured.
+      }
+    }
+
+    loadGoogleReviews();
+  }, []);
 
   return (
     // <section className="py-24 relative overflow-hidden bg-primary-dark">
@@ -164,14 +191,14 @@ export function GoogleReviews() {
                   <div className="w-12 h-[2px] bg-primary/20 mx-auto mb-6" />
 
                   <p className="text-secondary/80 text-lg leading-relaxed mb-8 italic">
-                    {testimonials[currentIndex].text}
+                    {items[currentIndex].text}
                   </p>
 
                   <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 rounded-[5px] overflow-hidden relative border-2 border-primary/10">
                       <Image
-                        src={testimonials[currentIndex].avatar}
-                        alt={testimonials[currentIndex].name}
+                        src={items[currentIndex].avatar}
+                        alt={items[currentIndex].name}
                         fill
                         sizes="64px"
                         className="object-cover"
@@ -179,10 +206,10 @@ export function GoogleReviews() {
                     </div>
                     <div>
                       <h4 className="text-accent-green font-black text-xl">
-                        {testimonials[currentIndex].name}
+                        {items[currentIndex].name}
                       </h4>
                       <p className="text-primary font-bold text-sm uppercase tracking-wider">
-                        {testimonials[currentIndex].role}
+                        {items[currentIndex].role}
                       </p>
                     </div>
                   </div>

@@ -11,7 +11,6 @@ import {
   Menu,
   PanelBottom,
   PanelTop,
-  Phone,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -35,16 +34,12 @@ const menuItems: MenuItem[] = [
     icon: Home,
     subItems: [
       { title: "Banner", href: "/admin/home-page/banner" },
-      { title: "About", href: "/admin/home-page/about" },
-      { title: "Sales", href: "/admin/home-page/sales" },
-      { title: "Join Us On Instagram", href: "/admin/home-page/instagram" },
     ],
   },
   {
     title: "Service Page",
     icon: Briefcase,
     subItems: [
-      { title: "Banner", href: "/admin/service/banner" },
       { title: "Service List", href: "/admin/service/list" },
     ],
   },
@@ -52,7 +47,6 @@ const menuItems: MenuItem[] = [
     title: "Gallery Page",
     icon: ImageIcon,
     subItems: [
-      { title: "Banner", href: "/admin/gallery/banner" },
       { title: "Gallery Images", href: "/admin/gallery/images" },
     ],
   },
@@ -60,17 +54,8 @@ const menuItems: MenuItem[] = [
     title: "Blog Page",
     icon: BookOpen,
     subItems: [
-      { title: "Banner", href: "/admin/blog/banner" },
       { title: "Categories", href: "/admin/blog/categories" },
       { title: "Blog Post", href: "/admin/blog/post" },
-    ],
-  },
-  {
-    title: "Contact Page",
-    icon: Phone,
-    subItems: [
-      { title: "Banner", href: "/admin/contact/banner" },
-      { title: "Contact", href: "/admin/contact/details" },
     ],
   },
   {

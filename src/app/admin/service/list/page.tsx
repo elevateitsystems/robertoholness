@@ -35,7 +35,7 @@ export default function AdminServiceListPage() {
     try {
       setLoading(true);
       const res = await servicesApi.getAll();
-      setServices(res.data?.items || []);
+      setServices(res.data?.items || res.data || []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -51,7 +51,7 @@ export default function AdminServiceListPage() {
       setSlug(service.slug);
       setDescription(service.description || "");
       setStatus(service.status);
-      setImagePreview(service.imageUrl || null);
+      setImagePreview(service.image?.url || service.imageUrl || null);
     } else {
       setEditingId(null);
       setTitle("");
@@ -150,8 +150,8 @@ export default function AdminServiceListPage() {
                 {services.map(s => (
                   <tr key={s.id} className="hover:bg-gray-50/50 transition-colors">
                     <td className="px-6 py-4 flex items-center gap-3">
-                      {s.imageUrl ? (
-                        <img src={s.imageUrl} alt={s.title} className="h-10 w-10 object-cover rounded-md border border-gray-200" />
+                      {s.image?.url || s.imageUrl ? (
+                        <img src={s.image?.url || s.imageUrl} alt={s.title} className="h-10 w-10 object-cover rounded-md border border-gray-200" />
                       ) : (
                         <div className="h-10 w-10 bg-gray-100 rounded-md flex items-center justify-center text-gray-400 border border-gray-200">
                           🐾
