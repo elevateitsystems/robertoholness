@@ -130,7 +130,8 @@ export function HeroSection() {
   useEffect(() => {
     async function loadHero() {
       try {
-        const res = await heroApi.get();
+        // const res = await heroApi.get();
+        const res = null; // Simulate no database content for now
         if (res?.data) {
           setHeroData({
             title: res.data.title || HERO_TITLE,
@@ -337,21 +338,18 @@ const renderTitle = (title: string) => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
-              <ul className="space-y-3 text-left">
-                {heroData.description.split("\n\n").map((line: string, index: number) => (
-                  <li key={line} className="flex gap-3">
-                    <Image
-                      src="/assets/Pink Paw.png"
-                      alt=""
-                      width={18}
-                      height={18}
-                      className="mt-1.5 h-4 w-4 shrink-0 object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.25)]"
-                      aria-hidden="true"
-                    />
-                    <span className={index === 1 ? "font-normal text-white" : ""}>{line}</span>
-                  </li>
-                ))}
-              </ul>
+        <ul className="space-y-3 text-left">
+  {heroData.description.split("\n\n").map((line: string, index: number) => (
+    <li
+      key={line}
+      className="list-disc ml-5 marker:text-secondary"
+    >
+      <span className={index === 1 ? "font-normal text-white" : ""}>
+        {line}
+      </span>
+    </li>
+  ))}
+</ul>
             </motion.div>
 
             <motion.div
