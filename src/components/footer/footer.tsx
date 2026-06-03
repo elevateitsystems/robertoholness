@@ -197,7 +197,7 @@ export function Footer() {
                 alt="Simply Diego's Logo"
                 width={isHomePage ? 300 : 180}
                 height={isHomePage ? 120 : 60}
-                className={isHomePage ? "h-36 w-auto object-contain" : "h-24 w-auto object-contain brightness-0 invert"}
+                className={isHomePage ? "h-36 w-auto object-contain" : "h-24 w-auto object-contain"}
                 style={{ width: "auto" }}
               />
             </Link>

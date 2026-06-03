@@ -13,11 +13,11 @@ export function FloatingChatButton() {
         href={MESSENGER_URL}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex min-h-14 items-center justify-center gap-2 rounded-[5px] bg-secondary px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-2xl shadow-secondary/35 transition-all hover:-translate-y-1 hover:bg-deep-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 sm:text-base"
+        className="inline-flex size-14 items-center justify-center gap-2 rounded-full bg-secondary px-5 py-3 text-sm font-black uppercase tracking-wide text-white shadow-2xl shadow-secondary/35 transition-all hover:-translate-y-1 hover:bg-deep-teal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary focus-visible:ring-offset-2 sm:text-base"
         aria-label="Chat with Simply Diego's on Facebook Messenger"
       >
-        <MessageCircle className="h-5 w-5" />
-        <span>Chat With Us</span>
+        <MessageCircle className="h-7 w-7" />
+        {/* <span>Chat With Us</span> */}
       </Link>
       <Link
         href={SMS_URL}
