@@ -7,7 +7,10 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { navBarApi } from "@/lib/api/navBar";
+import { useAppStore } from "@/lib/store";
+import { authApi } from "@/lib/api/auth";
 import Image from "next/image";
+import { LogOut, User as UserIcon, ChevronDown, LayoutDashboard } from "lucide-react";
 
 const MenuIcon = ({ className }: { className?: string }) => (
   <svg
@@ -86,7 +89,6 @@ const navItems = [
   { name: "Services", href: "/services" },
   { name: "Gallery", href: "/gallery" },
   { name: "Blog", href: "/blog" },
-  { name: "Reviews", href: "/reviews" },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -97,6 +99,11 @@ export function Navbar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = React.useState(false);
   const [scrolled, setScrolled] = React.useState(false);
+  const [dropdownOpen, setDropdownOpen] = React.useState(false);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
+
+  const user = useAppStore((state: any) => state.user);
+  const setUser = useAppStore((state: any) => state.setUser);
   
   const [navBarData, setNavBarData] = React.useState({
     contactNumber: "505-990-0099",
@@ -128,6 +135,30 @@ export function Navbar() {
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+      setUser(null);
+      setDropdownOpen(false);
+    } catch (e) {
+      console.error("Logout failed:", e);
+      setUser(null);
+      setDropdownOpen(false);
+    }
+  };
+
+  const displayName = user ? (user.displayName || `${user.firstName} ${user.lastName}` || user.email) : "User";
 
   return (
     <nav
@@ -206,8 +237,74 @@ export function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* CTA & User Profile Section */}
           <div className="hidden lg:flex items-center space-x-4">
+            {user ? (
+              // User Avatar Dropdown
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className={cn(
+                    "flex items-center gap-2 hover:bg-black/5 px-3 py-1.5 rounded-lg transition-all text-sm font-semibold cursor-pointer",
+                    scrolled || pathname !== "/" ? "text-secondary" : "text-white hover:bg-white/10"
+                  )}
+                >
+                  {user.avatar?.url ? (
+                    <img
+                      src={user.avatar.url}
+                      alt="Avatar"
+                      className="h-8 w-8 rounded-full object-cover border border-primary/20"
+                    />
+                  ) : (
+                    <div className="h-8 w-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary border border-secondary/20">
+                      <UserIcon className="h-5 w-5" />
+                    </div>
+                  )}
+                  <span className="truncate max-w-[120px]">{displayName}</span>
+                  <ChevronDown className="h-4 w-4 opacity-75" />
+                </button>
+
+                {dropdownOpen && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-100 bg-white shadow-xl py-2 z-50 ring-1 ring-black/5">
+                    <div className="px-4 py-2 border-b border-gray-100">
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{user.role}</p>
+                      <p className="text-sm font-bold text-gray-800 truncate">{displayName}</p>
+                    </div>
+                    {user.role === "admin" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setDropdownOpen(false)}
+                        className="flex items-center gap-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors font-medium"
+                      >
+                        <LayoutDashboard className="h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors font-medium text-left cursor-pointer"
+                    >
+                      <LogOut className="h-4 w-4" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              // Login Link/Button
+              <Link
+                href="/login"
+                className={cn(
+                  "text-sm font-bold px-4 py-2 border border-transparent rounded-[5px] transition-all hover:opacity-80",
+                  scrolled || pathname !== "/"
+                    ? "text-secondary hover:bg-secondary/5"
+                    : "text-white hover:bg-white/10"
+                )}
+              >
+                Login
+              </Link>
+            )}
+
             <Button
               asChild
               size="lg"
@@ -277,7 +374,57 @@ export function Navbar() {
                   </Link>
                 </motion.div>
               ))}
+              
               <div className="pt-4 border-t border-primary/10">
+                {user ? (
+                  // Mobile Logged In User Options
+                  <div className="mb-4 bg-white/50 p-4 rounded-xl space-y-3">
+                    <div className="flex items-center gap-3">
+                      {user.avatar?.url ? (
+                        <img
+                          src={user.avatar.url}
+                          alt="Avatar"
+                          className="h-10 w-10 rounded-full object-cover border border-primary/25"
+                        />
+                      ) : (
+                        <div className="h-10 w-10 rounded-full bg-secondary/15 flex items-center justify-center text-secondary">
+                          <UserIcon className="h-6 w-6" />
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">{user.role}</p>
+                        <p className="text-sm font-bold text-gray-800">{displayName}</p>
+                      </div>
+                    </div>
+                    {user.role === "admin" && (
+                      <Link
+                        href="/admin"
+                        onClick={() => setIsOpen(false)}
+                        className="block w-full text-center py-2.5 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors text-sm font-bold text-gray-700"
+                      >
+                        Go to Admin Dashboard
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-center py-2.5 rounded-lg bg-red-50 hover:bg-red-100 transition-colors text-sm font-bold text-red-600 cursor-pointer"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                ) : (
+                  // Mobile Login Button
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full mb-3 rounded-[5px] border-2 border-secondary text-secondary font-bold h-12 hover:bg-secondary hover:text-white"
+                  >
+                    <Link href="/login" onClick={() => setIsOpen(false)}>
+                      Login
+                    </Link>
+                  </Button>
+                )}
+
                 <Button
                   asChild
                   className="w-full rounded-[5px] bg-secondary font-black text-white h-14 shadow-lg shadow-secondary/25 hover:bg-deep-teal focus-visible:ring-secondary flex items-center justify-center gap-2"
@@ -286,11 +433,13 @@ export function Navbar() {
                     href="https://shop.simplydiegos.com/products/shop/"
                     target="_blank"
                     className="flex items-center gap-2"
+                    onClick={() => setIsOpen(false)}
                   >
                     <ShoppingCartIcon className="h-4 w-4" />
                     <span>Shop Online</span>
                   </Link>
                 </Button>
+
                 <div className="mt-4 rounded-[5px] bg-white p-4 text-sm font-bold text-foreground shadow-sm">
                   <a href="tel:+15059900099" className="flex items-center gap-2 text-base text-secondary">
                     <PhoneIcon className="h-4 w-4" />

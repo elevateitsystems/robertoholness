@@ -50,7 +50,7 @@ function VerifyEmailForm() {
       if (verifiedUser && verifiedUser.role === "admin") {
         router.push("/admin");
       } else {
-        router.push("/");
+        router.push("/verify-success");
       }
     } catch (err: any) {
       setError(err.message || "Failed to verify email");

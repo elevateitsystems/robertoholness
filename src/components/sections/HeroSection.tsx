@@ -131,7 +131,7 @@ export function HeroSection() {
     async function loadHero() {
       try {
         // const res = await heroApi.get();
-        const res = null; // Simulate no database content for now
+        const res: any = null; // Simulate no database content for now
         if (res?.data) {
           setHeroData({
             title: res.data.title || HERO_TITLE,
