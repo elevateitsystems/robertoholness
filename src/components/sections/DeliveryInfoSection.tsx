@@ -18,7 +18,7 @@ export function DeliveryInfoSection() {
   return (
     <section className="relative overflow-hidden bg-white py-16 md:py-24">
       <div className="pink-paw-pattern absolute inset-0 opacity-[0.035]" />
-      <div className="absolute inset-x-0 top-0 h-1 bg-secondary" />
+      {/* <div className="absolute inset-x-0 top-0 h-1 bg-secondary" /> */}
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr]">
           <motion.div

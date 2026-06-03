@@ -63,7 +63,9 @@ export function CustomerReviews() {
           description: item.description,
           rating: item.rating,
           authorName: item.user
-            ? `${item.user.firstName || ""} ${item.user.lastName || ""}`.trim() || item.user.displayName || "Anonymous"
+            ? `${item.user.firstName || ""} ${item.user.lastName || ""}`.trim() ||
+              item.user.displayName ||
+              "Anonymous"
             : "Anonymous",
           createdAt: item.createdAt,
         }));
@@ -78,7 +80,13 @@ export function CustomerReviews() {
         if (list.length > 0 && list.length <= 3) {
           const originalList = [...list];
           while (list.length < 8) {
-            list = [...list, ...originalList.map((r, i) => ({ ...r, id: `${r.id}-dup-${list.length}-${i}` }))];
+            list = [
+              ...list,
+              ...originalList.map((r, i) => ({
+                ...r,
+                id: `${r.id}-dup-${list.length}-${i}`,
+              })),
+            ];
           }
         }
         setReviews(list);
@@ -119,7 +127,7 @@ export function CustomerReviews() {
   const prevSlide = () => {
     if (reviews.length === 0) return;
     setCurrentIndex((prev) =>
-      prev === 0 ? reviews.length - cardsToShow : prev - 1
+      prev === 0 ? reviews.length - cardsToShow : prev - 1,
     );
   };
 
@@ -184,19 +192,15 @@ export function CustomerReviews() {
     }
   };
 
-  const handleGoogleLoginPlaceholder = () => {
-    setLoginError("Google Sign-In is not configured on the backend server. Please log in with email and password.");
-  };
-
   const totalDots = Math.max(0, reviews.length - cardsToShow + 1);
 
   return (
     <section className="py-16 bg-[#FFF8F0] relative overflow-hidden">
+      <div className="pink-paw-pattern absolute inset-0 opacity-[0.035]" />
+      {/* <div className="absolute inset-x-0 top-0 h-1 bg-secondary" /> */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
         {/* Main Box Wrapper - Using Brand blue to deep-teal gradient */}
         <div className="bg-gradient-to-r from-secondary to-deep-teal rounded-[30px] p-8 md:p-12 text-white relative shadow-xl min-h-[300px]">
-          
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center mb-10">
             {/* Left Header */}
             <div className="lg:col-span-2 space-y-4">
@@ -204,7 +208,8 @@ export function CustomerReviews() {
                 Customer Reviews
               </h2>
               <p className="text-white/90 text-base md:text-lg leading-relaxed max-w-xl">
-                We take pride in serving the Albuquerque pet community. Read through honest reviews from pet parents like you.
+                We take pride in serving the Albuquerque pet community. Read
+                through honest reviews from pet parents like you.
               </p>
               <div className="flex gap-4 pt-2">
                 <button
@@ -244,14 +249,15 @@ export function CustomerReviews() {
 
         {/* Carousel Overlay Container */}
         <div className="relative -mt-16 sm:-mt-20 md:-mt-24 px-4 sm:px-8">
-          
           {loading ? (
             <div className="flex justify-center items-center py-20">
               <Loader2 className="h-10 w-10 text-secondary animate-spin" />
             </div>
           ) : reviews.length === 0 ? (
             <div className="bg-white rounded-3xl p-12 text-center shadow-md">
-              <p className="text-gray-500 font-medium">No reviews yet. Be the first to leave one!</p>
+              <p className="text-gray-500 font-medium">
+                No reviews yet. Be the first to leave one!
+              </p>
             </div>
           ) : (
             <div className="relative">
@@ -330,7 +336,7 @@ export function CustomerReviews() {
               )}
 
               {/* Slider Dots Indicator */}
-              {totalDots > 1 && (
+              {/* {totalDots > 1 && (
                 <div className="flex justify-center gap-2 mt-4">
                   {[...Array(totalDots)].map((_, index) => (
                     <button
@@ -345,7 +351,7 @@ export function CustomerReviews() {
                     />
                   ))}
                 </div>
-              )}
+              )} */}
             </div>
           )}
         </div>
@@ -399,17 +405,27 @@ export function CustomerReviews() {
                             stroke="currentColor"
                             strokeWidth={2}
                           >
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M5 13l4 4L19 7"
+                            />
                           </svg>
                         </div>
-                        <h4 className="text-lg font-bold text-gray-800">Thank you!</h4>
-                        <p className="text-sm text-gray-500">Your review was submitted successfully.</p>
+                        <h4 className="text-lg font-bold text-gray-800">
+                          Thank you!
+                        </h4>
+                        <p className="text-sm text-gray-500">
+                          Your review was submitted successfully.
+                        </p>
                       </div>
                     ) : (
                       <>
                         {/* Rating Stars Input */}
                         <div className="space-y-2">
-                          <label className="block text-sm font-bold text-gray-700">Rating</label>
+                          <label className="block text-sm font-bold text-gray-700">
+                            Rating
+                          </label>
                           <div className="flex gap-2">
                             {[1, 2, 3, 4, 5].map((star) => (
                               <button
@@ -432,13 +448,18 @@ export function CustomerReviews() {
 
                         {/* Text description */}
                         <div className="space-y-2">
-                          <label htmlFor="description" className="block text-sm font-bold text-gray-700">
+                          <label
+                            htmlFor="description"
+                            className="block text-sm font-bold text-gray-700"
+                          >
                             Your Review
                           </label>
                           <Textarea
                             id="description"
                             value={descriptionInput}
-                            onChange={(e) => setDescriptionInput(e.target.value)}
+                            onChange={(e) =>
+                              setDescriptionInput(e.target.value)
+                            }
                             placeholder="Tell us what you loved about our service..."
                             className="min-h-[120px] rounded-xl border-gray-200"
                             required
@@ -472,12 +493,16 @@ export function CustomerReviews() {
                       </div>
                     )}
                     <p className="text-gray-600 text-xs md:text-sm">
-                      Please log in to complete your review. You will be returned directly back to your written review.
+                      Please log in to complete your review. You will be
+                      returned directly back to your written review.
                     </p>
 
                     <p className="text-xs md:text-sm text-gray-500 text-center">
                       Don&apos;t have an account?{" "}
-                      <Link href="/register" className="text-primary hover:underline font-semibold cursor-pointer">
+                      <Link
+                        href="/register"
+                        className="text-primary hover:underline font-semibold cursor-pointer"
+                      >
                         Register here
                       </Link>
                     </p>
@@ -488,7 +513,10 @@ export function CustomerReviews() {
 
                     <form onSubmit={handleInlineLogin} className="space-y-4">
                       <div className="space-y-1">
-                        <label htmlFor="email" className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label
+                          htmlFor="email"
+                          className="block text-xs font-bold text-gray-700 uppercase tracking-wider"
+                        >
                           Email Address
                         </label>
                         <Input
@@ -503,7 +531,10 @@ export function CustomerReviews() {
                       </div>
 
                       <div className="space-y-1">
-                        <label htmlFor="password" className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
+                        <label
+                          htmlFor="password"
+                          className="block text-xs font-bold text-gray-700 uppercase tracking-wider"
+                        >
                           Password
                         </label>
                         <Input

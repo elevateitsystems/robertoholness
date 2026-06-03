@@ -53,7 +53,7 @@ const socialLinks = [
 
 export function SocialMediaSection() {
   return (
-    <section className="relative overflow-hidden bg-warm-cream py-14 md:py-20">
+    <section className="relative overflow-hidden bg-white py-14 md:py-20">
       <div className="pink-paw-pattern absolute inset-0 opacity-[0.045]" />
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <motion.div
