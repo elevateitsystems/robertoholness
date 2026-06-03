@@ -15,81 +15,128 @@ interface Review {
   id: string;
   description: string;
   rating: number;
-  authorName: string;
   createdAt: string;
+  user: {
+    firstName?: string;
+    lastName?: string;
+    displayName?: string;
+  };
+}
+
+function ReviewCard({ review }: { review: Review }) {
+  const [expanded, setExpanded] = useState(false);
+
+  const words = review.description.trim().split(/\s+/).filter(Boolean);
+  const overflow = words.length > 20;
+
+  const visibleDescription =
+    overflow && !expanded
+      ? `${words.slice(0, 20).join(" ")}...`
+      : review.description;
+
+  const authorName =
+    `${review.user?.firstName || ""} ${review.user?.lastName || ""}`.trim() ||
+    review.user?.displayName ||
+    "Anonymous";
+
+  return (
+    <div className="bg-[#f4fce3] border border-[#d2f094] text-slate-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-lg min-h-[260px] flex-shrink-0">
+      <div className="flex gap-0.5">
+        {[...Array(5)].map((_, idx) => (
+          <Star
+            key={idx}
+            className={`h-4 w-4 ${
+              idx < review.rating
+                ? "fill-[#A2D600] text-[#A2D600]"
+                : "text-gray-300"
+            }`}
+          />
+        ))}
+      </div>
+
+      <div className="mt-4 flex-1">
+        <p className="text-slate-700 text-sm md:text-base font-semibold leading-relaxed italic">
+          “{visibleDescription}”
+        </p>
+
+        {overflow && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="text-sm font-semibold text-secondary hover:text-secondary-dark transition-colors p-0"
+          >
+            {expanded ? "See less" : "See more"}
+          </button>
+        )}
+      </div>
+
+      <h4 className="text-[#017ce8] font-extrabold text-sm md:text-base uppercase tracking-wide mt-4">
+        {authorName}
+      </h4>
+    </div>
+  );
+}
+
+function ReviewCardsSkeleton() {
+  return (
+    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {[...Array(3)].map((_, index) => (
+        <div
+          key={index}
+          className="bg-[#f4fce3] border border-[#d2f094] rounded-3xl p-6 md:p-8 shadow-lg h-[260px] animate-pulse"
+        >
+          <div className="h-4 w-24 bg-gray-200 rounded mb-4" />
+          <div className="space-y-3 mb-6">
+            <div className="h-4 bg-gray-200 rounded" />
+            <div className="h-4 bg-gray-200 rounded w-5/6" />
+            <div className="h-4 bg-gray-200 rounded w-3/4" />
+          </div>
+          <div className="h-5 w-32 bg-gray-200 rounded" />
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export function CustomerReviews() {
   const user = useAppStore((state: any) => state.user);
   const setUser = useAppStore((state: any) => state.setUser);
 
-  // States
   const [reviews, setReviews] = useState<Review[]>([]);
   const [avgRating, setAvgRating] = useState<number>(5);
   const [totalReviews, setTotalReviews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
 
-  // Carousel
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [cardsToShow, setCardsToShow] = useState<number>(3);
 
-  // Modal
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalStep, setModalStep] = useState<"form" | "login">("form");
 
-  // Form input states
-  const [ratingInput, setRatingInput] = useState<number>(5);
-  const [descriptionInput, setDescriptionInput] = useState<string>("");
+  const [ratingInput, setRatingInput] = useState(5);
+  const [descriptionInput, setDescriptionInput] = useState("");
 
-  // Login states
-  const [loginEmail, setLoginEmail] = useState<string>("");
-  const [loginPassword, setLoginPassword] = useState<string>("");
+  const [loginEmail, setLoginEmail] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
   const [loginError, setLoginError] = useState<string | null>(null);
-  const [loginSubmitting, setLoginSubmitting] = useState<boolean>(false);
+  const [loginSubmitting, setLoginSubmitting] = useState(false);
 
-  // Submit states
-  const [submitSubmitting, setSubmitSubmitting] = useState<boolean>(false);
-  const [submitSuccess, setSubmitSuccess] = useState<boolean>(false);
+  const [submitSubmitting, setSubmitSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Fetch reviews from backend
+  // =========================
+  // FETCH REVIEWS
+  // =========================
   const loadReviews = async () => {
     try {
       setLoading(true);
       const res = await reviewsApi.getAll();
+
       if (res.success && res.data) {
-        const backendReviews = res.data.map((item: any) => ({
-          id: item.id,
-          description: item.description,
-          rating: item.rating,
-          authorName: item.user
-            ? `${item.user.firstName || ""} ${item.user.lastName || ""}`.trim() ||
-              item.user.displayName ||
-              "Anonymous"
-            : "Anonymous",
-          createdAt: item.createdAt,
-        }));
-
+        setReviews(res.data);
         setAvgRating(res.meta?.pagination?.avgRating || 5);
-        setTotalReviews(res.meta?.pagination?.total || backendReviews.length);
-
-        // Process reviews: Slice to first 10 for slider
-        let list = backendReviews.slice(0, 10);
-
-        // If backend has 3 or fewer reviews, repeat them to keep slider functional
-        if (list.length > 0 && list.length <= 3) {
-          const originalList = [...list];
-          while (list.length < 8) {
-            list = [
-              ...list,
-              ...originalList.map((r, i) => ({
-                ...r,
-                id: `${r.id}-dup-${list.length}-${i}`,
-              })),
-            ];
-          }
-        }
-        setReviews(list);
+        setTotalReviews(res.meta?.pagination?.total || res?.data?.length);
       }
     } catch (err) {
       console.error("Failed to load reviews:", err);
@@ -102,36 +149,53 @@ export function CustomerReviews() {
     loadReviews();
   }, []);
 
-  // Update cards in view depending on screen width
+  // =========================
+  // RESPONSIVE (NO LISTENERS)
+  // =========================
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setCardsToShow(1);
-      } else if (window.innerWidth < 1024) {
-        setCardsToShow(2);
-      } else {
-        setCardsToShow(3);
-      }
+    const mobile = window.matchMedia("(max-width: 639px)");
+    const tablet = window.matchMedia(
+      "(min-width: 640px) and (max-width: 1023px)",
+    );
+    const desktop = window.matchMedia("(min-width: 1024px)");
+
+    const update = () => {
+      if (mobile.matches) setCardsToShow(1);
+      else if (tablet.matches) setCardsToShow(2);
+      else if (desktop.matches) setCardsToShow(3);
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+
+    update();
+
+    mobile.addEventListener("change", update);
+    tablet.addEventListener("change", update);
+    desktop.addEventListener("change", update);
+
+    return () => {
+      mobile.removeEventListener("change", update);
+      tablet.removeEventListener("change", update);
+      desktop.removeEventListener("change", update);
+    };
   }, []);
 
-  // Navigation handlers
+  // =========================
+  // CAROUSEL LOGIC
+  // =========================
+  const maxIndex = Math.max(0, reviews.length - cardsToShow);
+
   const nextSlide = () => {
-    if (reviews.length === 0) return;
-    setCurrentIndex((prev) => (prev + 1) % (reviews.length - cardsToShow + 1));
+    setCurrentIndex((prev) => Math.min(prev + 1, maxIndex));
   };
 
   const prevSlide = () => {
-    if (reviews.length === 0) return;
-    setCurrentIndex((prev) =>
-      prev === 0 ? reviews.length - cardsToShow : prev - 1,
-    );
+    setCurrentIndex((prev) => Math.max(prev - 1, 0));
   };
 
-  // Leave a review handlers
+  const totalDots = maxIndex + 1;
+
+  // =========================
+  // MODAL + AUTH LOGIC (UNCHANGED)
+  // =========================
   const handleOpenModal = () => {
     setIsModalOpen(true);
     setModalStep("form");
@@ -146,25 +210,24 @@ export function CustomerReviews() {
 
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitError(null);
 
-    // If user is not logged in, switch to login form inline
     if (!user) {
       setModalStep("login");
       return;
     }
 
-    // Submit review
     try {
       setSubmitSubmitting(true);
       await reviewsApi.create({
         rating: ratingInput,
         description: descriptionInput,
       });
+
       setSubmitSuccess(true);
+
       setTimeout(() => {
         setIsModalOpen(false);
-        loadReviews(); // reload reviews
+        loadReviews();
       }, 2000);
     } catch (err: any) {
       setSubmitError(err.message || "Failed to submit review");
@@ -175,24 +238,21 @@ export function CustomerReviews() {
 
   const handleInlineLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoginError(null);
     try {
       setLoginSubmitting(true);
       const res = await authApi.login({
         email: loginEmail,
         password: loginPassword,
       });
+
       setUser(res.data.user);
-      // Switch back to review form
       setModalStep("form");
     } catch (err: any) {
-      setLoginError(err.message || "Failed to login. Please try again.");
+      setLoginError(err.message || "Login failed");
     } finally {
       setLoginSubmitting(false);
     }
   };
-
-  const totalDots = Math.max(0, reviews.length - cardsToShow + 1);
 
   return (
     <section className="py-16 bg-[#FFF8F0] relative overflow-hidden">
@@ -250,8 +310,8 @@ export function CustomerReviews() {
         {/* Carousel Overlay Container */}
         <div className="relative -mt-16 sm:-mt-20 md:-mt-24 px-4 sm:px-8">
           {loading ? (
-            <div className="flex justify-center items-center py-20">
-              <Loader2 className="h-10 w-10 text-secondary animate-spin" />
+            <div className="bg-white rounded-3xl p-8 shadow-md">
+              <ReviewCardsSkeleton />
             </div>
           ) : reviews.length === 0 ? (
             <div className="bg-white rounded-3xl p-12 text-center shadow-md">
@@ -261,97 +321,63 @@ export function CustomerReviews() {
             </div>
           ) : (
             <div className="relative">
-              {/* Slider Viewport */}
               <div className="overflow-hidden">
                 <motion.div
                   className="flex gap-6 py-6"
                   animate={{
-                    x: `calc(-${currentIndex * (100 / cardsToShow)}% - ${
-                      currentIndex * (24 / cardsToShow)
-                    }px)`,
+                    x: `-${currentIndex * (100 / cardsToShow)}%`,
                   }}
                   transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                  style={{
-                    width: `calc(${reviews.length * (100 / cardsToShow)}% + ${
-                      (reviews.length - 1) * 24
-                    }px)`,
-                  }}
                 >
                   {reviews.map((review) => (
                     <div
                       key={review.id}
-                      className="bg-[#f4fce3] border border-[#d2f094] text-slate-800 rounded-3xl p-6 md:p-8 flex flex-col justify-between shadow-lg h-[260px]"
+                      className="flex-shrink-0"
                       style={{
-                        width: `calc(100% / ${reviews.length} - 16px)`,
+                        flex: `0 0 ${100 / cardsToShow}%`,
                       }}
                     >
-                      {/* Star Rating inside card - using brand green color for stars */}
-                      <div className="flex gap-0.5">
-                        {[...Array(5)].map((_, idx) => (
-                          <Star
-                            key={idx}
-                            className={`h-4 w-4 ${
-                              idx < review.rating
-                                ? "fill-[#A2D600] text-[#A2D600]"
-                                : "text-gray-300"
-                            }`}
-                          />
-                        ))}
-                      </div>
-
-                      {/* Review Comment */}
-                      <p className="text-slate-700 text-sm md:text-base font-semibold leading-relaxed line-clamp-4 my-4 flex-grow italic">
-                        &ldquo;{review.description}&rdquo;
-                      </p>
-
-                      {/* Review Author */}
-                      <div>
-                        <h4 className="text-[#017ce8] font-extrabold text-sm md:text-base truncate uppercase tracking-wide">
-                          {review.authorName}
-                        </h4>
-                      </div>
+                      <ReviewCard review={review} />
                     </div>
                   ))}
                 </motion.div>
               </div>
 
-              {/* Slider Navigation Arrows */}
-              {totalDots > 1 && (
+              {/* ARROWS */}
+              {reviews.length > cardsToShow && (
                 <>
                   <button
                     onClick={prevSlide}
-                    className="absolute -left-4 sm:-left-8 top-1/2 -translate-y-1/2 bg-white text-secondary hover:bg-secondary hover:text-white w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-10 cursor-pointer"
-                    aria-label="Previous slide"
+                    className="absolute -left-4 top-1/2 -translate-y-1/2 bg-white text-secondary w-10 h-10 rounded-full shadow flex items-center justify-center"
                   >
-                    <ChevronLeft className="h-5 sm:h-6 w-5 sm:w-6" />
+                    <ChevronLeft />
                   </button>
+
                   <button
                     onClick={nextSlide}
-                    className="absolute -right-4 sm:-right-8 top-1/2 -translate-y-1/2 bg-white text-secondary hover:bg-secondary hover:text-white w-10 sm:w-12 h-10 sm:h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-300 z-10 cursor-pointer"
-                    aria-label="Next slide"
+                    className="absolute -right-4 top-1/2 -translate-y-1/2 bg-white text-secondary w-10 h-10 rounded-full shadow flex items-center justify-center"
                   >
-                    <ChevronRight className="h-5 sm:h-6 w-5 sm:w-6" />
+                    <ChevronRight />
                   </button>
                 </>
               )}
 
-              {/* Slider Dots Indicator */}
-              {/* {totalDots > 1 && (
+              {/* DOTS */}
+              {totalDots > 1 && (
                 <div className="flex justify-center gap-2 mt-4">
-                  {[...Array(totalDots)].map((_, index) => (
+                  {[...Array(totalDots)].map((_, i) => (
                     <button
-                      key={index}
-                      onClick={() => setCurrentIndex(index)}
-                      className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
-                        currentIndex === index
+                      key={i}
+                      onClick={() => setCurrentIndex(i)}
+                      className={`h-2 rounded-full transition-all ${
+                        currentIndex === i
                           ? "w-8 bg-secondary"
-                          : "w-2 bg-secondary/30 hover:bg-secondary/60"
+                          : "w-2 bg-secondary/30"
                       }`}
-                      aria-label={`Go to slide ${index + 1}`}
                     />
                   ))}
                 </div>
-              )} */}
+              )}
             </div>
           )}
         </div>
