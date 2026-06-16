@@ -35,11 +35,14 @@ export function DeliveryInfoSection() {
 
             <div className="space-y-4">
               <h2 className="max-w-3xl text-2xl font-black leading-tight sm:text-3xl md:text-5xl">
-                <span className="text-secondary">Get your pet&apos;s food delivered right to </span>
+                <span className="text-secondary">
+                  Get your pet&apos;s food delivered right to{" "}
+                </span>
                 <span className="text-primary">your door!</span>
               </h2>
               <p className="text-base font-semibold text-muted-foreground md:text-lg">
-                Place your order today and let Simply Diego&apos;s handle the rest.
+                Place your order today and let Simply Diego&apos;s handle the
+                rest.
               </p>
             </div>
 

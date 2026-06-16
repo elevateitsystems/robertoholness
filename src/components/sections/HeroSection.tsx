@@ -123,7 +123,7 @@ export function HeroSection() {
   const [heroData, setHeroData] = useState<any>({
     title: HERO_TITLE,
     description: HERO_DESCRIPTION_LINES.join("\n\n"),
-    imageUrl: null
+    imageUrl: null,
   });
   const [loading, setLoading] = useState(true);
 
@@ -135,8 +135,9 @@ export function HeroSection() {
         if (res?.data) {
           setHeroData({
             title: res.data.title || HERO_TITLE,
-            description: res.data.description || HERO_DESCRIPTION_LINES.join("\n\n"),
-            imageUrl: res.data.image?.url || null
+            description:
+              res.data.description || HERO_DESCRIPTION_LINES.join("\n\n"),
+            imageUrl: res.data.image?.url || null,
           });
         }
       } catch {
@@ -148,28 +149,28 @@ export function HeroSection() {
     loadHero();
   }, []);
 
-const renderTitle = (title: string) => {
-  const words = title.trim().split(" ");
+  const renderTitle = (title: string) => {
+    const words = title.trim().split(" ");
 
-  const highlightedText = words.slice(0, 4).join(" ");
-  const remainingText = words.slice(4).join(" ");
+    const highlightedText = words.slice(0, 4).join(" ");
+    const remainingText = words.slice(4).join(" ");
 
-  return (
-    <>
-      <motion.span
-        className="inline-block gradient-text"
-        animate={{
-          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
-        }}
-        transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
-        style={{ backgroundSize: "200% 200%" }}
-      >
-        {highlightedText}
-      </motion.span>
-      {remainingText && ` ${remainingText}`}
-    </>
-  );
-};
+    return (
+      <>
+        <motion.span
+          className="inline-block gradient-text"
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: "linear" }}
+          style={{ backgroundSize: "200% 200%" }}
+        >
+          {highlightedText}
+        </motion.span>
+        {remainingText && ` ${remainingText}`}
+      </>
+    );
+  };
 
   if (loading) {
     return (
@@ -177,7 +178,7 @@ const renderTitle = (title: string) => {
         {/* Background Effects */}
         <div className="absolute inset-0 paw-pattern-light opacity-30" />
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]" />
-        
+
         <div className="container mx-auto px-4 md:px-6 relative z-10 w-full">
           <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16 w-full">
             {/* Shimmer Content Side */}
@@ -217,8 +218,18 @@ const renderTitle = (title: string) => {
             <div className="flex-1 relative w-full max-w-xl lg:max-w-2xl animate-pulse">
               <div className="relative aspect-[4/5] md:aspect-square rounded-[5px] bg-white/10 border-2 border-white/5 shadow-2xl overflow-hidden w-full h-full flex items-center justify-center">
                 <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white/20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  <svg
+                    className="w-8 h-8 text-white/20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
                   </svg>
                 </div>
               </div>
@@ -228,8 +239,15 @@ const renderTitle = (title: string) => {
 
         {/* Bottom wave divider */}
         <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-          <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-            <path fill="var(--background)" d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z" />
+          <svg
+            viewBox="0 0 1440 80"
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-full h-auto"
+          >
+            <path
+              fill="var(--background)"
+              d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
+            />
           </svg>
         </div>
       </section>
@@ -237,9 +255,9 @@ const renderTitle = (title: string) => {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-gradient-to-br from-primary via-primary-dark to-[#800040]">
+    <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
       {/* ── Background Effects ── */}
-      <div className="absolute inset-0 paw-pattern-light opacity-30" />
+      <div className="absolute inset-0 pink-paw-pattern opacity-[0.035]" />
 
       {/* Animated gradient orbs */}
       <motion.div
@@ -327,7 +345,7 @@ const renderTitle = (title: string) => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
-              className="text-2xl sm:text-3xl md:text-5xl font-heading font-black text-white leading-[1.12] max-w-3xl mx-auto lg:mx-0"
+              className="text-2xl sm:text-3xl md:text-5xl font-heading font-black text-secondary leading-[1.12] max-w-3xl mx-auto lg:mx-0"
             >
               {renderTitle(heroData.title)}
             </motion.h1>
@@ -336,20 +354,26 @@ const renderTitle = (title: string) => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-sm sm:text-base md:text-lg text-white/90 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-foreground max-w-2xl mx-auto lg:mx-0 leading-relaxed"
             >
-        <ul className="space-y-3 text-left">
-  {heroData.description.split("\n\n").map((line: string, index: number) => (
-    <li
-      key={line}
-      className="list-disc ml-5 marker:text-secondary"
-    >
-      <span className={index === 1 ? "font-normal text-white" : ""}>
-        {line}
-      </span>
-    </li>
-  ))}
-</ul>
+              <ul className="space-y-3 text-left">
+                {heroData.description
+                  .split("\n\n")
+                  .map((line: string, index: number) => (
+                    <li
+                      key={line}
+                      className="list-disc ml-5 marker:text-secondary"
+                    >
+                      <span
+                        className={
+                          index === 1 ? "font-normal text-foreground" : ""
+                        }
+                      >
+                        {line}
+                      </span>
+                    </li>
+                  ))}
+              </ul>
             </motion.div>
 
             <motion.div
@@ -398,24 +422,20 @@ const renderTitle = (title: string) => {
             >
               {[
                 { label: "Years of Caring for Your Pets", value: "9+" },
-                { label: "Google Rating", value: "4.9★"},
+                { label: "Google Rating", value: "4.9★" },
               ].map((stat) => (
-                <div
-                  key={stat.label}
-                  className="flex items-baseline gap-2"
-                >
+                <div key={stat.label} className="flex items-baseline gap-2">
                   <span
                     className={cn(
-                      "text-3xl font-black leading-none text-secondary drop-shadow-[0_4px_10px_rgba(1,124,232,0.35)]",
-                      
+                      "text-3xl font-black leading-none text-foreground drop-shadow-[0_4px_10px_rgba(1,124,232,0.35)]",
                     )}
                   >
                     {stat.value}
                   </span>
                   <span
                     className={cn(
-                      "text-sm font-semibold uppercase tracking-wider text-white/90",
-                  "text-white",
+                      "text-sm font-semiboldd uppercase tracking-wider text-foreground",
+                      "text-foreground",
                     )}
                   >
                     {stat.label}
@@ -497,7 +517,7 @@ const renderTitle = (title: string) => {
           className="w-full h-auto"
         >
           <path
-            fill="var(--background)"
+            fill="#ED127C"
             d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
           />
         </svg>
