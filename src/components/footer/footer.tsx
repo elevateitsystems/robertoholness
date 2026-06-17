@@ -128,10 +128,11 @@ export function Footer() {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const [footerData, setFooterData] = useState<any>({
-    description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
-    location: "7321 San Antonio Dr NE, Albuquerque, NM 87109",
+    description:
+      "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
+    location: "3301 Menaul Blvd NE, Suite 10, Albuquerque, NM 87107",
     phoneNumber: "505-990-0099",
-    email: "info@simplydlegos.com"
+    email: "info@simplydlegos.com",
   });
 
   useEffect(() => {
@@ -197,7 +198,11 @@ export function Footer() {
                 alt="Simply Diego's Logo"
                 width={isHomePage ? 300 : 180}
                 height={isHomePage ? 120 : 60}
-                className={isHomePage ? "h-36 w-auto object-contain" : "h-24 w-auto object-contain"}
+                className={
+                  isHomePage
+                    ? "h-36 w-auto object-contain"
+                    : "h-24 w-auto object-contain"
+                }
                 style={{ width: "auto" }}
               />
             </Link>
@@ -206,13 +211,19 @@ export function Footer() {
             </p>
             <div className="flex space-x-3">
               <Link
-                href={process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/SimplyDiegos"}
+                href={
+                  process.env.NEXT_PUBLIC_FACEBOOK_URL ||
+                  "https://www.facebook.com/SimplyDiegos"
+                }
                 className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <FacebookIcon />
               </Link>
               <Link
-                href={process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://www.instagram.com/simplydiegos"}
+                href={
+                  process.env.NEXT_PUBLIC_INSTAGRAM_URL ||
+                  "https://www.instagram.com/simplydiegos"
+                }
                 className="w-11 h-11 rounded-[5px] bg-white/10 flex items-center justify-center hover:bg-secondary hover:text-white hover:scale-110 transition-all duration-300 border border-white/5"
               >
                 <InstagramIcon />
@@ -231,8 +242,14 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    target={"external" in item && item.external ? "_blank" : undefined}
-                    rel={"external" in item && item.external ? "noopener noreferrer" : undefined}
+                    target={
+                      "external" in item && item.external ? "_blank" : undefined
+                    }
+                    rel={
+                      "external" in item && item.external
+                        ? "noopener noreferrer"
+                        : undefined
+                    }
                     className="hover:text-accent-green transition-colors flex items-center gap-2 group"
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-white/40 group-hover:bg-accent-green group-hover:scale-125 transition-all" />
@@ -249,14 +266,12 @@ export function Footer() {
               <PawIcon />
               Visit Us
             </h3>
-             <ul className="space-y-6 text-base">
+            <ul className="space-y-6 text-base">
               <li className="flex items-start space-x-4">
                 <div className="mt-1 w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MapPinIcon />
                 </div>
-                <span>
-                  {displayFooterData.location}
-                </span>
+                <span>{displayFooterData.location}</span>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
@@ -288,15 +303,21 @@ export function Footer() {
             <ul className="space-y-3 text-base">
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Mon - Fri</span>{" "}
-                <span className="text-warm-orange font-bold">9:00 AM - 7:00 PM</span>
+                <span className="text-warm-orange font-bold">
+                  9:00 AM - 7:00 PM
+                </span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Saturday</span>{" "}
-                <span className="text-warm-orange font-bold">9:00 AM - 6:00 PM</span>
+                <span className="text-warm-orange font-bold">
+                  9:00 AM - 6:00 PM
+                </span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
                 <span>Sunday</span>{" "}
-                <span className="text-warm-orange font-bold">10:00 AM - 6:00 PM</span>
+                <span className="text-warm-orange font-bold">
+                  10:00 AM - 6:00 PM
+                </span>
               </li>
             </ul>
             {/* Fun CTA */}

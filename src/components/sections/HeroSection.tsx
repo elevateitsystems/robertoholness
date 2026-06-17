@@ -255,7 +255,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
+    <section className="mt-16 relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
       {/* ── Background Effects ── */}
       <div className="absolute inset-0 pink-paw-pattern opacity-[0.035]" />
 

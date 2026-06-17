@@ -10,7 +10,12 @@ import { navBarApi } from "@/lib/api/navBar";
 import { useAppStore } from "@/lib/store";
 import { authApi } from "@/lib/api/auth";
 import Image from "next/image";
-import { LogOut, User as UserIcon, ChevronDown, LayoutDashboard } from "lucide-react";
+import {
+  LogOut,
+  User as UserIcon,
+  ChevronDown,
+  LayoutDashboard,
+} from "lucide-react";
 
 const MenuIcon = ({ className }: { className?: string }) => (
   <svg
@@ -104,27 +109,30 @@ export function Navbar() {
 
   const user = useAppStore((state: any) => state.user);
   const setUser = useAppStore((state: any) => state.setUser);
-  
+
   const [navBarData, setNavBarData] = React.useState({
     contactNumber: "505-990-0099",
     timeLine: "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
     deliveryOffer: "Free Delivery on Orders Over $49",
-    navLogoUrl: "/assets/logo-without-bg.png"
+    navLogoUrl: "/assets/logo-without-bg.png",
   });
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
-    
+
     const fetchNavBar = async () => {
       try {
         const res = await navBarApi.get();
         if (res && res.data) {
           setNavBarData({
             contactNumber: res.data.contactNumber || "505-990-0099",
-            timeLine: res.data.timeLine || "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
-            deliveryOffer: res.data.deliveryOffer || "Free Delivery on Orders Over $49",
-            navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png"
+            timeLine:
+              res.data.timeLine ||
+              "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
+            deliveryOffer:
+              res.data.deliveryOffer || "Free Delivery on Orders Over $49",
+            navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png",
           });
         }
       } catch {
@@ -138,7 +146,10 @@ export function Navbar() {
 
   React.useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setDropdownOpen(false);
       }
     }
@@ -158,7 +169,9 @@ export function Navbar() {
     }
   };
 
-  const displayName = user ? (user.displayName || `${user.firstName} ${user.lastName}` || user.email) : "User";
+  const displayName = user
+    ? user.displayName || `${user.firstName} ${user.lastName}` || user.email
+    : "User";
 
   return (
     <nav
@@ -166,7 +179,8 @@ export function Navbar() {
         "fixed top-0 z-50 w-full transition-all duration-300",
         scrolled || pathname !== "/"
           ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-primary/10"
-          : "bg-transparent border-b border-transparent",
+          : "bg-white/80 backdrop-blur-xl shadow-lg shadow-primary/5 border-b border-primary/10",
+        // : "bg-transparent border-b border-transparent",
       )}
     >
       {/* Top info bar */}
@@ -174,7 +188,10 @@ export function Navbar() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex min-h-9 items-center justify-between gap-4 py-1 text-sm font-bold">
             <div className="flex items-center gap-7">
-              <a href="tel:+15059900099" className="flex items-center gap-2 text-base hover:text-accent-green transition-colors">
+              <a
+                href="tel:+15059900099"
+                className="flex items-center gap-2 text-base hover:text-accent-green transition-colors"
+              >
                 <PhoneIcon className="h-4 w-4" />
                 {navBarData.contactNumber}
               </a>
@@ -222,7 +239,8 @@ export function Navbar() {
                     ? "text-primary"
                     : scrolled || pathname !== "/"
                       ? "text-secondary hover:text-primary hover:bg-primary/5"
-                      : "text-white hover:text-secondary hover:bg-white/10",
+                      : "text-secondary hover:text-primary hover:bg-primary/5",
+                  // : "text-white hover:text-secondary hover:bg-white/10",
                 )}
               >
                 {item.name}
@@ -246,7 +264,9 @@ export function Navbar() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className={cn(
                     "flex items-center gap-2 hover:bg-black/5 px-3 py-1.5 rounded-lg transition-all text-sm font-semibold cursor-pointer",
-                    scrolled || pathname !== "/" ? "text-secondary" : "text-white hover:bg-white/10"
+                    scrolled || pathname !== "/"
+                      ? "text-secondary"
+                      : "text-white hover:bg-white/10",
                   )}
                 >
                   {user.avatar?.url ? (
@@ -267,8 +287,12 @@ export function Navbar() {
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-48 rounded-xl border border-gray-100 bg-white shadow-xl py-2 z-50 ring-1 ring-black/5">
                     <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">{user.role}</p>
-                      <p className="text-sm font-bold text-gray-800 truncate">{displayName}</p>
+                      <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">
+                        {user.role}
+                      </p>
+                      <p className="text-sm font-bold text-gray-800 truncate">
+                        {displayName}
+                      </p>
                     </div>
                     {user.role === "admin" && (
                       <Link
@@ -292,17 +316,18 @@ export function Navbar() {
               </div>
             ) : (
               // Login Link/Button
-              <Link
-                href="/login"
-                className={cn(
-                  "text-sm font-bold px-4 py-2 border border-transparent rounded-[5px] transition-all hover:opacity-80",
-                  scrolled || pathname !== "/"
-                    ? "text-secondary hover:bg-secondary/5"
-                    : "text-white hover:bg-white/10"
-                )}
-              >
-                Login
-              </Link>
+              // <Link
+              //   href="/login"
+              //   className={cn(
+              //     "text-sm font-bold px-4 py-2 border border-transparent rounded-[5px] transition-all hover:opacity-80",
+              //     scrolled || pathname !== "/"
+              //       ? "text-secondary hover:bg-secondary/5"
+              //       : "text-secondary hover:bg-secondary/5",
+              //   )}
+              // >
+              //   Login
+              // </Link>
+              <></>
             )}
 
             <Button
@@ -374,7 +399,7 @@ export function Navbar() {
                   </Link>
                 </motion.div>
               ))}
-              
+
               <div className="pt-4 border-t border-primary/10">
                 {user ? (
                   // Mobile Logged In User Options
@@ -392,8 +417,12 @@ export function Navbar() {
                         </div>
                       )}
                       <div>
-                        <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">{user.role}</p>
-                        <p className="text-sm font-bold text-gray-800">{displayName}</p>
+                        <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">
+                          {user.role}
+                        </p>
+                        <p className="text-sm font-bold text-gray-800">
+                          {displayName}
+                        </p>
                       </div>
                     </div>
                     {user.role === "admin" && (
@@ -441,7 +470,10 @@ export function Navbar() {
                 </Button>
 
                 <div className="mt-4 rounded-[5px] bg-white p-4 text-sm font-bold text-foreground shadow-sm">
-                  <a href="tel:+15059900099" className="flex items-center gap-2 text-base text-secondary">
+                  <a
+                    href="tel:+15059900099"
+                    className="flex items-center gap-2 text-base text-secondary"
+                  >
                     <PhoneIcon className="h-4 w-4" />
                     505-990-0099
                   </a>
