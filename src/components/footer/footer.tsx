@@ -180,7 +180,7 @@ export function Footer() {
       ];
 
   return (
-    <footer className="bg-gradient-to-b from-primary to-[#600030] text-white/80 relative overflow-hidden">
+    <footer className="bg-gradient-to-b from-primary to-[#f93b9f] text-white/80 relative overflow-hidden">
       {/* Paw pattern overlay */}
       <div className="absolute inset-0 paw-pattern-light opacity-50" />
 
@@ -329,9 +329,9 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-20 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white/40">
+        <div className="mt-20 border-t border-white/10 pt-10 flex flex-col md:flex-row justify-between items-center gap-6 text-sm text-white/50">
           <p>
-            © {new Date().getFullYear()} Simply Diego's. Locally owned &
+            © {new Date().getFullYear()} Simply Diego&apos;s. Locally owned &
             operated.
           </p>
           <div className="flex gap-8">
