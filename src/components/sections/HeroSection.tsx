@@ -174,7 +174,7 @@ export function HeroSection() {
 
   if (loading) {
     return (
-      <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-gradient-to-br from-primary via-primary-dark to-[#800040]">
+      <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
         {/* Background Effects */}
         <div className="absolute inset-0 paw-pattern-light opacity-30" />
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]" />
@@ -510,8 +510,8 @@ export function HeroSection() {
       </div>
 
       {/* Bottom wave divider */}
-      <div className="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-        <svg
+      <div className="absolute bottom-0 left-0 overflow-hidden leading-none h-px w-full bg-primary">
+        {/* <svg
           viewBox="0 0 1440 80"
           xmlns="http://www.w3.org/2000/svg"
           className="w-full h-auto"
@@ -520,7 +520,7 @@ export function HeroSection() {
             fill="#ED127C"
             d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,80 L0,80 Z"
           />
-        </svg>
+        </svg> */}
       </div>
     </section>
   );
