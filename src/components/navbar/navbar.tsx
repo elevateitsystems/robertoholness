@@ -130,8 +130,7 @@ export function Navbar() {
             timeLine:
               res.data.timeLine ||
               "Mon-Fri: 9am-7pm | Sat: 9am-6pm | Sun: 10am-6pm",
-            deliveryOffer:
-              res.data.deliveryOffer || "Free Delivery on Orders Over $49",
+            deliveryOffer: "Free Delivery on Orders Over $49",
             navLogoUrl: res.data.navLogoUrl || "/assets/logo-without-bg.png",
           });
         }
@@ -184,36 +183,34 @@ export function Navbar() {
       )}
     >
       {/* Top info bar */}
-      <div className="hidden lg:block bg-primary text-white">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="flex min-h-9 items-center justify-between gap-4 py-1 text-sm font-bold">
-            <div className="flex items-center gap-7">
-              <a
-                href="tel:+15059900099"
-                className="flex items-center gap-2 text-base hover:text-accent-green transition-colors"
-              >
-                <PhoneIcon className="h-4 w-4" />
-                {navBarData.contactNumber}
-              </a>
-              <Link
-                href={GOOGLE_BUSINESS_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm hover:text-accent-green transition-colors"
-                aria-label="View Simply Diego's current business hours on Google"
-              >
-                {navBarData.timeLine}
+      <div className="bg-primary text-white">
+        <div className="container mx-auto px-4 py-2 md:px-6">
+          <div className="flex flex-col gap-2 text-sm font-bold">
+            <p className="text-center text-xs font-bold leading-relaxed sm:text-sm">
+              Welcome to Simply Diego’s—Albuquerque’s happy place for pets and their people! 🐾
+            </p>
+            <div className="flex min-h-9 flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs font-semibold sm:text-sm">
+              <div className="flex items-center gap-4 sm:gap-7">
+                <a href="tel:+15059900099" className="hidden items-center gap-2 hover:text-accent-green transition-colors sm:flex">
+                  <PhoneIcon className="h-4 w-4" />
+                  {navBarData.contactNumber}
+                </a>
+                <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="hidden hover:text-accent-green transition-colors md:block" aria-label="View Simply Diego's current business hours on Google">
+                  {navBarData.timeLine}
+                </Link>
+              </div>
+              <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="ml-auto text-sm font-black uppercase tracking-wide hover:text-accent-green sm:text-base">
+                🐾 {navBarData.deliveryOffer}
+              </Link>
+              <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="shrink-0 text-sm font-black underline decoration-white/60 underline-offset-4 hover:text-accent-green sm:text-base">
+                Visit Us
               </Link>
             </div>
-            <span className="rounded-[5px] px-4 py-1.5 text-sm font-black uppercase tracking-wide text-white">
-              🐾 {navBarData.deliveryOffer}
-            </span>
           </div>
         </div>
       </div>
-
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex min-h-16 items-center justify-between py-1 lg:min-h-20">
+        <div className="flex min-h-16 items-center justify-between py-1 lg:min-h-24">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
             <Image
@@ -221,7 +218,7 @@ export function Navbar() {
               alt="Simply Diego's Logo"
               width={220}
               height={80}
-              className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-16 lg:h-20"
+              className="h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-22 lg:h-28"
               style={{ width: "auto" }}
               priority
             />

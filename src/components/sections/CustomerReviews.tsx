@@ -106,6 +106,7 @@ export function CustomerReviews() {
   const [avgRating, setAvgRating] = useState<number>(5);
   const [totalReviews, setTotalReviews] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [cardsToShow, setCardsToShow] = useState<number>(3);
@@ -131,6 +132,7 @@ export function CustomerReviews() {
   const loadReviews = async () => {
     try {
       setLoading(true);
+      setLoadError(false);
       const res = await reviewsApi.getAll();
 
       if (res.success && res.data) {
@@ -138,8 +140,8 @@ export function CustomerReviews() {
         setAvgRating(res.meta?.pagination?.avgRating || 5);
         setTotalReviews(res.meta?.pagination?.total || res?.data?.length);
       }
-    } catch (err) {
-      console.error("Failed to load reviews:", err);
+    } catch {
+      setLoadError(true);
     } finally {
       setLoading(false);
     }
@@ -315,9 +317,20 @@ export function CustomerReviews() {
             </div>
           ) : reviews.length === 0 ? (
             <div className="bg-white rounded-3xl p-12 text-center shadow-md">
-              <p className="text-gray-500 font-medium">
-                No reviews yet. Be the first to leave one!
+              <p className="text-gray-500 font-medium" role="status">
+                {loadError
+                  ? "Customer reviews are temporarily unavailable. Please try again shortly."
+                  : "No reviews yet. Be the first to leave one!"}
               </p>
+              {loadError && (
+                <button
+                  type="button"
+                  onClick={loadReviews}
+                  className="mt-4 font-bold text-primary hover:underline"
+                >
+                  Try again
+                </button>
+              )}
             </div>
           ) : (
             <div className="relative">

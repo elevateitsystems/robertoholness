@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { ShieldCheck } from "lucide-react";
 
 interface PolicySection {
   title: string;
@@ -27,7 +28,7 @@ export function PolicyContent({ sections }: PolicyContentProps) {
             >
               <h2 className="text-2xl font-black text-secondary mb-6 flex items-center gap-3">
                 <span className="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">
-                  {index + 1}
+                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
                 </span>
                 {section.title}
               </h2>
@@ -35,7 +36,19 @@ export function PolicyContent({ sections }: PolicyContentProps) {
                 {Array.isArray(section.content) ? (
                   section.content.map((para, i) => (
                     <p key={i} className="text-secondary/70 leading-relaxed font-sans">
-                      {para}
+                      {para.startsWith("Website: ") ? (
+                        <>
+                          Website:{" "}
+                          <a
+                            href="https://www.simplydiegos.com"
+                            className="hover:underline"
+                          >
+                            www.simplydiegos.com
+                          </a>
+                        </>
+                      ) : (
+                        para
+                      )}
                     </p>
                   ))
                 ) : (

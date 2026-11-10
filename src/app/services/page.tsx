@@ -172,6 +172,28 @@ export default function ServicesPage() {
                     <p className="text-lg text-secondary/60 leading-relaxed">
                       {service.shortDescription}
                     </p>
+                    {(service.slug === "diy-dog-wash" || service.name.toLowerCase() === "diy dog wash") && (
+                      <div className="space-y-4">
+                        <p className="text-base text-secondary/80 leading-relaxed">
+                          appointment includes towels, shampoo and conditioner. (30 minutes per appointment/per dog)
+                        </p>
+                        <ul className="space-y-2 text-secondary/80 font-semibold">
+                          <li>$12.98 for dogs under 20lbs</li>
+                          <li>$21.98 for dogs over 20lbs</li>
+                        </ul>
+                        <Button asChild size="lg" className="rounded-[5px] bg-primary text-white hover:bg-primary-dark">
+                          <Link href="https://simplydiegos.as.me/" target="_blank" rel="noopener noreferrer">Book Now</Link>
+                        </Button>
+                      </div>
+                    )}
+                    {(service.slug === "local-delivery" || service.name.toLowerCase() === "local delivery") && (
+                      <div className="space-y-2 text-base text-secondary/80 leading-relaxed">
+                        <p>Free over $49</p>
+                        <p>Same day delivery available, please place your order by 1030am.*</p>
+                        <p>* Same day delivery to Albuquerque only.</p>
+                        <p>We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!</p>
+                      </div>
+                    )}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {service.metadata?.listingFeatures?.map(
                         (feature: string) => (

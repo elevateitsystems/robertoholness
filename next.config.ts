@@ -1,16 +1,20 @@
 import type { NextConfig } from "next";
 
+const backendUrl = process.env.BACKEND_URL || process.env.NEXT_PUBLIC_BACKEND_URL;
+
 const nextConfig: NextConfig = {
   env: {
     // Expose the proxy URL to the client instead of the real Render URL
     BACKEND_URL: "/proxy-api",
   },
   async rewrites() {
+    if (!backendUrl) return [];
+
     return [
       {
         // Proxy all requests starting with /proxy-api to the Render backend
         source: "/proxy-api/:path*",
-        destination: `${process.env.BACKEND_URL}/:path*`,
+        destination: `${backendUrl}/:path*`,
       },
     ];
   },

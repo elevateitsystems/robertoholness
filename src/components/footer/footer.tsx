@@ -132,7 +132,7 @@ export function Footer() {
       "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
     location: "3301 Menaul Blvd NE, Suite 10, Albuquerque, NM 87107",
     phoneNumber: "505-990-0099",
-    email: "info@simplydlegos.com",
+    email: "info@simplydiegos.com",
   });
 
   useEffect(() => {
@@ -146,6 +146,7 @@ export function Footer() {
             setFooterData({
               ...record,
               phoneNumber: "505-990-0099",
+              email: "info@simplydiegos.com",
             });
           }
         }
@@ -262,7 +263,7 @@ export function Footer() {
 
           {/* Business Info */}
           <div>
-            <h3 className="mb-8 text-sm font-bold uppercase tracking-[0.2em] text-white flex items-center gap-2">
+            <h3 className="mb-8 text-lg font-black uppercase tracking-[0.2em] text-white flex items-center gap-2">
               <PawIcon />
               Visit Us
             </h3>
@@ -271,7 +272,9 @@ export function Footer() {
                 <div className="mt-1 w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MapPinIcon />
                 </div>
-                <span>{displayFooterData.location}</span>
+                <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="text-lg font-semibold leading-relaxed hover:text-accent-green transition-colors">
+                  {displayFooterData.location}
+                </Link>
               </li>
               <li className="flex items-center space-x-4">
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
@@ -283,7 +286,7 @@ export function Footer() {
                 <div className="w-10 h-10 rounded-[5px] bg-white/10 text-white flex items-center justify-center shrink-0">
                   <MailIcon />
                 </div>
-                <span>{displayFooterData.email}</span>
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@simplydiegos.com" target="_blank" rel="noopener noreferrer" className="hover:underline">info@simplydiegos.com</a>
               </li>
             </ul>
           </div>
@@ -308,13 +311,13 @@ export function Footer() {
                 </span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
-                <span>Saturday</span>{" "}
+                <span>Saturday&nbsp;</span>
                 <span className="text-warm-orange font-bold">
                   9:00 AM - 6:00 PM
                 </span>
               </li>
               <li className="flex justify-between border-b border-white/10 pb-3">
-                <span>Sunday</span>{" "}
+                <span>Sunday&nbsp;</span>
                 <span className="text-warm-orange font-bold">
                   10:00 AM - 6:00 PM
                 </span>

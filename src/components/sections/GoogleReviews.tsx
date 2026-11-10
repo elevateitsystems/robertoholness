@@ -76,42 +76,19 @@ const ChevronRight = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const testimonials = [
-  {
-    name: "Lindsay Wind",
-    role: "Pet Owner",
-    text: "And taped a amazingly lazily far gosh oh bald oh raffishly ouch ladybug far that the and alas slapped alas far brusque pridefully kneeled python horse alas sound because more prodigiously",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
-    dogImage: "/assets/placeholder.svg",
-  },
-  {
-    name: "Sarah M.",
-    role: "Cat Parent",
-    text: "Simply Diego's is the only place I trust for my dog's food. The staff is incredibly knowledgeable and the DIY wash is a lifesaver!",
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=150",
-    dogImage: "/assets/placeholder.svg",
-  },
-  {
-    name: "James R.",
-    role: "Dog Lover",
-    text: "Great local shop with a fantastic selection. The delivery service is prompt and always comes with a friendly smile.",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
-    dogImage: "/assets/placeholder.svg",
-  },
-];
+const GOOGLE_BUSINESS_URL =
+  "https://www.google.com/maps/search/?api=1&query=Simply%20Diego%27s%203301%20Menaul%20Blvd%20NE%20Suite%2010%20Albuquerque%20NM%2087107";
 
 export function GoogleReviews() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [items, setItems] = useState(testimonials);
+  const [items, setItems] = useState<any[]>([]);
+  const [googleUrl, setGoogleUrl] = useState(GOOGLE_BUSINESS_URL);
 
   const next = () =>
-    setCurrentIndex((prev) => (prev + 1) % items.length);
+    setCurrentIndex((prev) => (prev + 1) % Math.max(items.length, 1));
   const prev = () =>
     setCurrentIndex(
-      (prev) => (prev - 1 + items.length) % items.length,
+      (prev) => (prev - 1 + Math.max(items.length, 1)) % Math.max(items.length, 1),
     );
 
   useEffect(() => {
@@ -120,6 +97,7 @@ export function GoogleReviews() {
         const response = await fetch("/api/google-reviews");
         const payload = await response.json();
 
+        if (payload?.data?.url) setGoogleUrl(payload.data.url);
         if (payload?.data?.reviews?.length) {
           setItems(
             payload.data.reviews.map((review: any) => ({
@@ -191,10 +169,10 @@ export function GoogleReviews() {
                   <div className="w-12 h-[2px] bg-primary/20 mx-auto mb-6" />
 
                   <p className="text-secondary/80 text-lg leading-relaxed mb-8 italic">
-                    {items[currentIndex].text}
+                    {items[currentIndex]?.text || "Google reviews are currently unavailable. Please visit our Google Business profile to read customer feedback."}
                   </p>
 
-                  <div className="flex flex-col items-center gap-4">
+                  {items[currentIndex] && <div className="flex flex-col items-center gap-4">
                     <div className="w-16 h-16 rounded-[5px] overflow-hidden relative border-2 border-primary/10">
                       <Image
                         src={items[currentIndex].avatar}
@@ -212,19 +190,21 @@ export function GoogleReviews() {
                         {items[currentIndex].role}
                       </p>
                     </div>
-                  </div>
+                  </div>}
                 </motion.div>
               </AnimatePresence>
 
               {/* Navigation Arrows */}
               <button
                 onClick={prev}
+                disabled={items.length < 2}
                 className="absolute left-0 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-20"
               >
                 <ChevronLeft />
               </button>
               <button
                 onClick={next}
+                disabled={items.length < 2}
                 className="absolute right-0 top-1/2 translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center shadow-lg hover:scale-110 transition-transform z-20"
               >
                 <ChevronRight />
@@ -246,8 +226,8 @@ export function GoogleReviews() {
             size="lg"
             className="rounded-[5px] px-10 font-bold bg-transparent border-2 border-white/30 text-white hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
           >
-            <Link href="/reviews" className="flex items-center gap-2">
-              <span>View All Feedback</span>
+            <Link href={googleUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+              <span>Read Google Reviews</span>
               <ArrowRightIcon className="h-4 w-4" />
             </Link>
           </Button>
