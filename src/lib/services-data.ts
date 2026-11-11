@@ -110,8 +110,8 @@ export const servicesData: Record<string, Service> = {
     durationMinutes: 30,
     availabilityType: "walk_in",
     actionType: "book",
-    actionLabel: "Book Wash",
-    actionUrl: "https://shop.simplydlegos.com",
+    actionLabel: "Book Now",
+    actionUrl: "https://simplydiegos.as.me/",
     metadata: {
       gradientTitle: "Stress-Free Bathing.",
       badge: "Our Most Popular Service",
@@ -159,10 +159,8 @@ export const servicesData: Record<string, Service> = {
         'Sanitized Workspace'
       ],
       pricing: [
-        { label: 'Small Dogs (under 25lbs)', price: '$15' },
-        { label: 'Medium Dogs (25-50lbs)', price: '$18' },
-        { label: 'Large Dogs (50-90lbs)', price: '$22' },
-        { label: 'Extra Large Dogs (90lbs+)', price: '$25' },
+        { label: 'for dogs under 20lbs', price: '$12.98' },
+        { label: 'for dogs over 20lbs', price: '$21.98' },
       ],
       proTip: "We recommend bringing your dog's favorite treats to keep them happy during the bath."
     }
@@ -202,25 +200,25 @@ export const servicesData: Record<string, Service> = {
         },
         {
           icon: "dollar-sign",
-          title: "Free Over $50",
-          description: "Delivery is FREE for orders over $50. Small flat fee for smaller orders."
+          title: "Free over $49",
+          description: "Free over $49"
         },
         {
           icon: "clock",
           title: "Same-Day Delivery",
-          description: "Order by 12 PM for guaranteed same-day delivery in the Albuquerque area."
+          description: "Same day delivery available, please place your order by 1030am.*"
         }
       ],
       listingFeatures: [
         "Fast Turnaround",
         "Albuquerque Area",
-        "Free Over $50",
+        "Free over $49",
         "Contactless Option",
       ],
       steps: [
         { icon: "package", title: '1. Order Online', text: 'Select "Local Delivery" at checkout.' },
-        { icon: "dollar-sign", title: '2. Free Over $50', text: 'Orders under $50 have a small flat fee of $5.99.' },
-        { icon: "check-circle-2", title: '3. Same-Day Delivery', text: 'Fast turnaround so your pet never goes hungry.' }
+        { icon: "dollar-sign", title: '2. Free over $49', text: 'Free over $49' },
+        { icon: "check-circle-2", title: '3. Same-Day Delivery', text: 'Same day delivery available, please place your order by 1030am.* * Same day delivery to Albuquerque only. We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!' }
       ]
     }
   },

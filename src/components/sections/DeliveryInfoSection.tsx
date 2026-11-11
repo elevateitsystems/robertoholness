@@ -9,9 +9,10 @@ import { motion } from "framer-motion";
 const SHOP_URL = "https://shop.simplydiegos.com/products/shop/";
 
 const deliveryDetails = [
-  "Deliveries are available Monday through Saturday.",
-  "Orders placed by 10:30 AM qualify for same-day delivery.",
-  "Westside Albuquerque, Rio Rancho, Corrales, and Bernalillo deliveries run every Tuesday and Friday.",
+  "Free over $49",
+  "Same day delivery available, please place your order by 1030am.*",
+  "* Same day delivery to Albuquerque only.",
+  "We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!",
 ];
 
 export function DeliveryInfoSection() {

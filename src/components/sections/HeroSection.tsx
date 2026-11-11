@@ -174,7 +174,7 @@ export function HeroSection() {
 
   if (loading) {
     return (
-      <section className="relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
+      <section className="relative min-h-screen flex items-center pt-[160px] lg:pt-[180px] pb-20 overflow-hidden bg-white">
         {/* Background Effects */}
         <div className="absolute inset-0 paw-pattern-light opacity-30" />
         <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-primary/20 rounded-full blur-[120px]" />
@@ -255,7 +255,7 @@ export function HeroSection() {
   }
 
   return (
-    <section className="mt-16 relative min-h-screen flex items-center pt-[90px] lg:pt-[110px] pb-20 overflow-hidden bg-white">
+    <section className="mt-16 relative min-h-screen flex items-center pt-[160px] lg:pt-[180px] pb-20 overflow-hidden bg-white">
       {/* ── Background Effects ── */}
       <div className="absolute inset-0 pink-paw-pattern opacity-[0.035]" />
 
@@ -400,7 +400,7 @@ export function HeroSection() {
                 variant="outline"
                 size="lg"
                 asChild
-                className="h-14 px-8 rounded-[5px] text-lg font-bold border-2 border-white/20 text-white bg-white/5 hover:bg-white/15 hover:border-white/40 hover:text-white backdrop-blur-sm transition-all flex items-center gap-3"
+                className="h-14 px-8 rounded-[5px] text-lg font-bold border-2 border-primary text-white bg-pink-500 hover:bg-pink-600 hover:border-pink-600 hover:text-white backdrop-blur-sm transition-all flex items-center gap-3"
               >
                 <a
                   href="https://simplydiegos.as.me/"
