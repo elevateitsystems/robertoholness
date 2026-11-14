@@ -11,7 +11,7 @@ const SHOP_URL = "https://shop.simplydiegos.com/products/shop/";
 const deliveryDetails = [
   "Free over $49",
   "Same day delivery available, please place your order by 1030am.*",
-  "* Same day delivery to Albuquerque only.",
+  "* Some restrictions apply.",
   "We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!",
 ];
 

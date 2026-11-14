@@ -173,7 +173,7 @@ export const servicesData: Record<string, Service> = {
     shortDescription: "Can't make it to the store? No problem! We offer fast, reliable local delivery across Albuquerque. Get your pet's favorite food delivered right to your porch.",
     fullDescription: "Albuquerque's fastest way to get natural pet food. Skip the trip and let us bring the best supplies directly to you.",
     icon: "truck",
-    imageUrl: "https://images.unsplash.com/photo-1586769852836-bc069f19e1b6?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "/DeliveryCar.jpg",
     priceType: "starting_from",
     price: 5,
     availabilityType: "scheduled",
@@ -218,7 +218,7 @@ export const servicesData: Record<string, Service> = {
       steps: [
         { icon: "package", title: '1. Order Online', text: 'Select "Local Delivery" at checkout.' },
         { icon: "dollar-sign", title: '2. Free over $49', text: 'Free over $49' },
-        { icon: "check-circle-2", title: '3. Same-Day Delivery', text: 'Same day delivery available, please place your order by 1030am.* * Same day delivery to Albuquerque only. We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!' }
+        { icon: "check-circle-2", title: '3. Same-Day Delivery', text: 'Same day delivery available, please place your order by 1030am.* * Some restrictions apply. We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!' }
       ]
     }
   },
@@ -297,7 +297,7 @@ export const servicesData: Record<string, Service> = {
     shortDescription: 'Short on time? Order through our online store and select "Pickup". We\'ll have your items ready and waiting.',
     fullDescription: "Order from your couch and grab it on the go. Choose between quick in-store pickup or our convenient contactless curbside service.",
     icon: "store",
-    imageUrl: "https://images.unsplash.com/photo-1534723452862-4c874018d66d?auto=format&fit=crop&q=80&w=1200",
+    imageUrl: "/SDInside.jpg",
     priceType: "free",
     price: 0,
     availabilityType: "scheduled",

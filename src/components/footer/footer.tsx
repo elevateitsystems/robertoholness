@@ -129,7 +129,7 @@ export function Footer() {
   const isHomePage = pathname === "/";
   const [footerData, setFooterData] = useState<any>({
     description:
-      "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
+      "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2016.",
     location: "3301 Menaul Blvd NE, Suite 10, Albuquerque, NM 87107",
     phoneNumber: "505-990-0099",
     email: "info@simplydiegos.com",
