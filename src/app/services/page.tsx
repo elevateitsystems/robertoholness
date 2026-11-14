@@ -190,7 +190,7 @@ export default function ServicesPage() {
                       <div className="space-y-2 text-base text-secondary/80 leading-relaxed">
                         <p>Free over $49</p>
                         <p>Same day delivery available, please place your order by 1030am.*</p>
-                        <p>* Same day delivery to Albuquerque only.</p>
+                        <p>* Some restrictions apply.</p>
                         <p>We deliver to Far West Side, Corrales and Rio Rancho every Tuesday and Friday!</p>
                       </div>
                     )}

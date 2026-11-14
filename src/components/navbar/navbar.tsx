@@ -199,7 +199,7 @@ export function Navbar() {
                   {navBarData.timeLine}
                 </Link>
               </div>
-              <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="ml-auto text-sm font-black uppercase tracking-wide hover:text-accent-green sm:text-base">
+              <Link href="https://shop.simplydiegos.com/products/list/" target="_blank" rel="noopener noreferrer" className="ml-auto text-sm font-black uppercase tracking-wide hover:text-accent-green sm:text-base">
                 🐾 {navBarData.deliveryOffer}
               </Link>
               <Link href={GOOGLE_BUSINESS_URL} target="_blank" rel="noopener noreferrer" className="shrink-0 text-sm font-black underline decoration-white/60 underline-offset-4 hover:text-accent-green sm:text-base">

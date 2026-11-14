@@ -15,7 +15,7 @@ export default function AdminFooterPage() {
   
   // Database States
   const [footerData, setFooterData] = useState<any>({
-    description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2008.",
+    description: "Albuquerque's premier natural pet food market. We focus on providing the best nutrition and care for your furry family members since 2016.",
     location: "7321 San Antonio Dr NE, Albuquerque, NM 87109",
     phoneNumber: "505-990-0099",
     email: "info@simplydlegos.com"
