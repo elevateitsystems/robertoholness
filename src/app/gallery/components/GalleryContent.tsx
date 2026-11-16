@@ -3,10 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { galleryApi } from "@/lib/api/gallery";
-
-const galleryCategories = ["All", "Birds", "Cats", "Dogs", "Kittens"];
 
 const galleryImages = [
   {
@@ -66,7 +63,6 @@ const galleryImages = [
 ];
 
 export function GalleryContent() {
-  const [activeCategory, setActiveCategory] = useState("All");
   const [images, setImages] = useState(galleryImages);
 
   useEffect(() => {
@@ -93,39 +89,16 @@ export function GalleryContent() {
     loadGallery();
   }, []);
 
-  const categories = images === galleryImages ? galleryCategories : ["All", "Gallery"];
-
-  const filteredImages = images.filter(
-    (img) => activeCategory === "All" || img.category === activeCategory,
-  );
-
   return (
     <div className="py-12 md:py-16 bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        {/* Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-2 mb-10">
-          {categories.map((cat) => (
-            <Button
-              key={cat}
-              onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-1.5 rounded-full text-sm font-semibold transition-all duration-300 ${
-                activeCategory === cat
-                  ? "bg-secondary text-white shadow-lg shadow-accent-green/20 scale-105"
-                  : "bg-secondary-10 border border-secondary/50 text-secondary/90 hover:text-primary hover:bg-primary/5"
-              }`}
-            >
-              {cat}
-            </Button>
-          ))}
-        </div>
-
         {/* Image Grid */}
         <motion.div
           layout
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1"
         >
           <AnimatePresence mode="popLayout">
-            {filteredImages.map((img) => (
+            {images.map((img) => (
               <motion.div
                 key={img.id}
                 layout

@@ -333,7 +333,7 @@ export function Navbar() {
               className="rounded-[5px] bg-secondary font-black text-white shadow-lg shadow-secondary/25 transition-all hover:scale-105 hover:bg-deep-teal hover:shadow-xl hover:shadow-secondary/35 active:scale-95 focus-visible:ring-secondary flex items-center gap-2"
             >
               <Link
-                href="https://shop.simplydiegos.com/products/shop/"
+                href="https://shop.simplydiegos.com/products/list/"
                 target="_blank"
                 className="flex items-center gap-2"
               >
@@ -456,7 +456,7 @@ export function Navbar() {
                   className="w-full rounded-[5px] bg-secondary font-black text-white h-14 shadow-lg shadow-secondary/25 hover:bg-deep-teal focus-visible:ring-secondary flex items-center justify-center gap-2"
                 >
                   <Link
-                    href="https://shop.simplydiegos.com/products/shop/"
+                    href="https://shop.simplydiegos.com/products/list/"
                     target="_blank"
                     className="flex items-center gap-2"
                     onClick={() => setIsOpen(false)}

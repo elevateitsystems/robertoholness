@@ -234,7 +234,7 @@ export function WelcomeSection() {
                 className="rounded-[5px] bg-primary hover:bg-primary/90 text-white font-bold h-14 px-10 transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary/20"
               >
                 <Link
-                  href="https://shop.simplydiegos.com/products/shop/"
+                  href="https://shop.simplydiegos.com/products/list/"
                   target="_blank"
                   className="flex items-center gap-2"
                 >
