@@ -139,7 +139,7 @@ export function BottomShopCTA() {
               className="h-16 px-12 rounded-[5px] text-xl font-bold shadow-xl shadow-primary/30 bg-primary hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all flex items-center gap-3"
             >
               <Link
-                href="https://shop.simplydiegos.com/products/shop/"
+                href="https://shop.simplydiegos.com/products/list/"
                 target="_blank"
                 className="flex items-center gap-3"
               >

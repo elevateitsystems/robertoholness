@@ -130,7 +130,7 @@ export function SalesSection() {
               className="border-2 rounded-[5px] border-white/50 text-white hover:bg-white hover:text-black bg-transparent px-12 py-6 text-sm font-bold tracking-widest uppercase transition-all duration-300"
             >
               <Link
-                href="https://shop.simplydiegos.com/products/shop/"
+                href="https://shop.simplydiegos.com/products/list/"
                 target="_blank"
                 className="flex items-center gap-2"
               >

@@ -175,7 +175,7 @@ export function Footer() {
         { label: "Pet Care Blog", href: "/blog" },
         {
           label: "Shop Online Store",
-          href: "https://shop.simplydiegos.com/products/shop/",
+          href: "https://shop.simplydiegos.com/products/list/",
           external: true,
         },
       ];

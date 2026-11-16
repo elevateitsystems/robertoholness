@@ -179,7 +179,7 @@ export const servicesData: Record<string, Service> = {
     availabilityType: "scheduled",
     actionType: "order",
     actionLabel: "Order Delivery",
-    actionUrl: "https://shop.simplydlegos.com",
+    actionUrl: "https://shop.simplydiegos.com/products/list/",
     metadata: {
       gradientTitle: "Right to Your Porch.",
       badge: "Convenient & Reliable",

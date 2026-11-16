@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Truck } from "lucide-react";
 import { motion } from "framer-motion";
 
-const SHOP_URL = "https://shop.simplydiegos.com/products/shop/";
+const SHOP_URL = "https://shop.simplydiegos.com/products/list/";
 
 const deliveryDetails = [
   "Free over $49",
