@@ -3,15 +3,19 @@ import { BottomShopCTA } from "@/components/sections/BottomShopCTA";
 import { DeliveryInfoSection } from "@/components/sections/DeliveryInfoSection";
 import { SocialMediaSection } from "@/components/sections/SocialMediaSection";
 import { CustomerReviews } from "@/components/sections/CustomerReviews";
-// import { GoogleReviews } from "@/components/sections/GoogleReviews";
+import { GoogleReviews } from "@/components/sections/GoogleReviews";
 
 export default function Home() {
+  const googleReviewsConfigured = Boolean(
+    process.env.GOOGLE_PLACES_API_KEY && process.env.GOOGLE_PLACE_ID,
+  );
+
   return (
     <div className="flex flex-col w-full">
       <HeroSection />
       <DeliveryInfoSection />
       <CustomerReviews />
-      {/* <GoogleReviews /> */}
+      <GoogleReviews configured={googleReviewsConfigured} />
       <SocialMediaSection />
       <BottomShopCTA />
     </div>
