@@ -79,7 +79,9 @@ const ChevronRight = ({ className }: { className?: string }) => (
 const GOOGLE_BUSINESS_URL =
   "https://www.google.com/maps/search/?api=1&query=Simply%20Diego%27s%203301%20Menaul%20Blvd%20NE%20Suite%2010%20Albuquerque%20NM%2087107";
 
-export function GoogleReviews() {
+const GOOGLE_REVIEWS_URL = "https://share.google/MjQwhU1HR6r9prDRt";
+
+export function GoogleReviews({ configured }: { configured: boolean }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [items, setItems] = useState<any[]>([]);
   const [googleUrl, setGoogleUrl] = useState(GOOGLE_BUSINESS_URL);
@@ -92,6 +94,8 @@ export function GoogleReviews() {
     );
 
   useEffect(() => {
+    if (!configured) return;
+
     async function loadGoogleReviews() {
       try {
         const response = await fetch("/api/google-reviews");
@@ -116,7 +120,37 @@ export function GoogleReviews() {
     }
 
     loadGoogleReviews();
-  }, []);
+  }, [configured]);
+
+  if (!configured) {
+    return (
+      <section className="py-24 bg-gradient-to-br from-primary via-primary-dark to-[#800040] text-white relative overflow-hidden">
+        <div className="absolute inset-0 paw-pattern-light" />
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center">
+          <p className="text-white/80 text-sm font-bold uppercase tracking-wider mb-2">
+            🐾 Loved by Pets, Trusted by Owners.
+          </p>
+          <h2 className="text-4xl md:text-5xl font-heading font-black text-white mb-8">
+            Amazing <span className="text-accent-green">Feedback</span>
+          </h2>
+          <Button
+            asChild
+            variant="outline"
+            size="lg"
+            className="rounded-[5px] px-10 font-bold bg-transparent border-2 border-white/30 text-white hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+          >
+            <Link
+              href={GOOGLE_REVIEWS_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Click here to see what customers are saying about us.
+            </Link>
+          </Button>
+        </div>
+      </section>
+    );
+  }
 
   return (
     // <section className="py-24 relative overflow-hidden bg-primary-dark">
